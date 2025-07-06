@@ -17,13 +17,13 @@ export default function Header() {
   const router = useRouter()
 
   // Helper function to create locale-aware URLs
-  const createLocalePath = (path: string, targetLocale: string = locale) => {
-    if (targetLocale === 'bg') {
+  const createLocalePath = (path: string) => {
+    if (locale === 'bg') {
       // Default locale doesn't need prefix
-      return path === '/' ? '/' : path
+      return path
     } else {
       // Non-default locales need prefix
-      return path === '/' ? `/${targetLocale}` : `/${targetLocale}${path}`
+      return path === '/' ? '/en' : `/en${path}`
     }
   }
 
@@ -37,18 +37,44 @@ export default function Header() {
   ]
 
   const switchLocale = (newLocale: string) => {
-    // Extract the path without the current locale prefix
+    // Don't do anything if we're already on the target locale
+    if (locale === newLocale) {
+      setIsLangMenuOpen(false)
+      return
+    }
+
+    // Get the current pathname without any locale prefix
     let pathWithoutLocale = pathname
     
-    // Remove current locale prefix if it exists
-    if (locale === 'en' && pathname.startsWith('/en')) {
-      pathWithoutLocale = pathname.replace('/en', '') || '/'
-    } else if (locale === 'bg' && pathname.startsWith('/bg')) {
-      pathWithoutLocale = pathname.replace('/bg', '') || '/'
+    // Remove existing locale prefix if present
+    if (pathname.startsWith('/en/')) {
+      pathWithoutLocale = pathname.substring(3) // Remove '/en'
+    } else if (pathname === '/en') {
+      pathWithoutLocale = '/'
+    } else if (pathname.startsWith('/bg/')) {
+      pathWithoutLocale = pathname.substring(3) // Remove '/bg'  
+    } else if (pathname === '/bg') {
+      pathWithoutLocale = '/'
+    }
+    // If pathname doesn't start with a locale, assume it's already clean
+
+    // Build new path based on target locale
+    let newPath: string
+    if (newLocale === 'bg') {
+      // Bulgarian is default, no prefix needed
+      newPath = pathWithoutLocale || '/'
+    } else {
+      // Other locales need prefix
+      newPath = `/en${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`
     }
     
-    // Create new path with target locale
-    const newPath = createLocalePath(pathWithoutLocale, newLocale)
+    console.log('Language switch:', {
+      from: locale,
+      to: newLocale,
+      currentPath: pathname,
+      pathWithoutLocale,
+      newPath
+    })
     
     router.push(newPath)
     setIsLangMenuOpen(false)

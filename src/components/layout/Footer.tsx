@@ -10,10 +10,10 @@ export default function Footer() {
   const createLocalePath = (path: string) => {
     if (locale === 'bg') {
       // Default locale doesn't need prefix
-      return path === '/' ? '/' : path
+      return path
     } else {
       // Non-default locales need prefix
-      return path === '/' ? `/${locale}` : `/${locale}${path}`
+      return path === '/' ? '/en' : `/en${path}`
     }
   }
 

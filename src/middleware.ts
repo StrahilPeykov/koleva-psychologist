@@ -4,10 +4,10 @@ export default createMiddleware({
   // A list of all locales that are supported
   locales: ['bg', 'en'],
   
-  // Used when no locale matches
+  // Used when no locale matches - Bulgarian should be default
   defaultLocale: 'bg',
   
-  // Use 'as-needed' instead of 'always' to make /bg optional for the default locale
+  // Use 'as-needed' so default locale (bg) has no prefix
   localePrefix: 'as-needed'
 })
 
