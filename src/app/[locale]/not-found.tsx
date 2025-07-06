@@ -1,12 +1,12 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
+import { BackButton } from '@/components/ui/BackButton'
 import { 
   Home, 
   Search, 
   Phone, 
   Mail, 
-  ArrowLeft,
   HelpCircle,
   FileText,
   Calendar,
@@ -84,10 +84,7 @@ export default function NotFoundPage() {
                   Към началото
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-blue-200 text-blue-700 hover:bg-blue-50" onClick={() => window.history.back()}>
-                <ArrowLeft className="w-5 h-5 mr-2" />
-                Върни се назад
-              </Button>
+              <BackButton />
             </div>
           </div>
 

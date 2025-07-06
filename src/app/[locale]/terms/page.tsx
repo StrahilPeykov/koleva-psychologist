@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { FileText, Scale, AlertTriangle, Phone, Mail, Calendar, Euro } from 'lucide-react'
+import { BackButton } from '@/components/ui/BackButton'
 
 export default function TermsOfServicePage() {
   const t = useTranslations()
@@ -295,172 +296,6 @@ export default function TermsOfServicePage() {
               </div>
             </section>
 
-            {/* Client Responsibilities */}
-            <section className="mb-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                6. Отговорности на клиента
-              </h2>
-              
-              <div className="space-y-6 text-gray-700">
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    Активно участие
-                  </h3>
-                  <ul className="space-y-2">
-                    <li>• Честно и отворено споделяне на информация</li>
-                    <li>• Редовно присъствие на насрочените сесии</li>
-                    <li>• Изпълнение на домашни задания (при необходимост)</li>
-                    <li>• Информиране при промени в състоянието</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    Финансови задължения
-                  </h3>
-                  <ul className="space-y-2">
-                    <li>• Навременно заплащане на дължимите суми</li>
-                    <li>• Спазване на условията за отмяна</li>
-                    <li>• Уведомяване при финансови затруднения</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    Комуникация
-                  </h3>
-                  <ul className="space-y-2">
-                    <li>• Уважително отношение към терапевта</li>
-                    <li>• Спазване на границите на терапевтичната връзка</li>
-                    <li>• Комуникация само по служебни канали</li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            {/* Website Terms */}
-            <section className="mb-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                7. Условия за ползване на уебсайта
-              </h2>
-              
-              <div className="space-y-6 text-gray-700">
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    Разрешено използване
-                  </h3>
-                  <ul className="space-y-2">
-                    <li>• Получаване на информация за услугите</li>
-                    <li>• Четене на статии и ресурси</li>
-                    <li>• Записване за консултации</li>
-                    <li>• Свързване с нас чрез контактните форми</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    Забранени действия
-                  </h3>
-                  <div className="bg-red-50 p-4 rounded-lg border border-red-200">
-                    <ul className="text-red-800 space-y-2">
-                      <li>• Копиране или разпространение на съдържанието без разрешение</li>
-                      <li>• Хакерски атаки или опити за неоторизиран достъп</li>
-                      <li>• Качване на вредоносен софтуер или спам</li>
-                      <li>• Използване за незаконни или неетични цели</li>
-                      <li>• Нарушаване на авторските права</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    Интелектуална собственост
-                  </h3>
-                  <p>
-                    Цялото съдържание на уебсайта (текстове, изображения, дизайн) е 
-                    интелектуална собственост на Олга Колева и е защитено от закона 
-                    за авторското право.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Limitations */}
-            <section className="mb-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                8. Ограничения на отговорността
-              </h2>
-              
-              <div className="space-y-6 text-gray-700">
-                <div className="bg-yellow-50 p-6 rounded-lg border border-yellow-200">
-                  <h3 className="text-xl font-semibold text-yellow-900 mb-4">
-                    Важни ограничения
-                  </h3>
-                  <div className="space-y-3 text-yellow-800">
-                    <p>
-                      Психологическите услуги не гарантират определен резултат. 
-                      Успехът на терапията зависи от много фактори, включително 
-                      мотивацията и активното участие на клиента.
-                    </p>
-                    <p>
-                      Уебсайтът се предоставя "както е" без гаранции за непрекъснатост 
-                      или отсъствие на грешки.
-                    </p>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    Форс мажор
-                  </h3>
-                  <p>
-                    Не носим отговорност за невъзможност да предоставим услуги 
-                    поради обстоятелства извън нашия контрол (природни бедствия, 
-                    епидемии, технически проблеми и др.).
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Dispute Resolution */}
-            <section className="mb-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                9. Решаване на спорове
-              </h2>
-              
-              <div className="space-y-6 text-gray-700">
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    Първа стъпка - Директен диалог
-                  </h3>
-                  <p>
-                    При възникване на проблеми или недоразумения, моля първо 
-                    се свържете директно с мен за обсъждане и решаване.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    Медиация
-                  </h3>
-                  <p>
-                    При невъзможност за споразумение, споровете могат да бъдат 
-                    решавани чрез медиация в Българската асоциация по позитивна психотерапия.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    Приложимо право
-                  </h3>
-                  <p>
-                    Настоящите условия се ръководят от българското право. 
-                    Компетентни са българските съдилища.
-                  </p>
-                </div>
-              </div>
-            </section>
-
             {/* Contact Information */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
@@ -491,6 +326,10 @@ export default function TermsOfServicePage() {
                     <p>Тема: "Технически въпрос - уебсайт"</p>
                   </div>
                 </div>
+              </div>
+
+              <div className="mt-8 text-center">
+                <BackButton />
               </div>
             </section>
 

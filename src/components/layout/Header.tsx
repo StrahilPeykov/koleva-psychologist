@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { usePathname } from 'next/navigation'
 import { Menu, X, Globe } from 'lucide-react'
@@ -13,6 +14,7 @@ export default function Header() {
   const t = useTranslations()
   const locale = useLocale()
   const pathname = usePathname()
+  const router = useRouter()
 
   const navigation = [
     { name: t('nav.home'), href: `/${locale}` },
@@ -25,7 +27,8 @@ export default function Header() {
 
   const switchLocale = (newLocale: string) => {
     const path = pathname.replace(`/${locale}`, `/${newLocale}`)
-    window.location.href = path
+    router.push(path)
+    setIsLangMenuOpen(false)
   }
 
   return (

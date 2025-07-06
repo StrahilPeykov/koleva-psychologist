@@ -2,13 +2,14 @@ import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
-// Sanity client configuration
+// Sanity client configuration - ensure it works in both server and client environments
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  useCdn: true, // Set to false if statically generating pages
+  useCdn: process.env.NODE_ENV === 'production', // Use CDN in production
   apiVersion: '2024-01-01',
   token: process.env.SANITY_API_TOKEN, // For write operations
+  perspective: 'published', // Ensure we only get published content
 })
 
 // Image URL builder
@@ -69,198 +70,34 @@ export interface Event {
   status: 'upcoming' | 'open' | 'closed' | 'completed' | 'cancelled' | 'in-progress'
 }
 
-// GROQ queries for content
-export const queries = {
-  // Articles queries
-  getAllArticles: `*[_type == "article"] | order(publishedAt desc) {
-    _id,
-    title,
-    slug,
-    excerpt,
-    publishedAt,
-    language,
-    category,
-    tags,
-    originalSource,
-    author,
-    featured,
-    "imageUrl": image.asset->url,
-    "imageAlt": image.alt
-  }`,
-
-  getArticlesByLanguage: (language: string) => `*[_type == "article" && language == "${language}"] | order(publishedAt desc) {
-    _id,
-    title,
-    slug,
-    excerpt,
-    publishedAt,
-    language,
-    category,
-    tags,
-    originalSource,
-    author,
-    featured,
-    "imageUrl": image.asset->url,
-    "imageAlt": image.alt
-  }`,
-
-  getFeaturedArticles: (language: string) => `*[_type == "article" && language == "${language}" && featured == true] | order(publishedAt desc) {
-    _id,
-    title,
-    slug,
-    excerpt,
-    publishedAt,
-    category,
-    tags,
-    author,
-    "imageUrl": image.asset->url,
-    "imageAlt": image.alt
-  }`,
-
-  getArticleBySlug: (slug: string, language: string) => `*[_type == "article" && slug.current == "${slug}" && language == "${language}"][0] {
-    _id,
-    title,
-    slug,
-    excerpt,
-    content,
-    publishedAt,
-    language,
-    category,
-    tags,
-    originalSource,
-    author,
-    "imageUrl": image.asset->url,
-    "imageAlt": image.alt
-  }`,
-
-  getArticlesByCategory: (category: string, language: string) => `*[_type == "article" && category == "${category}" && language == "${language}"] | order(publishedAt desc) {
-    _id,
-    title,
-    slug,
-    excerpt,
-    publishedAt,
-    category,
-    tags,
-    author,
-    "imageUrl": image.asset->url,
-    "imageAlt": image.alt
-  }`,
-
-  // Events queries
-  getAllEvents: `*[_type == "event"] | order(date asc) {
-    _id,
-    title,
-    slug,
-    description,
-    date,
-    time,
-    duration,
-    price,
-    discountPrice,
-    discountDeadline,
-    location,
-    locationDetails,
-    language,
-    eventType,
-    targetAudience,
-    certificate,
-    registrationLink,
-    status,
-    "imageUrl": image.asset->url,
-    "imageAlt": image.alt
-  }`,
-
-  getUpcomingEvents: (language: string) => `*[_type == "event" && language == "${language}" && status in ["upcoming", "open"] && date >= now()] | order(date asc) {
-    _id,
-    title,
-    slug,
-    description,
-    date,
-    time,
-    duration,
-    price,
-    discountPrice,
-    discountDeadline,
-    location,
-    locationDetails,
-    eventType,
-    targetAudience,
-    certificate,
-    registrationLink,
-    status,
-    "imageUrl": image.asset->url,
-    "imageAlt": image.alt
-  }`,
-
-  getPastEvents: (language: string) => `*[_type == "event" && language == "${language}" && status == "completed"] | order(date desc) {
-    _id,
-    title,
-    slug,
-    description,
-    date,
-    time,
-    duration,
-    price,
-    location,
-    locationDetails,
-    eventType,
-    "imageUrl": image.asset->url,
-    "imageAlt": image.alt
-  }`,
-
-  getEventBySlug: (slug: string, language: string) => `*[_type == "event" && slug.current == "${slug}" && language == "${language}"][0] {
-    _id,
-    title,
-    slug,
-    description,
-    content,
-    date,
-    time,
-    duration,
-    price,
-    discountPrice,
-    discountDeadline,
-    location,
-    locationDetails,
-    language,
-    eventType,
-    targetAudience,
-    certificate,
-    registrationLink,
-    status,
-    "imageUrl": image.asset->url,
-    "imageAlt": image.alt
-  }`,
-
-  // Latest content for homepage
-  getLatestContent: (language: string) => `{
-    "articles": *[_type == "article" && language == "${language}"] | order(publishedAt desc)[0...3] {
+// Helper functions for fetching data with error handling
+export async function getArticles(language: string = 'bg'): Promise<Article[]> {
+  try {
+    const query = `*[_type == "article" && language == $language] | order(publishedAt desc) {
       _id,
       title,
       slug,
       excerpt,
       publishedAt,
+      language,
       category,
-      "imageUrl": image.asset->url
-    },
-    "events": *[_type == "event" && language == "${language}" && status in ["upcoming", "open"] && date >= now()] | order(date asc)[0...2] {
-      _id,
-      title,
-      slug,
-      description,
-      date,
-      time,
-      price,
-      location,
-      eventType,
-      status,
-      "imageUrl": image.asset->url
-    }
-  }`,
+      tags,
+      originalSource,
+      "author": "Олга Колева",
+      featured,
+      image
+    }`
+    
+    return await client.fetch(query, { language })
+  } catch (error) {
+    console.warn('Failed to fetch articles:', error)
+    return []
+  }
+}
 
-  // Search functionality
-  searchContent: (searchTerm: string, language: string) => `{
-    "articles": *[_type == "article" && language == "${language}" && (title match "${searchTerm}*" || excerpt match "${searchTerm}*" || "${searchTerm}" in tags)] | order(publishedAt desc) {
+export async function getFeaturedArticles(language: string = 'bg'): Promise<Article[]> {
+  try {
+    const query = `*[_type == "article" && language == $language && featured == true] | order(publishedAt desc) {
       _id,
       title,
       slug,
@@ -268,52 +105,127 @@ export const queries = {
       publishedAt,
       category,
       tags,
-      "imageUrl": image.asset->url
-    },
-    "events": *[_type == "event" && language == "${language}" && (title match "${searchTerm}*" || description match "${searchTerm}*")] | order(date asc) {
+      "author": "Олга Колева",
+      image
+    }`
+    
+    return await client.fetch(query, { language })
+  } catch (error) {
+    console.warn('Failed to fetch featured articles:', error)
+    return []
+  }
+}
+
+export async function getArticle(slug: string, language: string = 'bg'): Promise<Article | null> {
+  try {
+    const query = `*[_type == "article" && slug.current == $slug && language == $language][0] {
+      _id,
+      title,
+      slug,
+      excerpt,
+      content,
+      publishedAt,
+      language,
+      category,
+      tags,
+      originalSource,
+      "author": "Олга Колева",
+      image
+    }`
+    
+    return await client.fetch(query, { slug, language })
+  } catch (error) {
+    console.warn('Failed to fetch article:', error)
+    return null
+  }
+}
+
+export async function getUpcomingEvents(language: string = 'bg'): Promise<Event[]> {
+  try {
+    const query = `*[_type == "event" && language == $language && status in ["upcoming", "open"] && startDate >= now()] | order(startDate asc) {
       _id,
       title,
       slug,
       description,
-      date,
+      startDate,
+      startTime,
+      endTime,
+      duration,
+      price,
+      discountPrice,
+      discountDeadline,
+      location,
+      locationDetails,
       eventType,
+      targetAudience,
+      certificate,
+      registrationLink,
       status,
-      "imageUrl": image.asset->url
-    }
-  }`
-}
-
-// Helper functions for fetching data
-export async function getArticles(language: string = 'bg'): Promise<Article[]> {
-  return await client.fetch(queries.getArticlesByLanguage(language))
-}
-
-export async function getFeaturedArticles(language: string = 'bg'): Promise<Article[]> {
-  return await client.fetch(queries.getFeaturedArticles(language))
-}
-
-export async function getArticle(slug: string, language: string = 'bg'): Promise<Article | null> {
-  return await client.fetch(queries.getArticleBySlug(slug, language))
-}
-
-export async function getUpcomingEvents(language: string = 'bg'): Promise<Event[]> {
-  return await client.fetch(queries.getUpcomingEvents(language))
+      image
+    }`
+    
+    return await client.fetch(query, { language })
+  } catch (error) {
+    console.warn('Failed to fetch upcoming events:', error)
+    return []
+  }
 }
 
 export async function getPastEvents(language: string = 'bg'): Promise<Event[]> {
-  return await client.fetch(queries.getPastEvents(language))
+  try {
+    const query = `*[_type == "event" && language == $language && status == "completed"] | order(startDate desc) {
+      _id,
+      title,
+      slug,
+      description,
+      startDate,
+      startTime,
+      duration,
+      price,
+      location,
+      locationDetails,
+      eventType,
+      image
+    }`
+    
+    return await client.fetch(query, { language })
+  } catch (error) {
+    console.warn('Failed to fetch past events:', error)
+    return []
+  }
 }
 
 export async function getEvent(slug: string, language: string = 'bg'): Promise<Event | null> {
-  return await client.fetch(queries.getEventBySlug(slug, language))
-}
-
-export async function getLatestContent(language: string = 'bg') {
-  return await client.fetch(queries.getLatestContent(language))
-}
-
-export async function searchContent(searchTerm: string, language: string = 'bg') {
-  return await client.fetch(queries.searchContent(searchTerm, language))
+  try {
+    const query = `*[_type == "event" && slug.current == $slug && language == $language][0] {
+      _id,
+      title,
+      slug,
+      description,
+      content,
+      startDate,
+      startTime,
+      endTime,
+      duration,
+      price,
+      discountPrice,
+      discountDeadline,
+      location,
+      locationDetails,
+      language,
+      eventType,
+      targetAudience,
+      certificate,
+      registrationLink,
+      status,
+      image
+    }`
+    
+    return await client.fetch(query, { slug, language })
+  } catch (error) {
+    console.warn('Failed to fetch event:', error)
+    return null
+  }
 }
 
 // Utility functions
