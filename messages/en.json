@@ -1,0 +1,56 @@
+{
+  "site": {
+    "title": "Olga Koleva - Psychologist & Addiction Psychotherapist | Burgas",
+    "description": "Licensed psychologist and addiction psychotherapist in Burgas. Individual and family counseling, trauma therapy, anxiety and depression treatment.",
+    "keywords": "psychologist burgas, addiction psychotherapist, trauma therapy, anxiety depression"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services", 
+    "articles": "Articles",
+    "events": "Events",
+    "contact": "Contact",
+    "book": "Book Session"
+  },
+  "hero": {
+    "title": "Olga Koleva",
+    "subtitle": "Psychologist & Addiction Psychotherapist",
+    "description": "Creating a space where you can be your authentic self – without masks, without fear.",
+    "cta": "Book Consultation",
+    "about": "Learn More"
+  },
+  "services": {
+    "title": "Services",
+    "individual": {
+      "title": "Individual Counseling",
+      "description": "90-minute sessions for emotional trauma, addictions, anxiety, depression, and OCD."
+    },
+    "family": {
+      "title": "Family Counseling",
+      "description": "Working with families affected by addiction and family crises."
+    },
+    "addiction": {
+      "title": "Addiction Psychotherapy", 
+      "description": "Specialized treatment for substance and behavioral addictions."
+    },
+    "trauma": {
+      "title": "Trauma Therapy",
+      "description": "PTSD and domestic violence aftermath recovery."
+    },
+    "price": "70 BGN for 90 minutes",
+    "languages": "Sessions available in Bulgarian, Russian, and English"
+  },
+  "contact": {
+    "title": "Contact",
+    "address": "79 Aleksandrovska St., Burgas",
+    "phone": "+359 888 494 533", 
+    "email": "olgakoleva@abv.bg",
+    "center": "Harmony Psychological Center"
+  },
+  "booking": {
+    "title": "Book Session",
+    "description": "Choose a convenient time for consultation",
+    "button": "Booking Calendar"
+  }
+}
