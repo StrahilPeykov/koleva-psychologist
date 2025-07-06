@@ -11,239 +11,72 @@ const inter = Inter({
   display: 'swap'
 })
 
+// Define locales here instead of importing
 const locales = ['bg', 'en'] as const
-type Locale = typeof locales[number]
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }))
+  return [
+    { locale: 'bg' },
+    { locale: 'en' }
+  ]
 }
 
-interface LocaleLayoutParams {
-  params: Promise<{ locale: string }>
+interface LocaleLayoutProps {
+  children: React.ReactNode
+  params: { locale: string }
 }
 
-export async function generateMetadata({ params }: LocaleLayoutParams) {
-  const { locale } = await params
-  
-  // Helper function to create correct URLs based on locale
-  const createUrl = (path: string = '') => {
-    const baseUrl = 'https://psiholog-koleva.bg'
-    if (locale === 'bg') {
-      // Default locale doesn't need prefix
-      return `${baseUrl}${path}`
-    } else {
-      // Non-default locales need prefix
-      return `${baseUrl}/${locale}${path}`
-    }
-  }
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale
   
   if (locale === 'bg') {
     return {
       title: 'Олга Колева - Психолог Бургас | Психотерапевт на Зависимости',
       description: 'Лицензиран психолог и психотерапевт на зависимости в Бургас. Индивидуални и семейни консултации, травма терапия, лечение на тревожност и депресия. 90 мин сесии, 70 лв.',
-      keywords: 'психолог бургас, психотерапевт зависимости бургас, травма терапия бургас, тревожност депресия бургас, психолог център хармония, олга колева психолог, психологическо консултиране бургас, семейна терапия бургас, психодрама бургас, ОКР лечение бургас',
-      authors: [{ name: 'Олга Колева' }],
-      creator: 'Олга Колева',
-      publisher: 'Психологически център Хармония',
-      formatDetection: {
-        email: false,
-        address: false,
-        telephone: false,
-      },
-      metadataBase: new URL('https://psiholog-koleva.bg'),
-      alternates: {
-        canonical: createUrl(),
-        languages: {
-          'bg': 'https://psiholog-koleva.bg', // No prefix for default
-          'en': 'https://psiholog-koleva.bg/en',
-        },
-      },
+      keywords: 'психолог бургас, психотерапевт зависимости бургас, травма терапия бургас, тревожност депресия бургас, психолог център хармония, олга колева психолог',
       openGraph: {
         title: 'Олга Колева - Психолог Бургас | Психотерапевт на Зависимости',
-        description: 'Лицензиран психолог и психотерапевт на зависимости в Бургас. Индивидуални и семейни консултации, травма терапия.',
-        url: createUrl(),
-        siteName: 'Олга Колева - Психолог',
+        description: 'Лицензиран психолог и психотерапевт на зависимости в Бургас.',
         locale: 'bg_BG',
         type: 'website',
-        images: [
-          {
-            url: 'https://psiholog-koleva.bg/images/olga-koleva.jpg',
-            width: 1200,
-            height: 630,
-            alt: 'Олга Колева - Психолог и Психотерапевт на Зависимости в Бургас',
-          },
-        ],
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title: 'Олга Колева - Психолог Бургас',
-        description: 'Лицензиран психолог и психотерапевт на зависимости в Бургас.',
-        images: ['https://psiholog-koleva.bg/images/olga-koleva.jpg'],
-      },
-      robots: {
-        index: true,
-        follow: true,
-        googleBot: {
-          index: true,
-          follow: true,
-          'max-video-preview': -1,
-          'max-image-preview': 'large',
-          'max-snippet': -1,
-        },
-      },
-      verification: {
-        google: 'your-google-verification-code',
       },
     }
   } else {
     return {
       title: 'Olga Koleva - Psychologist Burgas | Addiction Psychotherapist',
       description: 'Licensed psychologist and addiction psychotherapist in Burgas. Individual and family counseling, trauma therapy, anxiety and depression treatment.',
-      keywords: 'psychologist burgas, addiction psychotherapist, trauma therapy, anxiety depression, harmony psychological center, olga koleva psychologist',
-      authors: [{ name: 'Olga Koleva' }],
-      creator: 'Olga Koleva',
-      publisher: 'Harmony Psychological Center',
-      metadataBase: new URL('https://psiholog-koleva.bg'),
-      alternates: {
-        canonical: createUrl(),
-        languages: {
-          'bg': 'https://psiholog-koleva.bg', // No prefix for default
-          'en': 'https://psiholog-koleva.bg/en',
-        },
-      },
+      keywords: 'psychologist burgas, addiction psychotherapist, trauma therapy, anxiety depression',
       openGraph: {
         title: 'Olga Koleva - Psychologist Burgas | Addiction Psychotherapist',
-        description: 'Licensed psychologist and addiction psychotherapist in Burgas. Individual and family counseling, trauma therapy.',
-        url: createUrl(),
-        siteName: 'Olga Koleva - Psychologist',
+        description: 'Licensed psychologist and addiction psychotherapist in Burgas.',
         locale: 'en_US',
         type: 'website',
-        images: [
-          {
-            url: 'https://psiholog-koleva.bg/images/olga-koleva.jpg',
-            width: 1200,
-            height: 630,
-            alt: 'Olga Koleva - Psychologist and Addiction Psychotherapist in Burgas',
-          },
-        ],
-      },
-      robots: {
-        index: true,
-        follow: true,
       },
     }
   }
-}
-
-interface LocaleLayoutProps {
-  children: React.ReactNode
-  params: Promise<{ locale: string }>
 }
 
 export default async function LocaleLayout({
   children,
   params
 }: LocaleLayoutProps) {
-  const { locale } = await params
+  const locale = params.locale
   
-  if (!locales.includes(locale as Locale)) notFound()
+  // Validate locale
+  if (!locales.includes(locale as any)) {
+    notFound()
+  }
   
   const messages = await getMessages()
 
   return (
     <html lang={locale} className={inter.variable}>
       <head>
-        {/* Additional SEO tags */}
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        
-        {/* Structured Data for Local Business */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              "@id": "https://psiholog-koleva.bg",
-              "name": locale === 'bg' ? "Олга Колева - Психолог" : "Olga Koleva - Psychologist",
-              "image": "https://psiholog-koleva.bg/images/olga-koleva.jpg",
-              "description": locale === 'bg' 
-                ? "Лицензиран психолог и психотерапевт на зависимости в Бургас. Индивидуални и семейни консултации, травма терапия."
-                : "Licensed psychologist and addiction psychotherapist in Burgas. Individual and family counseling, trauma therapy.",
-              "url": "https://psiholog-koleva.bg",
-              "telephone": "+359888494533",
-              "email": "olgakoleva@abv.bg",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "ул. Александровска 79",
-                "addressLocality": "Бургас",
-                "addressCountry": "BG",
-                "postalCode": "8000"
-              },
-              "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": 42.5048,
-                "longitude": 27.4626
-              },
-              "openingHoursSpecification": [
-                {
-                  "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                  "opens": "09:00",
-                  "closes": "18:00"
-                },
-                {
-                  "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": "Saturday",
-                  "opens": "10:00",
-                  "closes": "16:00"
-                }
-              ],
-              "priceRange": "70 BGN",
-              "serviceType": locale === 'bg' 
-                ? ["Психологическо консултиране", "Психотерапия на зависимости", "Травма терапия", "Семейна терапия"]
-                : ["Psychological counseling", "Addiction psychotherapy", "Trauma therapy", "Family therapy"],
-              "founder": {
-                "@type": "Person",
-                "name": "Olga Koleva",
-                "jobTitle": locale === 'bg' ? "Психолог и Психотерапевт на Зависимости" : "Psychologist and Addiction Psychotherapist",
-                "alumniOf": locale === 'bg' ? "Бургаски свободен университет" : "Burgas Free University"
-              },
-              "areaServed": {
-                "@type": "City",
-                "name": locale === 'bg' ? "Бургас" : "Burgas"
-              },
-              "hasOfferCatalog": {
-                "@type": "OfferCatalog",
-                "name": locale === 'bg' ? "Психологически услуги" : "Psychological services",
-                "itemListElement": [
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": locale === 'bg' ? "Индивидуална консултация" : "Individual consultation",
-                      "description": locale === 'bg' ? "90-минутни сесии за работа с емоционална травма, зависимости, тревожност, депресия" : "90-minute sessions for emotional trauma, addictions, anxiety, depression"
-                    },
-                    "price": "70",
-                    "priceCurrency": "BGN"
-                  }
-                ]
-              }
-            })
-          }}
-        />
-        
-        {/* Additional meta tags for Bulgarian SEO */}
-        <meta name="geo.region" content="BG-07" />
-        <meta name="geo.placename" content="Burgas" />
-        <meta name="geo.position" content="42.5048;27.4626" />
-        <meta name="ICBM" content="42.5048, 27.4626" />
       </head>
-      <body className={`${inter.className} bg-white text-gray-900`}>
-        <NextIntlClientProvider messages={messages}>
+      <body className={`${inter.className} bg-warm-cream text-warm-charcoal`}>
+        <NextIntlClientProvider messages={messages} locale={locale}>
           <div className="min-h-screen flex flex-col">
             <Header />
             <main className="flex-1">

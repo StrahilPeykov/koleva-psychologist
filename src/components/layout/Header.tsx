@@ -2,10 +2,9 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
-import { usePathname } from 'next/navigation'
-import { Menu, X, Globe } from 'lucide-react'
+import { Menu, X, Globe, Phone, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
 export default function Header() {
@@ -16,83 +15,58 @@ export default function Header() {
   const pathname = usePathname()
   const router = useRouter()
 
-  // Helper function to create locale-aware URLs
-  const createLocalePath = (path: string) => {
-    if (locale === 'bg') {
-      // Default locale doesn't need prefix
-      return path
-    } else {
-      // Non-default locales need prefix
-      return path === '/' ? '/en' : `/en${path}`
-    }
-  }
-
   const navigation = [
-    { name: t('nav.home'), href: createLocalePath('/') },
-    { name: t('nav.about'), href: createLocalePath('/about') },
-    { name: t('nav.services'), href: createLocalePath('/#services') },
-    { name: t('nav.articles'), href: createLocalePath('/articles') },
-    { name: t('nav.events'), href: createLocalePath('/events') },
-    { name: t('nav.contact'), href: createLocalePath('/#contact') },
+    { name: t('nav.home'), href: '/' },
+    { name: t('nav.about'), href: '/about' },
+    { name: t('nav.services'), href: '/#services' },
+    { name: t('nav.articles'), href: '/articles' },
+    { name: t('nav.events'), href: '/events' },
+    { name: t('nav.contact'), href: '/#contact' },
   ]
 
   const switchLocale = (newLocale: string) => {
-    // Don't do anything if we're already on the target locale
     if (locale === newLocale) {
       setIsLangMenuOpen(false)
       return
     }
 
-    // Get the current pathname without any locale prefix
-    let pathWithoutLocale = pathname
+    // Simple locale switching - just replace or add locale prefix
+    let newPath = pathname
     
-    // Remove existing locale prefix if present
-    if (pathname.startsWith('/en/')) {
-      pathWithoutLocale = pathname.substring(3) // Remove '/en'
-    } else if (pathname === '/en') {
-      pathWithoutLocale = '/'
-    } else if (pathname.startsWith('/bg/')) {
-      pathWithoutLocale = pathname.substring(3) // Remove '/bg'  
-    } else if (pathname === '/bg') {
-      pathWithoutLocale = '/'
-    }
-    // If pathname doesn't start with a locale, assume it's already clean
-
-    // Build new path based on target locale
-    let newPath: string
-    if (newLocale === 'bg') {
-      // Bulgarian is default, no prefix needed
-      newPath = pathWithoutLocale || '/'
-    } else {
-      // Other locales need prefix
-      newPath = `/en${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`
+    // Remove any existing locale prefix
+    if (pathname.startsWith('/en')) {
+      newPath = pathname.slice(3) || '/'
     }
     
-    console.log('Language switch:', {
-      from: locale,
-      to: newLocale,
-      currentPath: pathname,
-      pathWithoutLocale,
-      newPath
-    })
+    // Add new locale prefix if not Bulgarian
+    if (newLocale === 'en') {
+      newPath = '/en' + (newPath === '/' ? '' : newPath)
+    }
     
     router.push(newPath)
     setIsLangMenuOpen(false)
   }
 
   return (
-    <header className="bg-white shadow-sm border-b sticky top-0 z-50">
+    <header className="bg-gradient-to-r from-warm-cream to-white shadow-soft border-b border-warm-sand/20 sticky top-0 z-50 backdrop-blur-sm bg-opacity-95">
       <nav className="container mx-auto px-4" aria-label="Top">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href={createLocalePath('/')} className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">ОК</span>
+            <Link href="/" className="flex items-center space-x-3 group">
+              <div className="relative">
+                <div className="w-12 h-12 bg-gradient-to-br from-warm-terracotta to-warm-rose rounded-2xl flex items-center justify-center transform group-hover:scale-105 transition-all duration-300 shadow-lg">
+                  <Heart className="w-6 h-6 text-white" />
+                </div>
+                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-warm-sage rounded-full opacity-60"></div>
               </div>
               <div className="hidden sm:block">
-                <div className="text-lg font-bold text-gray-900">Олга Колева</div>
-                <div className="text-sm text-blue-600">Психолог</div>
+                <div className="text-lg font-bold text-warm-charcoal group-hover:text-warm-terracotta transition-colors">
+                  Олга Колева
+                </div>
+                <div className="text-sm text-warm-terracotta font-medium">
+                  Психолог & Терапевт
+                </div>
               </div>
             </Link>
           </div>
@@ -103,7 +77,7 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                className="text-warm-charcoal hover:text-warm-terracotta font-medium transition-all duration-300 hover:translate-y-[-1px]"
               >
                 {item.name}
               </Link>
@@ -116,26 +90,30 @@ export default function Header() {
             <div className="relative">
               <button
                 onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                className="flex items-center space-x-1 text-gray-700 hover:text-blue-600"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-warm-charcoal hover:text-warm-terracotta hover:bg-warm-sand/30 transition-all duration-300"
               >
                 <Globe className="w-4 h-4" />
                 <span className="text-sm font-medium">{locale.toUpperCase()}</span>
               </button>
               
               {isLangMenuOpen && (
-                <div className="absolute right-0 mt-2 w-20 bg-white rounded-md shadow-lg border">
+                <div className="absolute right-0 mt-2 w-24 bg-white rounded-xl shadow-xl border border-warm-sand/20 overflow-hidden">
                   <button
                     onClick={() => switchLocale('bg')}
-                    className={`block w-full text-left px-3 py-2 text-sm hover:bg-gray-50 ${
-                      locale === 'bg' ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
+                    className={`block w-full text-left px-4 py-3 text-sm transition-all duration-200 ${
+                      locale === 'bg' 
+                        ? 'bg-warm-terracotta text-white font-medium' 
+                        : 'text-warm-charcoal hover:bg-warm-sand/30'
                     }`}
                   >
                     BG
                   </button>
                   <button
                     onClick={() => switchLocale('en')}
-                    className={`block w-full text-left px-3 py-2 text-sm hover:bg-gray-50 ${
-                      locale === 'en' ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
+                    className={`block w-full text-left px-4 py-3 text-sm transition-all duration-200 ${
+                      locale === 'en' 
+                        ? 'bg-warm-terracotta text-white font-medium' 
+                        : 'text-warm-charcoal hover:bg-warm-sand/30'
                     }`}
                   >
                     EN
@@ -145,8 +123,9 @@ export default function Header() {
             </div>
 
             {/* Book Session Button */}
-            <Button asChild className="bg-blue-600 hover:bg-blue-700">
-              <Link href={createLocalePath('/#booking')}>
+            <Button asChild className="bg-gradient-to-r from-warm-terracotta to-warm-rose hover:from-warm-rose hover:to-warm-terracotta text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+              <Link href="/#booking">
+                <Phone className="w-4 h-4 mr-2" />
                 {t('nav.book')}
               </Link>
             </Button>
@@ -156,7 +135,7 @@ export default function Header() {
           <div className="lg:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-md text-gray-700 hover:text-blue-600"
+              className="p-2 rounded-lg text-warm-charcoal hover:text-warm-terracotta hover:bg-warm-sand/30 transition-all duration-300"
             >
               {isMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -169,35 +148,45 @@ export default function Header() {
 
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t mt-2 pt-4 pb-4">
+          <div className="lg:hidden border-t border-warm-sand/20 mt-2 pt-4 pb-4 animate-fade-in">
             <div className="space-y-2">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 font-medium"
+                  className="block px-3 py-2 text-warm-charcoal hover:text-warm-terracotta hover:bg-warm-sand/20 rounded-lg font-medium transition-all duration-300"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
                 </Link>
               ))}
               
-              <div className="border-t pt-4 mt-4">
+              <div className="border-t border-warm-sand/20 pt-4 mt-4">
                 <div className="flex items-center justify-between px-3 py-2">
-                  <span className="text-sm text-gray-700">Език:</span>
+                  <span className="text-sm text-warm-charcoal">Език:</span>
                   <div className="flex space-x-2">
                     <button
-                      onClick={() => switchLocale('bg')}
-                      className={`px-2 py-1 text-xs rounded ${
-                        locale === 'bg' ? 'bg-blue-100 text-blue-600' : 'text-gray-500'
+                      onClick={() => {
+                        switchLocale('bg')
+                        setIsMenuOpen(false)
+                      }}
+                      className={`px-3 py-1 text-xs rounded-md transition-all duration-300 ${
+                        locale === 'bg' 
+                          ? 'bg-warm-terracotta text-white' 
+                          : 'text-warm-charcoal bg-warm-sand/30'
                       }`}
                     >
                       BG
                     </button>
                     <button
-                      onClick={() => switchLocale('en')}
-                      className={`px-2 py-1 text-xs rounded ${
-                        locale === 'en' ? 'bg-blue-100 text-blue-600' : 'text-gray-500'
+                      onClick={() => {
+                        switchLocale('en')
+                        setIsMenuOpen(false)
+                      }}
+                      className={`px-3 py-1 text-xs rounded-md transition-all duration-300 ${
+                        locale === 'en' 
+                          ? 'bg-warm-terracotta text-white' 
+                          : 'text-warm-charcoal bg-warm-sand/30'
                       }`}
                     >
                       EN
@@ -206,8 +195,9 @@ export default function Header() {
                 </div>
                 
                 <div className="px-3 pt-2">
-                  <Button asChild className="w-full bg-blue-600 hover:bg-blue-700">
-                    <Link href={createLocalePath('/#booking')}>
+                  <Button asChild className="w-full bg-gradient-to-r from-warm-terracotta to-warm-rose hover:from-warm-rose hover:to-warm-terracotta text-white shadow-lg">
+                    <Link href="/#booking" onClick={() => setIsMenuOpen(false)}>
+                      <Phone className="w-4 h-4 mr-2" />
                       {t('nav.book')}
                     </Link>
                   </Button>

@@ -3,22 +3,22 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
+  "inline-flex items-center justify-center rounded-xl text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warm-terracotta focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none transform active:scale-95",
   {
     variants: {
       variant: {
-        default: "bg-blue-600 text-white hover:bg-blue-700",
-        destructive: "bg-red-600 text-white hover:bg-red-700",
-        outline: "border border-gray-300 hover:bg-gray-50 hover:text-gray-900",
-        secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200",
-        ghost: "hover:bg-gray-100 hover:text-gray-900",
-        link: "underline-offset-4 hover:underline text-blue-600",
+        default: "bg-gradient-to-r from-warm-terracotta to-warm-rose text-white shadow-lg hover:shadow-xl hover:scale-105",
+        destructive: "bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 shadow-lg hover:shadow-xl",
+        outline: "border-2 hover:scale-105 bg-transparent",
+        secondary: "bg-warm-sand text-warm-charcoal hover:bg-warm-beige shadow-sm hover:shadow-md",
+        ghost: "hover:bg-warm-sand/50 hover:text-warm-charcoal",
+        link: "underline-offset-4 hover:underline text-warm-terracotta hover:text-warm-rose",
       },
       size: {
-        default: "h-10 py-2 px-4",
-        sm: "h-9 px-3 rounded-md",
-        lg: "h-11 px-8 rounded-md",
-        icon: "h-10 w-10",
+        default: "h-11 py-3 px-6",
+        sm: "h-9 px-4 rounded-lg text-xs",
+        lg: "h-12 px-8 rounded-2xl text-base",
+        icon: "h-10 w-10 rounded-xl",
       },
     },
     defaultVariants: {
@@ -36,11 +36,9 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, children, ...props }, ref) => {
-    // Simple implementation without complex type issues
     const buttonClass = cn(buttonVariants({ variant, size, className }))
     
     if (asChild && React.isValidElement(children)) {
-      // Pass the className and other props to the child element
       return React.cloneElement(children as React.ReactElement<any>, {
         className: buttonClass,
         ref,
