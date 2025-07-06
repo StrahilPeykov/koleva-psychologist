@@ -59,6 +59,12 @@ const nextConfig: NextConfig = {
   // Compression
   compress: true,
 
+  // Handle missing environment variables during build
+  env: {
+    NEXT_PUBLIC_SANITY_PROJECT_ID: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'placeholder',
+    NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+  },
+
   // ESLint and TypeScript - ignore during build for faster compilation
   eslint: {
     ignoreDuringBuilds: true,

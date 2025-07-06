@@ -162,16 +162,14 @@ export default function AboutPage() {
             <div className="relative">
               <div className="relative w-full max-w-md mx-auto">
                 <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-blue-100 to-blue-200">
-                  {/* Placeholder - replace with actual image */}
-                  <div className="w-full h-full flex items-center justify-center">
-                    <div className="text-center text-blue-600">
-                      <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-blue-300 flex items-center justify-center">
-                        <span className="text-3xl font-bold text-white">ОК</span>
-                      </div>
-                      <p className="text-lg font-medium">Олга Колева</p>
-                      <p className="text-sm">Психолог & Психотерапевт</p>
-                    </div>
-                  </div>
+                  <Image
+                    src="/images/olga-koleva.jpg"
+                    alt="Олга Колева - Психолог и Психотерапевт на Зависимости"
+                    fill
+                    className="object-cover"
+                    priority
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
                 
                 {/* Decorative elements */}

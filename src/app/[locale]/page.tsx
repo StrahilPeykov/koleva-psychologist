@@ -81,24 +81,14 @@ export default function HomePage() {
             <div className="relative">
               <div className="relative w-full max-w-md mx-auto lg:max-w-lg">
                 <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl bg-gray-100">
-                  {/* Placeholder for now - replace with actual image */}
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200">
-                    <div className="text-center text-blue-600">
-                      <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-blue-300 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-white">ОК</span>
-                      </div>
-                      <p className="text-sm">Олга Колева</p>
-                    </div>
-                  </div>
-                  {/* When you have the image, replace above div with:
                   <Image
                     src="/images/olga-koleva.jpg"
                     alt="Олга Колева - Психолог и Психотерапевт на Зависимости"
                     fill
                     className="object-cover"
                     priority
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
-                  */}
                 </div>
                 
                 {/* Decorative elements */}
@@ -197,6 +187,21 @@ export default function HomePage() {
               </div>
               
               <div className="bg-white p-8 rounded-2xl shadow-lg">
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
+                    <Image
+                      src="/images/olga-koleva.jpg"
+                      alt="Олга Колева"
+                      width={64}
+                      height={64}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Олга Колева</h3>
+                    <p className="text-blue-600">Психолог & Психотерапевт</p>
+                  </div>
+                </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-6">Специализации</h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">

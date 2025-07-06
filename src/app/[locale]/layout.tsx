@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: LocaleLayoutParams) {
         type: 'website',
         images: [
           {
-            url: 'https://psiholog-koleva.bg/images/og-image.jpg',
+            url: 'https://psiholog-koleva.bg/images/olga-koleva.jpg',
             width: 1200,
             height: 630,
             alt: 'Олга Колева - Психолог и Психотерапевт на Зависимости в Бургас',
@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: LocaleLayoutParams) {
         card: 'summary_large_image',
         title: 'Олга Колева - Психолог Бургас',
         description: 'Лицензиран психолог и психотерапевт на зависимости в Бургас.',
-        images: ['https://psiholog-koleva.bg/images/og-image.jpg'],
+        images: ['https://psiholog-koleva.bg/images/olga-koleva.jpg'],
       },
       robots: {
         index: true,
@@ -108,7 +108,7 @@ export async function generateMetadata({ params }: LocaleLayoutParams) {
         type: 'website',
         images: [
           {
-            url: 'https://psiholog-koleva.bg/images/og-image.jpg',
+            url: 'https://psiholog-koleva.bg/images/olga-koleva.jpg',
             width: 1200,
             height: 630,
             alt: 'Olga Koleva - Psychologist and Addiction Psychotherapist in Burgas',
