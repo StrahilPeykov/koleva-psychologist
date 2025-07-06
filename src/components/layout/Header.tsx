@@ -16,18 +16,41 @@ export default function Header() {
   const pathname = usePathname()
   const router = useRouter()
 
+  // Helper function to create locale-aware URLs
+  const createLocalePath = (path: string, targetLocale: string = locale) => {
+    if (targetLocale === 'bg') {
+      // Default locale doesn't need prefix
+      return path === '/' ? '/' : path
+    } else {
+      // Non-default locales need prefix
+      return path === '/' ? `/${targetLocale}` : `/${targetLocale}${path}`
+    }
+  }
+
   const navigation = [
-    { name: t('nav.home'), href: `/${locale}` },
-    { name: t('nav.about'), href: `/${locale}/about` },
-    { name: t('nav.services'), href: `/${locale}#services` },
-    { name: t('nav.articles'), href: `/${locale}/articles` },
-    { name: t('nav.events'), href: `/${locale}/events` },
-    { name: t('nav.contact'), href: `/${locale}#contact` },
+    { name: t('nav.home'), href: createLocalePath('/') },
+    { name: t('nav.about'), href: createLocalePath('/about') },
+    { name: t('nav.services'), href: createLocalePath('/#services') },
+    { name: t('nav.articles'), href: createLocalePath('/articles') },
+    { name: t('nav.events'), href: createLocalePath('/events') },
+    { name: t('nav.contact'), href: createLocalePath('/#contact') },
   ]
 
   const switchLocale = (newLocale: string) => {
-    const path = pathname.replace(`/${locale}`, `/${newLocale}`)
-    router.push(path)
+    // Extract the path without the current locale prefix
+    let pathWithoutLocale = pathname
+    
+    // Remove current locale prefix if it exists
+    if (locale === 'en' && pathname.startsWith('/en')) {
+      pathWithoutLocale = pathname.replace('/en', '') || '/'
+    } else if (locale === 'bg' && pathname.startsWith('/bg')) {
+      pathWithoutLocale = pathname.replace('/bg', '') || '/'
+    }
+    
+    // Create new path with target locale
+    const newPath = createLocalePath(pathWithoutLocale, newLocale)
+    
+    router.push(newPath)
     setIsLangMenuOpen(false)
   }
 
@@ -37,7 +60,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href={`/${locale}`} className="flex items-center space-x-3">
+            <Link href={createLocalePath('/')} className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-lg">ОК</span>
               </div>
@@ -77,13 +100,17 @@ export default function Header() {
                 <div className="absolute right-0 mt-2 w-20 bg-white rounded-md shadow-lg border">
                   <button
                     onClick={() => switchLocale('bg')}
-                    className="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    className={`block w-full text-left px-3 py-2 text-sm hover:bg-gray-50 ${
+                      locale === 'bg' ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
+                    }`}
                   >
                     BG
                   </button>
                   <button
                     onClick={() => switchLocale('en')}
-                    className="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    className={`block w-full text-left px-3 py-2 text-sm hover:bg-gray-50 ${
+                      locale === 'en' ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
+                    }`}
                   >
                     EN
                   </button>
@@ -93,7 +120,7 @@ export default function Header() {
 
             {/* Book Session Button */}
             <Button asChild className="bg-blue-600 hover:bg-blue-700">
-              <Link href={`/${locale}#booking`}>
+              <Link href={createLocalePath('/#booking')}>
                 {t('nav.book')}
               </Link>
             </Button>
@@ -135,13 +162,17 @@ export default function Header() {
                   <div className="flex space-x-2">
                     <button
                       onClick={() => switchLocale('bg')}
-                      className={`px-2 py-1 text-xs rounded ${locale === 'bg' ? 'bg-blue-100 text-blue-600' : 'text-gray-500'}`}
+                      className={`px-2 py-1 text-xs rounded ${
+                        locale === 'bg' ? 'bg-blue-100 text-blue-600' : 'text-gray-500'
+                      }`}
                     >
                       BG
                     </button>
                     <button
                       onClick={() => switchLocale('en')}
-                      className={`px-2 py-1 text-xs rounded ${locale === 'en' ? 'bg-blue-100 text-blue-600' : 'text-gray-500'}`}
+                      className={`px-2 py-1 text-xs rounded ${
+                        locale === 'en' ? 'bg-blue-100 text-blue-600' : 'text-gray-500'
+                      }`}
                     >
                       EN
                     </button>
@@ -150,7 +181,7 @@ export default function Header() {
                 
                 <div className="px-3 pt-2">
                   <Button asChild className="w-full bg-blue-600 hover:bg-blue-700">
-                    <Link href={`/${locale}#booking`}>
+                    <Link href={createLocalePath('/#booking')}>
                       {t('nav.book')}
                     </Link>
                   </Button>

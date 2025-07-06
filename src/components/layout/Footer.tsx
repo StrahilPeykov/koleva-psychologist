@@ -6,6 +6,17 @@ export default function Footer() {
   const t = useTranslations()
   const locale = useLocale()
 
+  // Helper function to create locale-aware URLs
+  const createLocalePath = (path: string) => {
+    if (locale === 'bg') {
+      // Default locale doesn't need prefix
+      return path === '/' ? '/' : path
+    } else {
+      // Non-default locales need prefix
+      return path === '/' ? `/${locale}` : `/${locale}${path}`
+    }
+  }
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-12">
@@ -36,22 +47,22 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2">
               <li>
-                <Link href={`/${locale}`} className="text-gray-300 hover:text-white transition-colors">
+                <Link href={createLocalePath('/')} className="text-gray-300 hover:text-white transition-colors">
                   {t('nav.home')}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/about`} className="text-gray-300 hover:text-white transition-colors">
+                <Link href={createLocalePath('/about')} className="text-gray-300 hover:text-white transition-colors">
                   {t('nav.about')}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/articles`} className="text-gray-300 hover:text-white transition-colors">
+                <Link href={createLocalePath('/articles')} className="text-gray-300 hover:text-white transition-colors">
                   {t('nav.articles')}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/events`} className="text-gray-300 hover:text-white transition-colors">
+                <Link href={createLocalePath('/events')} className="text-gray-300 hover:text-white transition-colors">
                   {t('nav.events')}
                 </Link>
               </li>
@@ -99,10 +110,10 @@ export default function Footer() {
               © {new Date().getFullYear()} Олга Колева. {locale === 'bg' ? 'Всички права запазени.' : 'All rights reserved.'}
             </div>
             <div className="flex items-center space-x-6 text-sm text-gray-400">
-              <Link href={`/${locale}/privacy`} className="hover:text-white transition-colors">
+              <Link href={createLocalePath('/privacy')} className="hover:text-white transition-colors">
                 {locale === 'bg' ? 'Поверителност' : 'Privacy Policy'}
               </Link>
-              <Link href={`/${locale}/terms`} className="hover:text-white transition-colors">
+              <Link href={createLocalePath('/terms')} className="hover:text-white transition-colors">
                 {locale === 'bg' ? 'Условия' : 'Terms of Service'}
               </Link>
             </div>

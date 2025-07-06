@@ -7,11 +7,19 @@ export default createMiddleware({
   // Used when no locale matches
   defaultLocale: 'bg',
   
-  // Always show the locale in the URL
-  localePrefix: 'always'
+  // Use 'as-needed' instead of 'always' to make /bg optional for the default locale
+  localePrefix: 'as-needed'
 })
 
 export const config = {
-  // Match only internationalized pathnames
-  matcher: ['/', '/(bg|en)/:path*']
+  // Match internationalized pathnames and root
+  matcher: [
+    // Match all paths except those starting with:
+    // - api (API routes)
+    // - _next/static (static files)
+    // - _next/image (image optimization files)
+    // - favicon.ico (favicon file)
+    // - studio (Sanity Studio)
+    '/((?!api|_next/static|_next/image|favicon.ico|studio|images|robots.txt|sitemap.xml).*)'
+  ]
 }

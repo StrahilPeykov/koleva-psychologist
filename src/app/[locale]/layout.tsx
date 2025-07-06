@@ -25,6 +25,18 @@ interface LocaleLayoutParams {
 export async function generateMetadata({ params }: LocaleLayoutParams) {
   const { locale } = await params
   
+  // Helper function to create correct URLs based on locale
+  const createUrl = (path: string = '') => {
+    const baseUrl = 'https://psiholog-koleva.bg'
+    if (locale === 'bg') {
+      // Default locale doesn't need prefix
+      return `${baseUrl}${path}`
+    } else {
+      // Non-default locales need prefix
+      return `${baseUrl}/${locale}${path}`
+    }
+  }
+  
   if (locale === 'bg') {
     return {
       title: 'Олга Колева - Психолог Бургас | Психотерапевт на Зависимости',
@@ -40,16 +52,16 @@ export async function generateMetadata({ params }: LocaleLayoutParams) {
       },
       metadataBase: new URL('https://psiholog-koleva.bg'),
       alternates: {
-        canonical: 'https://psiholog-koleva.bg',
+        canonical: createUrl(),
         languages: {
-          'bg': 'https://psiholog-koleva.bg',
+          'bg': 'https://psiholog-koleva.bg', // No prefix for default
           'en': 'https://psiholog-koleva.bg/en',
         },
       },
       openGraph: {
         title: 'Олга Колева - Психолог Бургас | Психотерапевт на Зависимости',
         description: 'Лицензиран психолог и психотерапевт на зависимости в Бургас. Индивидуални и семейни консултации, травма терапия.',
-        url: 'https://psiholog-koleva.bg',
+        url: createUrl(),
         siteName: 'Олга Колева - Психолог',
         locale: 'bg_BG',
         type: 'website',
@@ -93,16 +105,16 @@ export async function generateMetadata({ params }: LocaleLayoutParams) {
       publisher: 'Harmony Psychological Center',
       metadataBase: new URL('https://psiholog-koleva.bg'),
       alternates: {
-        canonical: 'https://psiholog-koleva.bg/en',
+        canonical: createUrl(),
         languages: {
-          'bg': 'https://psiholog-koleva.bg',
+          'bg': 'https://psiholog-koleva.bg', // No prefix for default
           'en': 'https://psiholog-koleva.bg/en',
         },
       },
       openGraph: {
         title: 'Olga Koleva - Psychologist Burgas | Addiction Psychotherapist',
         description: 'Licensed psychologist and addiction psychotherapist in Burgas. Individual and family counseling, trauma therapy.',
-        url: 'https://psiholog-koleva.bg/en',
+        url: createUrl(),
         siteName: 'Olga Koleva - Psychologist',
         locale: 'en_US',
         type: 'website',

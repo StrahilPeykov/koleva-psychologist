@@ -1,12 +1,14 @@
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import ServiceCard from '@/components/ServiceCard'
 import { Phone, Mail, MapPin, Calendar, Award, Users, Heart, Shield } from 'lucide-react'
+import { createLocalePath } from '@/lib/url-utils'
 
 export default function HomePage() {
   const t = useTranslations()
+  const locale = useLocale()
 
   return (
     <div className="space-y-0">
