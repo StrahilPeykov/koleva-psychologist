@@ -11,17 +11,19 @@ const inter = Inter({
   display: 'swap'
 })
 
-const locales = ['bg', 'en']
+const locales = ['bg', 'en'] as const
+type Locale = typeof locales[number]
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+interface LocaleLayoutParams {
+  params: Promise<{ locale: string }>
+}
+
+export async function generateMetadata({ params }: LocaleLayoutParams) {
   const { locale } = await params
-  const messages = await getMessages({ locale })
-  
-  const isHomePage = true // You can determine this based on the route
   
   if (locale === 'bg') {
     return {
@@ -38,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       },
       metadataBase: new URL('https://psiholog-koleva.bg'),
       alternates: {
-        canonical: locale === 'bg' ? 'https://psiholog-koleva.bg' : 'https://psiholog-koleva.bg/en',
+        canonical: 'https://psiholog-koleva.bg',
         languages: {
           'bg': 'https://psiholog-koleva.bg',
           'en': 'https://psiholog-koleva.bg/en',
@@ -78,7 +80,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         },
       },
       verification: {
-        google: 'your-google-verification-code', // Add your Google Search Console verification code
+        google: 'your-google-verification-code',
       },
     }
   } else {
@@ -121,16 +123,18 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   }
 }
 
+interface LocaleLayoutProps {
+  children: React.ReactNode
+  params: Promise<{ locale: string }>
+}
+
 export default async function LocaleLayout({
   children,
   params
-}: {
-  children: React.ReactNode
-  params: Promise<{ locale: string }>
-}) {
+}: LocaleLayoutProps) {
   const { locale } = await params
   
-  if (!locales.includes(locale as any)) notFound()
+  if (!locales.includes(locale as Locale)) notFound()
   
   const messages = await getMessages()
 
