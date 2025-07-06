@@ -1,6 +1,7 @@
 import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
+import { type PortableTextBlock, type ArbitraryTypedObject } from '@portabletext/types'
 
 // Sanity client configuration - ensure it works in both server and client environments
 export const client = createClient({
@@ -26,7 +27,7 @@ export interface Article {
   title: string
   slug: { current: string }
   excerpt: string
-  content: any[] // Portable text content
+  content: PortableTextBlock[] | ArbitraryTypedObject[] // Portable text content with proper types
   image?: SanityImageSource
   publishedAt: string
   language: 'bg' | 'en'
@@ -43,7 +44,7 @@ export interface Event {
   title: string
   slug: { current: string }
   description: string
-  content?: any[] // Portable text content
+  content?: PortableTextBlock[] | ArbitraryTypedObject[] // Portable text content with proper types
   image?: SanityImageSource
   startDate: string
   endTime?: string
@@ -55,7 +56,7 @@ export interface Event {
   location: 'online' | 'burgas' | 'plovdiv' | 'sofia' | 'other'
   locationDetails?: {
     venue?: string
-    [key: string]: any
+    [key: string]: unknown
   }
   language: 'bg' | 'en'
   eventType: 'seminar' | 'workshop' | 'course' | 'webinar' | 'conference' | 'group-therapy'

@@ -1,12 +1,58 @@
-import { PortableText as SanityPortableText } from '@portabletext/react'
+import { PortableText as SanityPortableText, type PortableTextComponents } from '@portabletext/react'
+import { type PortableTextBlock, type ArbitraryTypedObject } from '@portabletext/types'
 import Image from 'next/image'
 import Link from 'next/link'
 import { urlFor } from '@/lib/sanity'
 
+// Type definitions for portable text components
+interface ImageValue {
+  _type: 'image'
+  asset: {
+    _ref: string
+    _type: 'reference'
+  }
+  alt?: string
+  caption?: string
+}
+
+interface CalloutValue {
+  _type: 'callout'
+  type: 'note' | 'warning' | 'tip' | 'important'
+  content: string
+}
+
+interface ScheduleItem {
+  time: string
+  activity: string
+  description?: string
+}
+
+interface ScheduleValue {
+  _type: 'schedule'
+  title?: string
+  items?: ScheduleItem[]
+}
+
+interface LinkMark {
+  _type: 'link'
+  href: string
+  blank?: boolean
+}
+
+interface InternalLinkMark {
+  _type: 'internalLink'
+  reference?: {
+    _type: string
+    slug?: {
+      current: string
+    }
+  }
+}
+
 // Custom components for portable text rendering
-const components = {
+const components: PortableTextComponents = {
   types: {
-    image: ({ value }: any) => {
+    image: ({ value }: { value: ImageValue }) => {
       return (
         <div className="my-8">
           <div className="relative rounded-lg overflow-hidden">
@@ -26,7 +72,7 @@ const components = {
         </div>
       )
     },
-    callout: ({ value }: any) => {
+    callout: ({ value }: { value: CalloutValue }) => {
       const typeStyles = {
         note: {
           container: 'bg-blue-50 border-blue-200 text-blue-900',
@@ -46,7 +92,7 @@ const components = {
         }
       }
 
-      const style = typeStyles[value.type as keyof typeof typeStyles] || typeStyles.note
+      const style = typeStyles[value.type] || typeStyles.note
 
       return (
         <div className={`border rounded-lg p-4 my-6 ${style.container}`}>
@@ -59,14 +105,14 @@ const components = {
         </div>
       )
     },
-    schedule: ({ value }: any) => {
+    schedule: ({ value }: { value: ScheduleValue }) => {
       return (
         <div className="my-8 bg-gray-50 rounded-lg p-6">
           <h3 className="text-xl font-semibold text-gray-900 mb-4">
             {value.title || 'Програма'}
           </h3>
           <div className="space-y-3">
-            {value.items?.map((item: any, index: number) => (
+            {value.items?.map((item: ScheduleItem, index: number) => (
               <div key={index} className="flex items-start space-x-4 p-3 bg-white rounded-lg">
                 <div className="text-sm font-medium text-blue-600 min-w-[60px]">
                   {item.time}
@@ -85,13 +131,14 @@ const components = {
     }
   },
   marks: {
-    link: ({ children, value }: any) => {
-      const rel = !value.href.startsWith('/') ? 'noreferrer noopener' : undefined
-      const target = !value.href.startsWith('/') ? '_blank' : undefined
+    link: ({ children, value }) => {
+      const linkValue = value as LinkMark
+      const rel = !linkValue.href.startsWith('/') ? 'noreferrer noopener' : undefined
+      const target = !linkValue.href.startsWith('/') ? '_blank' : undefined
 
       return (
         <a
-          href={value.href}
+          href={linkValue.href}
           rel={rel}
           target={target}
           className="text-blue-600 hover:text-blue-800 underline"
@@ -100,11 +147,16 @@ const components = {
         </a>
       )
     },
-    internalLink: ({ children, value }: any) => {
-      // Handle internal links to other articles/events
-      const href = value.reference?._type === 'article' 
-        ? `/articles/${value.reference.slug?.current}` 
-        : `/events/${value.reference.slug?.current}`
+    internalLink: ({ children, value }) => {
+      const linkValue = value as InternalLinkMark
+      // Handle internal links to other articles/events with proper null checking
+      if (!linkValue.reference?.slug?.current) {
+        return <span>{children}</span>
+      }
+      
+      const href = linkValue.reference._type === 'article' 
+        ? `/articles/${linkValue.reference.slug.current}` 
+        : `/events/${linkValue.reference.slug.current}`
 
       return (
         <Link href={href} className="text-blue-600 hover:text-blue-800 underline">
@@ -114,40 +166,40 @@ const components = {
     }
   },
   block: {
-    h2: ({ children }: any) => (
+    h2: ({ children }) => (
       <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{children}</h2>
     ),
-    h3: ({ children }: any) => (
+    h3: ({ children }) => (
       <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">{children}</h3>
     ),
-    h4: ({ children }: any) => (
+    h4: ({ children }) => (
       <h4 className="text-lg font-medium text-gray-900 mt-4 mb-2">{children}</h4>
     ),
-    normal: ({ children }: any) => (
+    normal: ({ children }) => (
       <p className="text-gray-700 leading-relaxed mb-4">{children}</p>
     ),
-    blockquote: ({ children }: any) => (
+    blockquote: ({ children }) => (
       <blockquote className="border-l-4 border-blue-500 pl-6 py-2 my-6 bg-blue-50 rounded-r-lg">
         <div className="text-gray-700 italic">{children}</div>
       </blockquote>
     )
   },
   list: {
-    bullet: ({ children }: any) => (
+    bullet: ({ children }) => (
       <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700">{children}</ul>
     ),
-    number: ({ children }: any) => (
+    number: ({ children }) => (
       <ol className="list-decimal list-inside space-y-2 mb-4 text-gray-700">{children}</ol>
     )
   },
   listItem: {
-    bullet: ({ children }: any) => <li className="leading-relaxed">{children}</li>,
-    number: ({ children }: any) => <li className="leading-relaxed">{children}</li>
+    bullet: ({ children }) => <li className="leading-relaxed">{children}</li>,
+    number: ({ children }) => <li className="leading-relaxed">{children}</li>
   }
 }
 
 interface PortableTextProps {
-  content: any[]
+  content: PortableTextBlock[] | ArbitraryTypedObject[]
   className?: string
 }
 

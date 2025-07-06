@@ -27,7 +27,7 @@ export default function HomePage() {
                 
                 <div className="space-y-4">
                   <p className="text-lg lg:text-xl text-gray-700 italic leading-relaxed">
-                    "{t('hero.description')}"
+                    &ldquo;{t('hero.description')}&rdquo;
                   </p>
                   
                   <div className="flex flex-wrap gap-3 text-sm text-gray-600">
@@ -189,7 +189,7 @@ export default function HomePage() {
                   <div className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-blue-600 rounded-full mt-3"></div>
                     <div>
-                      <p className="font-medium text-gray-900">Основател на Психологически център "Хармония"</p>
+                      <p className="font-medium text-gray-900">Основател на Психологически център &quot;Хармония&quot;</p>
                       <p className="text-sm text-gray-600">Бургас</p>
                     </div>
                   </div>
