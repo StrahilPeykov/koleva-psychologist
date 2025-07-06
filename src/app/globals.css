@@ -1,28 +1,64 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --card: #ffffff;
-  --card-foreground: #171717;
-  --popover: #ffffff;
-  --popover-foreground: #171717;
-  --primary: #2563eb;
-  --primary-foreground: #ffffff;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f172a;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #f1f5f9;
-  --accent-foreground: #0f172a;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #2563eb;
+  /* Main Brand Colors - Calm Blue Palette */
+  --color-primary: #2563eb; /* Blue-600 */
+  --color-primary-light: #3b82f6; /* Blue-500 */
+  --color-primary-dark: #1d4ed8; /* Blue-700 */
+  --color-primary-50: #eff6ff; /* Very light blue */
+  --color-primary-100: #dbeafe; /* Light blue */
+  --color-primary-200: #bfdbfe; /* Soft blue */
+  
+  /* Neutral Colors */
+  --color-white: #ffffff;
+  --color-gray-50: #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #cbd5e1;
+  --color-gray-400: #94a3b8;
+  --color-gray-500: #64748b;
+  --color-gray-600: #475569;
+  --color-gray-700: #334155;
+  --color-gray-800: #1e293b;
+  --color-gray-900: #0f172a;
+  
+  /* Semantic Colors */
+  --color-success: #10b981; /* Green for positive actions */
+  --color-warning: #f59e0b; /* Amber for warnings */
+  --color-error: #ef4444; /* Red for errors */
+  
+  /* CSS Variables for Design System */
+  --background: var(--color-white);
+  --foreground: var(--color-gray-900);
+  --card: var(--color-white);
+  --card-foreground: var(--color-gray-900);
+  --popover: var(--color-white);
+  --popover-foreground: var(--color-gray-900);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-white);
+  --secondary: var(--color-gray-100);
+  --secondary-foreground: var(--color-gray-900);
+  --muted: var(--color-gray-100);
+  --muted-foreground: var(--color-gray-500);
+  --accent: var(--color-primary-50);
+  --accent-foreground: var(--color-primary-dark);
+  --destructive: var(--color-error);
+  --destructive-foreground: var(--color-white);
+  --border: var(--color-gray-200);
+  --input: var(--color-gray-200);
+  --ring: var(--color-primary);
   --radius: 0.5rem;
+  
+  /* Shadows with soft blue tint */
+  --shadow-sm: 0 1px 2px 0 rgba(37, 99, 235, 0.05);
+  --shadow: 0 1px 3px 0 rgba(37, 99, 235, 0.1), 0 1px 2px -1px rgba(37, 99, 235, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(37, 99, 235, 0.1), 0 2px 4px -2px rgba(37, 99, 235, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(37, 99, 235, 0.1), 0 4px 6px -4px rgba(37, 99, 235, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(37, 99, 235, 0.1), 0 8px 10px -6px rgba(37, 99, 235, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(37, 99, 235, 0.25);
 }
 
+/* Custom Tailwind utilities */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -33,8 +69,22 @@
   --color-border: var(--border);
   --color-ring: var(--ring);
   --font-sans: var(--font-inter);
+  
+  /* Custom blue color palette */
+  --color-blue-25: #fafbff;
+  --color-blue-50: var(--color-primary-50);
+  --color-blue-100: var(--color-primary-100);
+  --color-blue-200: var(--color-primary-200);
+  --color-blue-500: var(--color-primary-light);
+  --color-blue-600: var(--color-primary);
+  --color-blue-700: var(--color-primary-dark);
+  
+  /* Custom shadows */
+  --shadow-soft: var(--shadow);
+  --shadow-soft-lg: var(--shadow-lg);
 }
 
+/* Dark mode adjustments (optional) */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -56,19 +106,186 @@
   }
 }
 
+/* Base styles */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 4rem; /* Account for fixed header */
 }
 
 /* Focus styles for accessibility */
-.focus-visible {
+.focus-visible,
+*:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--ring);
+  box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px rgba(37, 99, 235, 0.1);
+  border-radius: var(--radius);
+}
+
+/* Custom component styles */
+.gradient-blue {
+  background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-white) 50%, var(--color-blue-25) 100%);
+}
+
+.gradient-blue-soft {
+  background: linear-gradient(to bottom right, var(--color-primary-50), var(--color-white));
+}
+
+/* Button enhancements */
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  transition: all 0.2s ease-in-out;
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-dark);
+  box-shadow: var(--shadow-soft-lg);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary-200);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-outline:hover {
+  background: var(--color-primary-50);
+  border-color: var(--color-primary);
+}
+
+/* Card enhancements */
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: calc(var(--radius) * 1.5);
+  box-shadow: var(--shadow-soft);
+  transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-soft-lg);
+  transform: translateY(-2px);
+  border-color: var(--color-primary-200);
+}
+
+/* Text improvements */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Custom scrollbar for Webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* Selection color */
+::selection {
+  background: var(--color-primary-100);
+  color: var(--color-primary-dark);
+}
+
+/* Print styles */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Animation utilities */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Responsive typography improvements */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border: #000000;
+    --color-primary: #0000ff;
+  }
+  
+  .card {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
 }

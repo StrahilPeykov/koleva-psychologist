@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <!-- Homepage - Bulgarian (Primary) -->
+  <url>
+    <loc>https://psiholog-koleva.bg/</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://psiholog-koleva.bg/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://psiholog-koleva.bg/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://psiholog-koleva.bg/" />
+  </url>
+  
+  <!-- Homepage - English -->
+  <url>
+    <loc>https://psiholog-koleva.bg/en</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://psiholog-koleva.bg/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://psiholog-koleva.bg/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://psiholog-koleva.bg/" />
+  </url>
+  
+  <!-- About Page - Bulgarian -->
+  <url>
+    <loc>https://psiholog-koleva.bg/about</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://psiholog-koleva.bg/about" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://psiholog-koleva.bg/en/about" />
+  </url>
+  
+  <!-- About Page - English -->
+  <url>
+    <loc>https://psiholog-koleva.bg/en/about</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://psiholog-koleva.bg/about" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://psiholog-koleva.bg/en/about" />
+  </url>
+  
+  <!-- Services Page - Bulgarian -->
+  <url>
+    <loc>https://psiholog-koleva.bg/services</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://psiholog-koleva.bg/services" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://psiholog-koleva.bg/en/services" />
+  </url>
+  
+  <!-- Services Page - English -->
+  <url>
+    <loc>https://psiholog-koleva.bg/en/services</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://psiholog-koleva.bg/services" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://psiholog-koleva.bg/en/services" />
+  </url>
+  
+  <!-- Articles Index - Bulgarian -->
+  <url>
+    <loc>https://psiholog-koleva.bg/articles</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://psiholog-koleva.bg/articles" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://psiholog-koleva.bg/en/articles" />
+  </url>
+  
+  <!-- Articles Index - English -->
+  <url>
+    <loc>https://psiholog-koleva.bg/en/articles</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://psiholog-koleva.bg/articles" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://psiholog-koleva.bg/en/articles" />
+  </url>
+  
+  <!-- Events Index - Bulgarian -->
+  <url>
+    <loc>https://psiholog-koleva.bg/events</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://psiholog-koleva.bg/events" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://psiholog-koleva.bg/en/events" />
+  </url>
+  
+  <!-- Events Index - English -->
+  <url>
+    <loc>https://psiholog-koleva.bg/en/events</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://psiholog-koleva.bg/events" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://psiholog-koleva.bg/en/events" />
+  </url>
+  
+  <!-- Contact Page - Bulgarian -->
+  <url>
+    <loc>https://psiholog-koleva.bg/contact</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://psiholog-koleva.bg/contact" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://psiholog-koleva.bg/en/contact" />
+  </url>
+  
+  <!-- Contact Page - English -->
+  <url>
+    <loc>https://psiholog-koleva.bg/en/contact</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://psiholog-koleva.bg/contact" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://psiholog-koleva.bg/en/contact" />
+  </url>
+  
+  <!-- Service-specific landing pages for SEO -->
+  
+  <!-- Individual Therapy - Bulgarian -->
+  <url>
+    <loc>https://psiholog-koleva.bg/services/individual-therapy</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Addiction Therapy - Bulgarian -->
+  <url>
+    <loc>https://psiholog-koleva.bg/services/addiction-therapy</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Trauma Therapy - Bulgarian -->
+  <url>
+    <loc>https://psiholog-koleva.bg/services/trauma-therapy</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Family Therapy - Bulgarian -->
+  <url>
+    <loc>https://psiholog-koleva.bg/services/family-therapy</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://psiholog-koleva.bg/privacy</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- Terms of Service -->
+  <url>
+    <loc>https://psiholog-koleva.bg/terms</loc>
+    <lastmod>2025-07-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+</urlset>
