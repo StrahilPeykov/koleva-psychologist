@@ -1,10 +1,12 @@
+"use client"
+
 import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/Button'
 import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock, 
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
   Calendar,
   Car,
   Bus,
