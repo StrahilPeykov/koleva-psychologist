@@ -3,16 +3,16 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-xl text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-warm-terracotta focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none transform active:scale-95",
+  "inline-flex items-center justify-center rounded-xl text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-soft-blue focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none transform active:scale-95",
   {
     variants: {
       variant: {
-        default: "bg-gradient-to-r from-warm-terracotta to-warm-rose text-white shadow-lg hover:shadow-xl hover:scale-105",
+        default: "bg-gradient-to-r from-soft-blue to-sky-blue text-white shadow-lg hover:shadow-xl hover:scale-105",
         destructive: "bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 shadow-lg hover:shadow-xl",
         outline: "border-2 hover:scale-105 bg-transparent",
-        secondary: "bg-warm-sand text-warm-charcoal hover:bg-warm-beige shadow-sm hover:shadow-md",
-        ghost: "hover:bg-warm-sand/50 hover:text-warm-charcoal",
-        link: "underline-offset-4 hover:underline text-warm-terracotta hover:text-warm-rose",
+        secondary: "bg-powder-blue/30 text-charcoal hover:bg-powder-blue/50 shadow-sm hover:shadow-md",
+        ghost: "hover:bg-gray-cream/50 hover:text-charcoal",
+        link: "underline-offset-4 hover:underline text-soft-blue hover:text-sky-blue",
       },
       size: {
         default: "h-11 py-3 px-6",

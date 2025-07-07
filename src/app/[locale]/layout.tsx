@@ -75,7 +75,7 @@ export default async function LocaleLayout({
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       </head>
-      <body className={`${inter.className} bg-warm-cream text-warm-charcoal`}>
+      <body className={`${inter.className} bg-[#FBF8F3] text-[#2E2C29]`}>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <div className="min-h-screen flex flex-col">
             <Header />
