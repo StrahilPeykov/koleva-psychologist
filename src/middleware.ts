@@ -8,10 +8,10 @@ const middleware = createMiddleware({
   // Bulgarian is the default locale
   defaultLocale: 'bg',
   
-  // Never use prefixes for default locale
-  localePrefix: 'never',
+  // Use prefixes only when needed (not for default locale)
+  localePrefix: 'as-needed',
   
-  // Detect locale from Accept-Language header
+  // Disable automatic locale detection
   localeDetection: false
 })
 
@@ -19,8 +19,20 @@ export default function (request: NextRequest) {
   // Skip locale handling for specific paths
   const pathname = request.nextUrl.pathname
   
-  // If pathname starts with /en, we handle it with middleware
-  // Otherwise, treat it as Bulgarian (default)
+  // Skip for static assets, API routes, and Sanity Studio
+  if (
+    pathname.startsWith('/api') ||
+    pathname.startsWith('/_next') ||
+    pathname.startsWith('/studio') ||
+    pathname.startsWith('/images') ||
+    pathname.includes('.') ||
+    pathname === '/favicon.ico' ||
+    pathname === '/robots.txt' ||
+    pathname === '/sitemap.xml'
+  ) {
+    return
+  }
+  
   return middleware(request)
 }
 

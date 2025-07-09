@@ -23,11 +23,11 @@ export function generateStaticParams() {
 
 interface LocaleLayoutProps {
   children: React.ReactNode
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }
 
-export async function generateMetadata({ params }: { params: { locale: string } }) {
-  const locale = params.locale
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
   
   if (locale === 'bg') {
     return {
@@ -60,7 +60,7 @@ export default async function LocaleLayout({
   children,
   params
 }: LocaleLayoutProps) {
-  const locale = params.locale
+  const { locale } = await params
   
   // Validate locale
   if (!locales.includes(locale as any)) {

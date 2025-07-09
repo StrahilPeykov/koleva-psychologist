@@ -30,21 +30,22 @@ export default function Header() {
       return
     }
 
-    // Simple locale switching - just replace or add locale prefix
     let newPath = pathname
     
-    // Remove any existing locale prefix
-    if (pathname.startsWith('/en')) {
-      newPath = pathname.slice(3) || '/'
+    // Handle locale switching based on the current path
+    if (locale === 'en') {
+      // Remove /en prefix from current path
+      newPath = pathname.replace('/en', '') || '/'
     }
     
-    // Add new locale prefix if not Bulgarian
+    // Add new locale prefix if switching to English
     if (newLocale === 'en') {
       newPath = '/en' + (newPath === '/' ? '' : newPath)
     }
     
-    router.push(newPath)
+    // Close the menu and navigate
     setIsLangMenuOpen(false)
+    router.push(newPath)
   }
 
   return (

@@ -31,46 +31,6 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['lucide-react'],
   },
 
-  // Redirects for proper locale handling
-  async redirects() {
-    return [
-      // Redirect /en to proper locale path if needed
-      {
-        source: '/en',
-        destination: '/en',
-        permanent: false,
-        locale: false,
-      },
-      // Ensure Bulgarian pages don't have /bg prefix
-      {
-        source: '/bg/:path*',
-        destination: '/:path*',
-        permanent: true,
-        locale: false,
-      },
-    ]
-  },
-
-  // Rewrites to handle default locale
-  async rewrites() {
-    return {
-      beforeFiles: [
-        // Handle root path
-        {
-          source: '/',
-          destination: '/bg',
-          locale: false,
-        },
-        // Handle all non-locale paths as Bulgarian
-        {
-          source: '/:path((?!en|bg|api|_next|studio|images|favicon.ico).*)',
-          destination: '/bg/:path',
-          locale: false,
-        },
-      ],
-    }
-  },
-
   // Transpile packages if needed
   transpilePackages: ['next-intl'],
 

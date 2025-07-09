@@ -1,24 +1,17 @@
-// This handles the root route "/" and ensures Bulgarian loads by default
+import { redirect } from 'next/navigation'
 
+// This handles the root route "/" and redirects to Bulgarian
 export default function RootPage() {
-  // Return the Bulgarian homepage directly
-  return null
+  redirect('/bg')
 }
 
-// This ensures the root "/" redirects to the Bulgarian locale
 export async function generateMetadata() {
   return {
     title: 'Олга Колева - Психолог Бургас',
-    description: 'Лицензиран психолог и психотерапевт на зависимости в Бургас.'
+    description: 'Лицензиран психолог и психотерапевт на зависимости в Бургас.',
+    robots: {
+      index: false,
+      follow: true,
+    },
   }
-}
-
-// Force a redirect to the locale-specific page
-import { redirect } from 'next/navigation'
-export const dynamic = 'force-static'
-
-// Since we're using middleware, this should not be needed
-// but keeping it as a fallback
-export async function loader() {
-  redirect('/bg')
 }

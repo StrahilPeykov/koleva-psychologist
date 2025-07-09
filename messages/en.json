@@ -1,13 +1,13 @@
 {
   "site": {
-    "title": "Olga Koleva - Psychologist & Addiction Psychotherapist | Burgas",
-    "description": "Licensed psychologist and addiction psychotherapist in Burgas. Individual and family counseling, trauma therapy, anxiety and depression treatment.",
-    "keywords": "psychologist burgas, addiction psychotherapist, trauma therapy, anxiety depression"
+    "title": "Olga Koleva - Psychologist Burgas | Addiction Psychotherapist | Harmony Center",
+    "description": "Licensed psychologist and addiction psychotherapist in Burgas. Individual and family counseling, trauma therapy, anxiety and depression treatment. 90 min sessions, 70 BGN. Harmony Center.",
+    "keywords": "psychologist burgas, addiction psychotherapist burgas, trauma therapy burgas, anxiety depression burgas, psychologist harmony center, olga koleva psychologist, psychological counseling burgas, family therapy burgas, psychodrama burgas, OCD treatment burgas, PTSD therapy burgas, domestic violence help burgas"
   },
   "nav": {
     "home": "Home",
     "about": "About",
-    "services": "Services", 
+    "services": "Services",
     "articles": "Articles",
     "events": "Events",
     "contact": "Contact",
@@ -16,41 +16,223 @@
   "hero": {
     "title": "Olga Koleva",
     "subtitle": "Psychologist & Addiction Psychotherapist",
-    "description": "Creating a space where you can be your authentic self – without masks, without fear.",
+    "description": "Creating a space where you can be your authentic self – without masks, without fear",
     "cta": "Book Consultation",
-    "about": "Learn More"
+    "about": "Learn More",
+    "qualifications": "Licensed psychologist • Master's in Psychological Counseling • Addiction Specialist"
   },
   "services": {
-    "title": "Services",
+    "title": "Psychological Services",
+    "subtitle": "Professional help for adults and adolescents",
     "individual": {
       "title": "Individual Counseling",
-      "description": "90-minute sessions for emotional trauma, addictions, anxiety, depression, and OCD."
+      "description": "90-minute sessions for emotional trauma, addictions, anxiety, depression, and OCD. Personalized approach according to your needs.",
+      "details": [
+        "Emotional trauma and PTSD",
+        "Anxiety and panic disorder",
+        "Depression and bipolar disorder",
+        "Obsessive-compulsive disorder (OCD)",
+        "Anger and aggression issues",
+        "Low self-esteem and confidence"
+      ]
     },
     "family": {
       "title": "Family Counseling",
-      "description": "Working with families affected by addiction and family crises."
+      "description": "Working with families affected by addiction and family crises. Restoring healthy relationships.",
+      "details": [
+        "Codependency and codependent relationships",
+        "Family crisis and conflicts",
+        "Communication problems",
+        "Divorce and separation",
+        "Parenting counseling",
+        "Family boundaries and roles"
+      ]
     },
     "addiction": {
-      "title": "Addiction Psychotherapy", 
-      "description": "Specialized treatment for substance and behavioral addictions."
+      "title": "Addiction Psychotherapy",
+      "description": "Specialized treatment for substance and behavioral addictions using evidence-based methods.",
+      "details": [
+        "Alcohol addiction",
+        "Drug addiction",
+        "Gambling addiction",
+        "Internet and gaming addiction",
+        "Eating disorders",
+        "Workaholism and other behavioral addictions"
+      ]
     },
     "trauma": {
       "title": "Trauma Therapy",
-      "description": "PTSD and domestic violence aftermath recovery."
+      "description": "PTSD therapy and working with consequences of domestic violence, sexual abuse, and childhood trauma.",
+      "details": [
+        "Post-traumatic stress disorder (PTSD)",
+        "Childhood trauma and neglect",
+        "Domestic violence and abuse",
+        "Sexual assault and harassment",
+        "Car accident trauma",
+        "Loss and grief"
+      ]
     },
     "price": "70 BGN for 90 minutes",
-    "languages": "Sessions available in Bulgarian, Russian, and English"
+    "languages": "Sessions available in Bulgarian, Russian, and English",
+    "methods": {
+      "title": "Therapeutic Methods",
+      "list": [
+        "Positive psychotherapy",
+        "Cognitive-behavioral therapy (CBT)",
+        "Psychodrama and group therapy",
+        "OH Cards counseling",
+        "Trauma-focused therapy",
+        "Family systems therapy"
+      ]
+    }
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Professional experience and qualifications",
+    "intro": "I believe that every person carries within themselves the power to transform when they receive the right support.",
+    "experience": "I work with adolescents and adults, providing evidence-based help for emotional trauma, addictions, guilt, anxiety, depression, and consequences of domestic violence.",
+    "approach": "My sessions create a space without judgment, where clients can remove their masks, feel safe, and rediscover their authenticity and direction.",
+    "education": {
+      "title": "Education and Certificates",
+      "items": [
+        {
+          "title": "Master's in Psychological Counseling",
+          "year": "2023",
+          "institution": "Burgas Free University",
+          "details": "Thesis: Aspects of mental functioning of codependents in psychoactive substance use"
+        },
+        {
+          "title": "Psychoactive Substance Addiction Counselor",
+          "year": "2022",
+          "institution": "St. Petersburg Medical and Social Institute"
+        },
+        {
+          "title": "Specialization: Neuropsychology, Psychopathology and Psychotherapy",
+          "institution": "Medical University - Plovdiv"
+        }
+      ]
+    },
+    "certifications": {
+      "title": "Certificates and Training",
+      "items": [
+        "Basic Counselor - World Association for Positive and Transcultural Psychotherapy (WAPP)",
+        "Advanced Program (Master level) - WAPP",
+        "Trauma and PTSD Psychotherapy - certified course",
+        "OH Cards Facilitator - OH Cards Institute Bulgaria",
+        "Psychodrama Institute DEA - over 250 hours of personal psychodrama experience",
+        "Member of the Bulgarian Association for Positive Psychotherapy (BAPP)"
+      ]
+    },
+    "positions": {
+      "title": "Professional Positions",
+      "items": [
+        "Founder and lead psychologist at Psychological Center 'Harmony', Burgas",
+        "Creator and lecturer of the course 'Psychotherapy for substance addicts and their families'",
+        "Regular participant in national and international psychological conferences"
+      ]
+    }
   },
   "contact": {
     "title": "Contact",
     "address": "79 Aleksandrovska St., Burgas",
-    "phone": "+359 888 494 533", 
+    "phone": "+359 888 494 533",
     "email": "olgakoleva@abv.bg",
-    "center": "Harmony Psychological Center"
+    "center": "Harmony Psychological Center",
+    "hours": {
+      "title": "Working Hours",
+      "weekdays": "Monday - Friday: 9:00 AM - 6:00 PM",
+      "saturday": "Saturday: 10:00 AM - 4:00 PM",
+      "sunday": "Sunday: By appointment"
+    },
+    "location": {
+      "title": "Location",
+      "description": "The center is located in the heart of Burgas, easily accessible by public transport.",
+      "parking": "Free parking in the area",
+      "accessibility": "Accessible for people with disabilities"
+    }
   },
   "booking": {
     "title": "Book Session",
-    "description": "Choose a convenient time for consultation",
-    "button": "Booking Calendar"
+    "description": "Choose a convenient time for consultation. Online counseling is also available.",
+    "button": "Booking Calendar",
+    "consultation_types": {
+      "individual": "Individual consultation (90 min) - 70 BGN",
+      "family": "Family consultation (90 min) - 70 BGN",
+      "online": "Online session (90 min) - 70 BGN"
+    },
+    "payment": {
+      "title": "Payment Methods",
+      "methods": [
+        "Cash at the office",
+        "Bank transfer",
+        "Card payment (POS terminal)"
+      ]
+    },
+    "note": "Payment is made at the office or by bank transfer",
+    "cancellation": "Free cancellation up to 24 hours before the appointment"
+  },
+  "articles": {
+    "title": "Articles and Resources",
+    "subtitle": "Useful information for mental health and well-being",
+    "categories": {
+      "original": "Original Articles",
+      "translation": "Translations",
+      "research": "Research Studies",
+      "clinical": "Clinical Notes"
+    },
+    "read_more": "Read More",
+    "published": "Published on",
+    "author": "Author"
+  },
+  "events": {
+    "title": "Seminars and Courses",
+    "subtitle": "Professional training and development",
+    "upcoming": "Upcoming Events",
+    "past": "Past Events",
+    "register": "Register",
+    "price": "Price",
+    "duration": "Duration",
+    "location": "Location",
+    "language": "Language",
+    "certificate": "Certificate",
+    "discount": "Discount until",
+    "status": {
+      "upcoming": "Upcoming",
+      "open": "Registration Open",
+      "closed": "Registration Closed",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "types": {
+      "seminar": "Seminar",
+      "workshop": "Workshop",
+      "course": "Course",
+      "webinar": "Webinar",
+      "conference": "Conference"
+    },
+    "audience": {
+      "students": "Psychology Students",
+      "psychologists": "Practicing Psychologists",
+      "psychotherapists": "Psychotherapists",
+      "general": "General Public",
+      "medical": "Medical Professionals"
+    }
+  },
+  "footer": {
+    "description": "Creating a space where you can be your authentic self – without masks, without fear.",
+    "quick_links": "Quick Links",
+    "working_hours": "Working Hours",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "copyright": "All rights reserved."
+  },
+  "seo": {
+    "psychologist_burgas": "psychologist burgas",
+    "addiction_therapy": "addiction psychotherapist burgas",
+    "trauma_therapy": "trauma therapy burgas",
+    "anxiety_depression": "anxiety depression burgas",
+    "family_therapy": "family therapy burgas",
+    "ptsd_treatment": "PTSD treatment burgas",
+    "harmony_center": "harmony psychological center burgas"
   }
 }

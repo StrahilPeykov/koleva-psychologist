@@ -26,13 +26,13 @@ export default function NotFoundPage() {
     {
       title: "Услуги",
       description: "Разгледайте психологическите услуги",
-      href: "/services",
+      href: "/#services",
       icon: FileText
     },
     {
       title: "Запази час",
       description: "Запазете консултация",
-      href: "/contact",
+      href: "/#contact",
       icon: Calendar
     },
     {
