@@ -1,364 +1,222 @@
-"use client"
-
-import { useTranslations, useLocale } from 'next-intl'
-import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/Button'
-import { BookOpen, Globe, Search, FileText, User, Calendar, Clock, Tag } from 'lucide-react'
-import { useState, useEffect } from 'react'
-import { getArticles, getFeaturedArticles, urlFor, type Article } from '@/lib/sanity'
-
-const categories = [
-  { key: "all", label: "Всички статии", icon: BookOpen },
-  { key: "original", label: "Авторски статии", icon: FileText },
-  { key: "translation", label: "Преводи", icon: Globe },
-  { key: "research", label: "Изследвания", icon: Search },
-  { key: "clinical", label: "Клинични бележки", icon: User }
-]
+import { 
+  Calendar,
+  Clock,
+  ArrowRight,
+  BookOpen,
+  Tag,
+  Search,
+  Filter
+} from 'lucide-react'
 
 export default function ArticlesPage() {
   const t = useTranslations()
-  const locale = useLocale()
-  const [articles, setArticles] = useState<Article[]>([])
-  const [featuredArticles, setFeaturedArticles] = useState<Article[]>([])
-  const [selectedCategory, setSelectedCategory] = useState("all")
-  const [searchTerm, setSearchTerm] = useState("")
-  const [loading, setLoading] = useState(true)
 
-  // Fetch articles on component mount
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        setLoading(true)
-        const [articlesData, featuredData] = await Promise.all([
-          getArticles(locale),
-          getFeaturedArticles(locale)
-        ])
-        setArticles(articlesData)
-        setFeaturedArticles(featuredData)
-      } catch (error) {
-        console.error('Error fetching articles:', error)
-      } finally {
-        setLoading(false)
-      }
+  const articles = [
+    {
+      id: 1,
+      title: "Как да разпознаем признаците на емоционално изтощение",
+      excerpt: "Емоционалното изтощение е състояние, което се развива постепенно и често остава незабелязано...",
+      category: "Психично здраве",
+      readTime: "5 мин",
+      date: "15 март 2024",
+      image: "/images/article-burnout.jpg",
+      tags: ["стрес", "бърнаут", "емоции"]
+    },
+    {
+      id: 2,
+      title: "Травма и изцеление: Пътят към възстановяване",
+      excerpt: "Травматичните преживявания оставят дълбоки следи в нашата психика, но изцелението е възможно...",
+      category: "Травма терапия",
+      readTime: "8 мин",
+      date: "10 март 2024",
+      image: "/images/article-trauma.jpg",
+      tags: ["травма", "ПТСР", "терапия"]
+    },
+    {
+      id: 3,
+      title: "Зависимостта като симптом: Разбиране на дълбоките причини",
+      excerpt: "Зависимостта рядко е самостоятелен проблем. Тя често е симптом на по-дълбоки емоционални рани...",
+      category: "Зависимости",
+      readTime: "7 мин",
+      date: "5 март 2024",
+      image: "/images/article-addiction.jpg",
+      tags: ["зависимост", "психология", "лечение"]
+    },
+    {
+      id: 4,
+      title: "Изграждане на здрави граници във взаимоотношенията",
+      excerpt: "Личните граници са основата на здравите взаимоотношения. Те ни помагат да защитим...",
+      category: "Взаимоотношения",
+      readTime: "6 мин",
+      date: "28 февруари 2024",
+      image: "/images/article-boundaries.jpg",
+      tags: ["граници", "отношения", "комуникация"]
     }
+  ]
 
-    fetchData()
-  }, [locale])
-
-  // Filter articles based on category and search
-  const filteredArticles = articles.filter(article => {
-    const matchesCategory = selectedCategory === "all" || article.category === selectedCategory
-    const matchesSearch = searchTerm === "" || 
-      article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      article.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      article.tags?.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-    
-    return matchesCategory && matchesSearch
-  })
-
-  const getCategoryLabel = (category: string) => {
-    const labels = {
-      original: "Авторска статия",
-      translation: "Превод",
-      research: "Изследване",
-      clinical: "Клинични бележки"
-    }
-    return labels[category as keyof typeof labels] || category
-  }
-
-  const getCategoryColor = (category: string) => {
-    const colors = {
-      original: "bg-blue-100 text-blue-800",
-      translation: "bg-green-100 text-green-800", 
-      research: "bg-purple-100 text-purple-800",
-      clinical: "bg-orange-100 text-orange-800"
-    }
-    return colors[category as keyof typeof colors] || "bg-gray-100 text-gray-800"
-  }
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString(locale === 'bg' ? 'bg-BG' : 'en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })
-  }
-
-  const calculateReadingTime = (content: any[]) => {
-    if (!content) return '5 мин четене'
-    
-    // Estimate words in portable text content
-    const textContent = content
-      .filter(block => block._type === 'block')
-      .map(block => block.children?.map((child: any) => child.text).join('') || '')
-      .join(' ')
-    
-    const wordCount = textContent.split(/\s+/).length
-    const readingTime = Math.max(1, Math.ceil(wordCount / 200)) // 200 words per minute
-    
-    return `${readingTime} мин четене`
-  }
-
-  const ArticleCard = ({ article, featured = false }: { article: Article, featured?: boolean }) => (
-    <div className={`card bg-white rounded-xl shadow-soft border border-gray-100 overflow-hidden hover:shadow-soft-lg transition-all duration-300 ${featured ? 'lg:col-span-2' : ''}`}>
-      {/* Article Image */}
-      <div className={`relative ${featured ? 'h-64' : 'h-48'} bg-gradient-to-br from-blue-50 to-blue-100`}>
-        {article.image ? (
-          <Image
-            src={urlFor(article.image).width(600).height(400).quality(80).url()}
-            alt={article.title}
-            fill
-            className="object-cover"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center text-blue-600">
-              <BookOpen className="w-12 h-12 mx-auto mb-2" />
-              <p className="text-sm font-medium">{getCategoryLabel(article.category)}</p>
-            </div>
-          </div>
-        )}
-        
-        {/* Category badge */}
-        <div className="absolute top-4 left-4">
-          <span className={`px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(article.category)}`}>
-            {getCategoryLabel(article.category)}
-          </span>
-        </div>
-        
-        {/* Featured badge */}
-        {featured && (
-          <div className="absolute top-4 right-4">
-            <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">
-              Препоръчано
-            </span>
-          </div>
-        )}
-      </div>
-      
-      {/* Article Content */}
-      <div className="p-6 space-y-4">
-        <div>
-          <h3 className={`${featured ? 'text-2xl' : 'text-xl'} font-bold text-gray-900 mb-2 line-clamp-2`}>
-            {article.title}
-          </h3>
-          <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">{article.excerpt}</p>
-        </div>
-        
-        {/* Article Meta */}
-        <div className="space-y-3">
-          <div className="flex items-center space-x-4 text-xs text-gray-500">
-            <div className="flex items-center space-x-1">
-              <Calendar className="w-3 h-3" />
-              <span>{formatDate(article.publishedAt)}</span>
-            </div>
-            <div className="flex items-center space-x-1">
-              <Clock className="w-3 h-3" />
-              <span>{calculateReadingTime(article.content)}</span>
-            </div>
-            <div className="flex items-center space-x-1">
-              <User className="w-3 h-3" />
-              <span>{article.author}</span>
-            </div>
-          </div>
-          
-          {/* Original source if translation */}
-          {article.originalSource && (
-            <div className="text-xs text-gray-500 italic">
-              Оригинален източник: {article.originalSource}
-            </div>
-          )}
-          
-          {/* Tags */}
-          {article.tags && article.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {article.tags.slice(0, 3).map((tag: string, index: number) => (
-                <span key={index} className="px-2 py-1 bg-gray-100 text-gray-600 rounded-md text-xs flex items-center">
-                  <Tag className="w-3 h-3 mr-1" />
-                  {tag}
-                </span>
-              ))}
-              {article.tags.length > 3 && (
-                <span className="text-xs text-gray-500">+{article.tags.length - 3} още</span>
-              )}
-            </div>
-          )}
-        </div>
-        
-        {/* Read More Button */}
-        <div className="pt-4 border-t">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="w-full border-blue-200 text-blue-700 hover:bg-blue-50"
-            asChild
-          >
-            <Link href={`/${locale}/articles/${article.slug.current}`}>
-              Прочети повече
-            </Link>
-          </Button>
-        </div>
-      </div>
-    </div>
-  )
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Зареждане на статиите...</p>
-        </div>
-      </div>
-    )
-  }
+  const categories = [
+    "Всички",
+    "Психично здраве",
+    "Травма терапия",
+    "Зависимости",
+    "Взаимоотношения",
+    "Личностно развитие"
+  ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-cream-light">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-blue-25 py-16">
+      <section className="bg-gradient-to-br from-cream to-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-3xl lg:text-4xl font-bold text-charcoal mb-4">
               Статии и ресурси
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
-              Полезна информация за психично здраве, научни преводи и клинични наблюдения
+            <p className="text-lg text-gray-medium mb-6">
+              Полезна информация за психичното здраве и личностното развитие
             </p>
             
             {/* Search Bar */}
-            <div className="max-w-md mx-auto">
+            <div className="max-w-xl mx-auto">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Търсене в статиите..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                  placeholder="Търсете статии..."
+                  className="w-full px-5 py-3 pl-12 border border-gray-200 rounded-lg focus:ring-2 focus:ring-soft-blue/30 focus:border-soft-blue text-sm"
                 />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Category Filter */}
-      <section className="py-8 bg-white border-b">
+      {/* Categories Filter */}
+      <section className="py-8 bg-white border-b border-gray-100">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category) => {
-              const Icon = category.icon
-              return (
-                <button
-                  key={category.key}
-                  onClick={() => setSelectedCategory(category.key)}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
-                    selectedCategory === category.key
-                      ? 'bg-blue-600 text-white shadow-md'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  <span className="font-medium">{category.label}</span>
-                </button>
-              )
-            })}
+          <div className="flex items-center justify-center space-x-2 overflow-x-auto">
+            {categories.map((category, index) => (
+              <button
+                key={index}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                  index === 0 
+                    ? 'bg-soft-blue text-white' 
+                    : 'bg-gray-100 text-charcoal hover:bg-gray-200'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Articles */}
-      {selectedCategory === "all" && featuredArticles.length > 0 && (
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Препоръчани статии</h2>
-              <div className="w-24 h-1 bg-blue-600"></div>
-            </div>
-            
-            <div className="grid lg:grid-cols-3 gap-8">
-              {featuredArticles.map((article) => (
-                <ArticleCard key={article._id} article={article} featured={true} />
+      {/* Articles Grid */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+              {articles.map((article) => (
+                <article key={article.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300">
+                  <div className="relative h-48 bg-gray-100">
+                    <div className="absolute inset-0 bg-gradient-to-br from-soft-blue/20 to-sky-blue/20 flex items-center justify-center">
+                      <BookOpen className="w-16 h-16 text-soft-blue/30" />
+                    </div>
+                  </div>
+                  
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs font-medium text-soft-blue bg-soft-blue/10 px-3 py-1 rounded-full">
+                        {article.category}
+                      </span>
+                      <div className="flex items-center space-x-3 text-xs text-gray-500">
+                        <span className="flex items-center">
+                          <Calendar className="w-3.5 h-3.5 mr-1" />
+                          {article.date}
+                        </span>
+                        <span className="flex items-center">
+                          <Clock className="w-3.5 h-3.5 mr-1" />
+                          {article.readTime}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <h2 className="text-xl font-semibold text-charcoal mb-3 line-clamp-2">
+                      {article.title}
+                    </h2>
+                    
+                    <p className="text-gray-medium text-sm mb-4 line-clamp-3">
+                      {article.excerpt}
+                    </p>
+                    
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-wrap gap-2">
+                        {article.tags.slice(0, 2).map((tag, index) => (
+                          <span key={index} className="text-xs text-gray-500">
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                      
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-soft-blue hover:text-steel-blue"
+                        asChild
+                      >
+                        <Link href={`/articles/${article.id}`}>
+                          Прочетете
+                          <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </article>
               ))}
             </div>
-          </div>
-        </section>
-      )}
-
-      {/* All Articles */}
-      <section className={`py-16 ${selectedCategory === "all" && featuredArticles.length > 0 ? 'bg-white' : ''}`}>
-        <div className="container mx-auto px-4">
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              {selectedCategory === "all" ? "Всички статии" : categories.find(c => c.key === selectedCategory)?.label}
-            </h2>
-            <div className="w-24 h-1 bg-blue-600"></div>
-            <p className="text-gray-600 mt-4">
-              {filteredArticles.length} {filteredArticles.length === 1 ? 'статия' : 'статии'}
-              {searchTerm && ` съответстващи на "${searchTerm}"`}
-            </p>
-          </div>
-          
-          {filteredArticles.length > 0 ? (
-            <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
-              {filteredArticles
-                .filter(article => !(selectedCategory === "all" && article.featured))
-                .map((article) => (
-                  <ArticleCard key={article._id} article={article} />
-                ))}
+            
+            {/* Load More */}
+            <div className="text-center mt-12">
+              <Button variant="outline" className="border-soft-blue/30 text-soft-blue hover:bg-soft-blue/10">
+                Вижте още статии
+              </Button>
             </div>
-          ) : (
-            <div className="text-center py-12">
-              <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-600 mb-4">
-                {articles.length === 0 
-                  ? "Все още няма публикувани статии." 
-                  : "Няма статии, съответстващи на търсенето."
-                }
-              </p>
-              {searchTerm && (
-                <Button 
-                  variant="outline" 
-                  className="mt-4"
-                  onClick={() => {
-                    setSearchTerm("")
-                    setSelectedCategory("all")
-                  }}
-                >
-                  Изчисти филтрите
-                </Button>
-              )}
-            </div>
-          )}
+          </div>
         </div>
       </section>
 
-      {/* Newsletter Signup */}
-      <section className="py-16 bg-blue-50">
+      {/* Newsletter Section */}
+      <section className="py-16 bg-cream-light">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Бъдете информирани за нови статии
-            </h3>
-            <p className="text-gray-600 mb-8">
-              Получавайте уведомления за нови публикации, преводи и ресурси по психология.
+            <h2 className="text-2xl font-bold text-charcoal mb-4">
+              Абонирайте се за новини
+            </h2>
+            <p className="text-gray-medium mb-8">
+              Получавайте полезни статии и съвети за психичното здраве директно в пощата си
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <input
                 type="email"
                 placeholder="Вашият имейл адрес"
-                className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-soft-blue/30 focus:border-soft-blue text-sm"
+                required
               />
-              <Button className="bg-blue-600 hover:bg-blue-700 px-6">
+              <Button type="submit" className="bg-soft-blue hover:bg-steel-blue">
                 Абонирай се
               </Button>
-            </div>
+            </form>
             
             <p className="text-xs text-gray-500 mt-4">
-              Няма спам. Можете да се отпишете по всяко време.
+              Можете да се отпишете по всяко време. Прочетете нашата{' '}
+              <Link href="/privacy" className="text-soft-blue hover:underline">
+                политика за поверителност
+              </Link>
             </p>
           </div>
         </div>

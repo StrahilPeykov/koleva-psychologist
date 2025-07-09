@@ -48,23 +48,20 @@ export default function Header() {
   }
 
   return (
-    <header className="bg-gradient-to-r from-[#FEFDFB] to-white shadow-soft border-b border-gray-cream/30 sticky top-0 z-50 backdrop-blur-sm bg-opacity-95">
+    <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100 sticky top-0 z-50">
       <nav className="container mx-auto px-4" aria-label="Top">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-3 group">
-              <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-br from-soft-blue to-sky-blue rounded-2xl flex items-center justify-center transform group-hover:scale-105 transition-all duration-300 shadow-lg">
-                  <Heart className="w-6 h-6 text-white" />
-                </div>
-                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-powder-blue rounded-full opacity-60"></div>
+              <div className="w-10 h-10 bg-soft-blue rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-200">
+                <Heart className="w-5 h-5 text-white" />
               </div>
               <div className="hidden sm:block">
-                <div className="text-lg font-bold text-charcoal group-hover:text-soft-blue transition-colors">
+                <div className="text-base font-semibold text-charcoal">
                   Олга Колева
                 </div>
-                <div className="text-sm text-soft-blue font-medium">
+                <div className="text-xs text-soft-blue">
                   Психолог & Терапевт
                 </div>
               </div>

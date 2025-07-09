@@ -11,240 +11,204 @@ export default function HomePage() {
 
   return (
     <div className="space-y-0">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#FBF8F3] via-[#F5F0E8]/30 to-[#FBF8F3]">
-        {/* Decorative background elements */}
-        <div className="absolute top-20 left-10 w-64 h-64 bg-[#8FA7C6]/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#A8C4E1]/10 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#BFD4E8]/5 rounded-full blur-3xl"></div>
+      {/* Hero Section - Optimized for screen height */}
+      <section className="relative min-h-[calc(100vh-5rem)] flex items-center overflow-hidden bg-gradient-to-br from-cream via-cream-light to-cream">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-10 w-64 h-64 bg-soft-blue rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-sky-blue rounded-full blur-3xl"></div>
+        </div>
         
-        <div className="container mx-auto px-4 py-20 lg:py-28 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8 animate-fade-in-up">
-              <div className="space-y-6">
-                <div className="space-y-3">
-                  <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-charcoal leading-[1.1]">
-                    {t('hero.title')}
-                  </h1>
-                  <p className="text-xl lg:text-2xl text-soft-blue font-medium">
-                    {t('hero.subtitle')}
-                  </p>
+        <div className="container mx-auto px-4 py-12 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-7xl mx-auto">
+            <div className="space-y-6 animate-fade-in-up">
+              <div className="space-y-4">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-charcoal leading-tight">
+                  {t('hero.title')}
+                </h1>
+                <p className="text-lg md:text-xl text-soft-blue font-medium">
+                  {t('hero.subtitle')}
+                </p>
+                <p className="text-base md:text-lg text-gray-medium italic leading-relaxed font-light max-w-lg">
+                  &ldquo;{t('hero.description')}&rdquo;
+                </p>
+              </div>
+              
+              <div className="flex flex-wrap gap-2 text-xs md:text-sm">
+                <div className="flex items-center gap-1.5 bg-white/70 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
+                  <Award className="w-3.5 h-3.5 text-soft-blue" />
+                  <span className="text-charcoal">Лицензиран психолог</span>
                 </div>
-                
-                <div className="space-y-4">
-                  <p className="text-lg lg:text-xl text-gray-medium italic leading-relaxed font-serif">
-                    &ldquo;{t('hero.description')}&rdquo;
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-3 text-sm">
-                    <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
-                      <Award className="w-4 h-4 text-soft-blue" />
-                      <span className="text-charcoal">Лицензиран психолог</span>
-                    </div>
-                    <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
-                      <Brain className="w-4 h-4 text-steel-blue" />
-                      <span className="text-charcoal">Психотерапевт на зависимости</span>
-                    </div>
-                    <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
-                      <Heart className="w-4 h-4 text-sky-blue" />
-                      <span className="text-charcoal">Травма терапия</span>
-                    </div>
-                  </div>
+                <div className="flex items-center gap-1.5 bg-white/70 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
+                  <Brain className="w-3.5 h-3.5 text-steel-blue" />
+                  <span className="text-charcoal">Психотерапевт</span>
+                </div>
+                <div className="flex items-center gap-1.5 bg-white/70 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
+                  <Heart className="w-3.5 h-3.5 text-sky-blue" />
+                  <span className="text-charcoal">Травма терапия</span>
                 </div>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="bg-gradient-to-r from-soft-blue to-sky-blue hover:from-sky-blue hover:to-soft-blue text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <Button asChild size="lg" className="bg-soft-blue hover:bg-steel-blue text-white shadow-md">
                   <Link href="#booking">
-                    <Calendar className="w-5 h-5 mr-2" />
+                    <Calendar className="w-4 h-4 mr-2" />
                     {t('hero.cta')}
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="border-soft-blue text-soft-blue hover:bg-soft-blue hover:text-white transition-all duration-300">
-                  <Link href="#about">
+                <Button asChild variant="outline" size="lg" className="border-soft-blue/30 text-soft-blue hover:bg-soft-blue/10">
+                  <Link href="/about">
                     {t('hero.about')}
                   </Link>
                 </Button>
               </div>
-              
-              {/* Quick Stats */}
-              <div className="grid grid-cols-3 gap-6 pt-8 border-t border-gray-cream">
-                <div className="text-center">
-                  <div className="text-3xl font-bold bg-gradient-to-r from-soft-blue to-sky-blue bg-clip-text text-transparent">90</div>
-                  <div className="text-sm text-gray-medium">минути сесия</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold bg-gradient-to-r from-steel-blue to-deep-blue bg-clip-text text-transparent">3</div>
-                  <div className="text-sm text-gray-medium">езика</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold bg-gradient-to-r from-sky-blue to-soft-blue bg-clip-text text-transparent">70</div>
-                  <div className="text-sm text-gray-medium">лв. консултация</div>
-                </div>
-              </div>
             </div>
             
-            <div className="relative animate-fade-in">
-              <div className="relative w-full max-w-md mx-auto lg:max-w-lg">
-                <div className="aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-powder-blue/20 to-sky-blue/20 relative group">
+            <div className="relative animate-fade-in lg:pl-8">
+              <div className="relative w-full max-w-sm mx-auto">
+                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-powder-blue/20 to-sky-blue/20">
                   <Image
                     src="/images/olga-koleva.jpg"
-                    alt="Олга Колева - Психолог и Психотерапевт на Зависимости"
+                    alt="Олга Колева - Психолог и Психотерапевт"
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover"
                     priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    sizes="(max-width: 768px) 100vw, 400px"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-deep-blue/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
                 
-                {/* Decorative elements */}
-                <div className="absolute -top-6 -right-6 w-32 h-32 bg-soft-blue/20 rounded-full blur-2xl animate-pulse"></div>
-                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-sky-blue/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-                <div className="absolute top-1/2 -right-8 w-16 h-16 bg-powder-blue/30 rounded-full blur-xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-                
-                {/* Floating elements */}
-                <div className="absolute -top-4 left-10 animate-bounce" style={{ animationDelay: '0.5s', animationDuration: '3s' }}>
-                  <Flower2 className="w-8 h-8 text-sky-blue/60" />
-                </div>
-                <div className="absolute bottom-10 -right-4 animate-bounce" style={{ animationDelay: '1.5s', animationDuration: '3s' }}>
-                  <Sun className="w-6 h-6 text-soft-blue/60" />
-                </div>
+                {/* Subtle decorative elements */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-soft-blue/10 rounded-full blur-2xl"></div>
+                <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-sky-blue/10 rounded-full blur-2xl"></div>
               </div>
+            </div>
+          </div>
+          
+          {/* Quick Stats - Compact */}
+          <div className="grid grid-cols-3 gap-4 max-w-md mx-auto mt-12 lg:hidden">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-soft-blue">90</div>
+              <div className="text-xs text-gray-medium">минути сесия</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-steel-blue">3</div>
+              <div className="text-xs text-gray-medium">езика</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-sky-blue">70</div>
+              <div className="text-xs text-gray-medium">лв. консултация</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Trust Indicators */}
-      <section className="py-16 bg-white relative overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-soft-blue/20 to-transparent"></div>
+      {/* Trust Indicators - Compact */}
+      <section className="py-12 md:py-16 bg-white/50">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8 text-center">
-            <div className="space-y-4 group cursor-pointer">
-              <div className="w-16 h-16 bg-gradient-to-br from-soft-blue/10 to-sky-blue/10 rounded-2xl flex items-center justify-center mx-auto transform group-hover:scale-110 transition-all duration-300">
-                <Shield className="w-8 h-8 text-soft-blue" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            <div className="text-center group cursor-pointer">
+              <div className="w-14 h-14 bg-soft-blue/10 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-all duration-300">
+                <Shield className="w-7 h-7 text-soft-blue" />
               </div>
-              <h3 className="font-semibold text-charcoal">Лицензиран специалист</h3>
-              <p className="text-sm text-gray-medium">Психолог с акредитация и професионална етика</p>
+              <h3 className="font-medium text-sm text-charcoal">Лицензиран специалист</h3>
             </div>
-            <div className="space-y-4 group cursor-pointer">
-              <div className="w-16 h-16 bg-gradient-to-br from-sky-blue/10 to-soft-blue/10 rounded-2xl flex items-center justify-center mx-auto transform group-hover:scale-110 transition-all duration-300">
-                <Heart className="w-8 h-8 text-sky-blue" />
+            <div className="text-center group cursor-pointer">
+              <div className="w-14 h-14 bg-sky-blue/10 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-all duration-300">
+                <Heart className="w-7 h-7 text-sky-blue" />
               </div>
-              <h3 className="font-semibold text-charcoal">Индивидуален подход</h3>
-              <p className="text-sm text-gray-medium">Персонализирана терапия според нуждите ви</p>
+              <h3 className="font-medium text-sm text-charcoal">Индивидуален подход</h3>
             </div>
-            <div className="space-y-4 group cursor-pointer">
-              <div className="w-16 h-16 bg-gradient-to-br from-powder-blue/10 to-steel-blue/10 rounded-2xl flex items-center justify-center mx-auto transform group-hover:scale-110 transition-all duration-300">
-                <Users className="w-8 h-8 text-steel-blue" />
+            <div className="text-center group cursor-pointer">
+              <div className="w-14 h-14 bg-steel-blue/10 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-all duration-300">
+                <Users className="w-7 h-7 text-steel-blue" />
               </div>
-              <h3 className="font-semibold text-charcoal">Многоезична</h3>
-              <p className="text-sm text-gray-medium">Консултации на български, руски и английски</p>
+              <h3 className="font-medium text-sm text-charcoal">Многоезична</h3>
             </div>
-            <div className="space-y-4 group cursor-pointer">
-              <div className="w-16 h-16 bg-gradient-to-br from-deep-blue/10 to-soft-blue/10 rounded-2xl flex items-center justify-center mx-auto transform group-hover:scale-110 transition-all duration-300">
-                <MapPin className="w-8 h-8 text-deep-blue" />
+            <div className="text-center group cursor-pointer">
+              <div className="w-14 h-14 bg-powder-blue/10 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-all duration-300">
+                <MapPin className="w-7 h-7 text-powder-blue" />
               </div>
-              <h3 className="font-semibold text-charcoal">Центрово място</h3>
-              <p className="text-sm text-gray-medium">Лесно достъпен офис в центъра на Бургас</p>
+              <h3 className="font-medium text-sm text-charcoal">Удобна локация</h3>
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-soft-blue/20 to-transparent"></div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-24 bg-gradient-to-br from-[#FBF8F3] to-white relative overflow-hidden">
-        <div className="absolute top-40 right-0 w-96 h-96 bg-[#BFD4E8]/10 rounded-full blur-3xl"></div>
+      {/* About Section - Refined */}
+      <section id="about" className="py-16 md:py-20 bg-gradient-to-br from-cream-light to-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16 animate-fade-in-up">
-              <h2 className="text-3xl lg:text-4xl font-bold text-charcoal mb-6">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
                 За мен
               </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-soft-blue to-sky-blue mx-auto mb-8 rounded-full"></div>
+              <div className="w-20 h-1 bg-soft-blue mx-auto rounded-full"></div>
             </div>
             
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6 animate-slide-in-right">
-                <p className="text-lg text-charcoal leading-relaxed">
+            <div className="grid lg:grid-cols-2 gap-10 items-start">
+              <div className="space-y-5">
+                <p className="text-base text-charcoal leading-relaxed">
                   Вярвам, че всеки човек носи в себе си силата да се трансформира, когато получи правилната подкрепа. 
                   Работя с юношите и възрастните, предоставяйки научно обоснована помощ при емоционална травма, 
                   зависимости, вина, тревожност, депресия и последици от домашно насилие.
                 </p>
                 
-                <p className="text-lg text-charcoal leading-relaxed">
+                <p className="text-base text-charcoal leading-relaxed">
                   Моите сесии създават пространство без съждения, където клиентите могат да свалят маските си, 
                   да се чувстват в безопасност и да преоткрият автентичността и посоката си.
                 </p>
                 
-                <div className="space-y-4">
+                <div className="space-y-3 pt-2">
                   <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-soft-blue rounded-full mt-3"></div>
+                    <div className="w-2 h-2 bg-soft-blue rounded-full mt-2"></div>
                     <div>
-                      <p className="font-medium text-charcoal">Магистър по Психологическо консултиране (2023)</p>
-                      <p className="text-sm text-gray-medium">Бургаски свободен университет</p>
+                      <p className="font-medium text-charcoal text-sm">Магистър по Психологическо консултиране</p>
+                      <p className="text-xs text-gray-medium">Бургаски свободен университет, 2023</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-sky-blue rounded-full mt-3"></div>
+                    <div className="w-2 h-2 bg-sky-blue rounded-full mt-2"></div>
                     <div>
-                      <p className="font-medium text-charcoal">Консултант при зависимости от психоактивни вещества</p>
-                      <p className="text-sm text-gray-medium">Санкт Петербургски медико-социален институт</p>
+                      <p className="font-medium text-charcoal text-sm">Консултант при зависимости</p>
+                      <p className="text-xs text-gray-medium">Санкт Петербургски медико-социален институт</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-steel-blue rounded-full mt-3"></div>
+                    <div className="w-2 h-2 bg-steel-blue rounded-full mt-2"></div>
                     <div>
-                      <p className="font-medium text-charcoal">Основател на Психологически център &quot;Хармония&quot;</p>
-                      <p className="text-sm text-gray-medium">Бургас</p>
+                      <p className="font-medium text-charcoal text-sm">Основател на център &quot;Хармония&quot;</p>
+                      <p className="text-xs text-gray-medium">Бургас</p>
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="bg-white p-8 rounded-3xl shadow-soft border border-gray-cream/30 transform hover:scale-[1.02] transition-all duration-300">
-                <div className="flex items-center mb-8">
-                  <div className="w-16 h-16 rounded-2xl overflow-hidden mr-4 flex-shrink-0 shadow-lg">
-                    <Image
-                      src="/images/olga-koleva.jpg"
-                      alt="Олга Колева"
-                      width={64}
-                      height={64}
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-charcoal">Олга Колева</h3>
-                    <p className="text-soft-blue font-medium">Психолог & Психотерапевт</p>
-                  </div>
-                </div>
+              <div className="bg-white rounded-2xl shadow-soft p-6 lg:p-8">
                 <h3 className="text-xl font-bold text-charcoal mb-6">Специализации</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3 group cursor-pointer">
-                    <div className="w-10 h-10 bg-gradient-to-br from-sky-blue/10 to-soft-blue/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3 group">
+                    <div className="w-10 h-10 bg-sky-blue/10 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                       <Heart className="w-5 h-5 text-sky-blue" />
                     </div>
-                    <span className="text-charcoal">Травма терапия и ПТСР</span>
+                    <span className="text-charcoal text-sm">Травма терапия и ПТСР</span>
                   </div>
-                  <div className="flex items-center space-x-3 group cursor-pointer">
-                    <div className="w-10 h-10 bg-gradient-to-br from-soft-blue/10 to-sky-blue/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                  <div className="flex items-center space-x-3 group">
+                    <div className="w-10 h-10 bg-soft-blue/10 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                       <Shield className="w-5 h-5 text-soft-blue" />
                     </div>
-                    <span className="text-charcoal">Психотерапия на зависимости</span>
+                    <span className="text-charcoal text-sm">Психотерапия на зависимости</span>
                   </div>
-                  <div className="flex items-center space-x-3 group cursor-pointer">
-                    <div className="w-10 h-10 bg-gradient-to-br from-steel-blue/10 to-deep-blue/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                  <div className="flex items-center space-x-3 group">
+                    <div className="w-10 h-10 bg-steel-blue/10 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                       <Users className="w-5 h-5 text-steel-blue" />
                     </div>
-                    <span className="text-charcoal">Семейно консултиране</span>
+                    <span className="text-charcoal text-sm">Семейно консултиране</span>
                   </div>
-                  <div className="flex items-center space-x-3 group cursor-pointer">
-                    <div className="w-10 h-10 bg-gradient-to-br from-powder-blue/10 to-soft-blue/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                  <div className="flex items-center space-x-3 group">
+                    <div className="w-10 h-10 bg-powder-blue/10 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                       <Brain className="w-5 h-5 text-powder-blue" />
                     </div>
-                    <span className="text-charcoal">Тревожност и депресия</span>
+                    <span className="text-charcoal text-sm">Тревожност и депресия</span>
                   </div>
                 </div>
               </div>
@@ -253,21 +217,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section id="services" className="py-24 bg-white relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#E8E4DF]/5 to-transparent"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-3xl lg:text-4xl font-bold text-charcoal mb-6">
+      {/* Services Section - Refined */}
+      <section id="services" className="py-16 md:py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
               {t('services.title')}
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-soft-blue to-sky-blue mx-auto mb-8 rounded-full"></div>
-            <p className="text-lg text-gray-medium max-w-2xl mx-auto">
+            <div className="w-20 h-1 bg-soft-blue mx-auto mb-6 rounded-full"></div>
+            <p className="text-base text-gray-medium max-w-2xl mx-auto">
               {t('services.languages')}
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
             <ServiceCard
               title={t('services.individual.title')}
               description={t('services.individual.description')}
@@ -291,11 +254,11 @@ export default function HomePage() {
           </div>
           
           <div className="text-center">
-            <div className="inline-block bg-gradient-to-r from-gray-cream/50 to-powder-blue/20 backdrop-blur-sm rounded-3xl p-8 border border-soft-blue/20 shadow-soft transform hover:scale-105 transition-all duration-300">
-              <p className="text-3xl font-bold bg-gradient-to-r from-soft-blue to-sky-blue bg-clip-text text-transparent mb-2">
+            <div className="inline-block bg-soft-blue/10 rounded-2xl p-6 md:p-8">
+              <p className="text-2xl md:text-3xl font-bold text-soft-blue mb-2">
                 {t('services.price')}
               </p>
-              <p className="text-gray-medium">
+              <p className="text-sm text-gray-medium">
                 Продължителност: 90 минути • Индивидуален подход
               </p>
             </div>
@@ -303,111 +266,91 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Contact & Booking Section */}
-      <section id="contact" className="py-24 bg-gradient-to-br from-[#FBF8F3] via-white to-[#E8E4DF]/20 relative overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#A8C4E1]/10 rounded-full blur-3xl"></div>
-        <div className="absolute top-20 right-20 w-64 h-64 bg-[#BFD4E8]/10 rounded-full blur-3xl"></div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Info */}
-            <div className="animate-fade-in-up">
-              <h2 className="text-3xl font-bold text-charcoal mb-8">
-                {t('contact.title')}
-              </h2>
+      {/* Contact & Booking Section - Refined */}
+      <section id="contact" className="py-16 md:py-20 bg-gradient-to-br from-cream-light to-cream">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-10">
+              {/* Contact Info */}
+              <div>
+                <h2 className="text-3xl font-bold text-charcoal mb-8">
+                  {t('contact.title')}
+                </h2>
+                
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-start space-x-4 p-5 bg-white/80 rounded-xl shadow-sm">
+                    <MapPin className="w-5 h-5 text-soft-blue mt-1" />
+                    <div>
+                      <p className="font-medium text-charcoal text-sm">{t('contact.center')}</p>
+                      <p className="text-gray-medium text-sm">{t('contact.address')}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-4 p-5 bg-white/80 rounded-xl shadow-sm">
+                    <Phone className="w-5 h-5 text-sky-blue" />
+                    <div>
+                      <p className="font-medium text-charcoal text-sm">Телефон</p>
+                      <a href="tel:+359888494533" className="text-soft-blue hover:text-sky-blue transition-colors text-sm">
+                        {t('contact.phone')}
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-4 p-5 bg-white/80 rounded-xl shadow-sm">
+                    <Mail className="w-5 h-5 text-steel-blue" />
+                    <div>
+                      <p className="font-medium text-charcoal text-sm">Имейл</p>
+                      <a href="mailto:olgakoleva@abv.bg" className="text-soft-blue hover:text-sky-blue transition-colors text-sm">
+                        {t('contact.email')}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
               
-              <div className="space-y-6 mb-8">
-                <div className="flex items-start space-x-4 p-6 bg-white/80 backdrop-blur-sm rounded-2xl shadow-soft transform hover:scale-[1.02] transition-all duration-300">
-                  <MapPin className="w-6 h-6 text-soft-blue mt-1" />
-                  <div>
-                    <p className="font-semibold text-charcoal">{t('contact.center')}</p>
-                    <p className="text-gray-medium">{t('contact.address')}</p>
+              {/* Booking */}
+              <div id="booking" className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
+                <h3 className="text-2xl font-bold text-charcoal mb-4">
+                  {t('booking.title')}
+                </h3>
+                <p className="text-gray-medium mb-6 text-sm">
+                  {t('booking.description')}
+                </p>
+                
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <span className="text-charcoal text-sm">Консултация (90 мин)</span>
+                    <span className="font-bold text-soft-blue">70 лв.</span>
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <span className="text-charcoal text-sm">Семейна консултация</span>
+                    <span className="font-bold text-soft-blue">70 лв.</span>
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <span className="text-charcoal text-sm">Онлайн сесия</span>
+                    <span className="font-bold text-soft-blue">70 лв.</span>
                   </div>
                 </div>
                 
-                <div className="flex items-center space-x-4 p-6 bg-white/80 backdrop-blur-sm rounded-2xl shadow-soft transform hover:scale-[1.02] transition-all duration-300">
-                  <Phone className="w-6 h-6 text-sky-blue" />
-                  <div>
-                    <p className="font-semibold text-charcoal">Телефон</p>
-                    <a href="tel:+359888494533" className="text-soft-blue hover:text-sky-blue transition-colors">
-                      {t('contact.phone')}
+                <div className="space-y-3">
+                  <Button className="w-full bg-soft-blue hover:bg-steel-blue" asChild>
+                    <a href="tel:+359888494533">
+                      <Phone className="w-4 h-4 mr-2" />
+                      Обади се за час
                     </a>
-                  </div>
+                  </Button>
+                  <Button variant="outline" className="w-full border-soft-blue/30 text-soft-blue hover:bg-soft-blue/10" asChild>
+                    <a href="mailto:olgakoleva@abv.bg">
+                      <Mail className="w-4 h-4 mr-2" />
+                      Изпрати имейл
+                    </a>
+                  </Button>
                 </div>
                 
-                <div className="flex items-center space-x-4 p-6 bg-white/80 backdrop-blur-sm rounded-2xl shadow-soft transform hover:scale-[1.02] transition-all duration-300">
-                  <Mail className="w-6 h-6 text-steel-blue" />
-                  <div>
-                    <p className="font-semibold text-charcoal">Имейл</p>
-                    <a href="mailto:olgakoleva@abv.bg" className="text-soft-blue hover:text-sky-blue transition-colors">
-                      {t('contact.email')}
-                    </a>
-                  </div>
-                </div>
+                <p className="text-xs text-gray-medium mt-4 text-center">
+                  * Плащането се извършва в офиса или по банков превод
+                </p>
               </div>
-              
-              <div className="bg-gradient-to-br from-powder-blue/20 to-sky-blue/10 p-6 rounded-2xl border border-soft-blue/30">
-                <h3 className="font-semibold text-charcoal mb-3">Работно време</h3>
-                <div className="space-y-2 text-sm text-gray-medium">
-                  <div className="flex justify-between">
-                    <span>Понеделник - Петък:</span>
-                    <span className="font-medium">9:00 - 18:00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Събота:</span>
-                    <span className="font-medium">10:00 - 16:00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Неделя:</span>
-                    <span className="font-medium">По договаряне</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Booking */}
-            <div id="booking" className="bg-white rounded-3xl shadow-xl p-8 border border-gray-cream/30 animate-fade-in">
-              <h3 className="text-2xl font-bold text-charcoal mb-4">
-                {t('booking.title')}
-              </h3>
-              <p className="text-gray-medium mb-6">
-                {t('booking.description')}
-              </p>
-              
-              <div className="space-y-4 mb-8">
-                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-cream/20 to-powder-blue/10 rounded-xl">
-                  <span className="text-charcoal font-medium">Консултация (90 мин)</span>
-                  <span className="font-bold text-soft-blue">70 лв.</span>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-cream/20 to-powder-blue/10 rounded-xl">
-                  <span className="text-charcoal font-medium">Семейна консултация</span>
-                  <span className="font-bold text-soft-blue">70 лв.</span>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-cream/20 to-powder-blue/10 rounded-xl">
-                  <span className="text-charcoal font-medium">Онлайн сесия</span>
-                  <span className="font-bold text-soft-blue">70 лв.</span>
-                </div>
-              </div>
-              
-              {/* Contact methods for booking */}
-              <div className="space-y-3">
-                <Button className="w-full bg-gradient-to-r from-soft-blue to-sky-blue hover:from-sky-blue hover:to-soft-blue text-white shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300" asChild>
-                  <a href="tel:+359888494533">
-                    <Phone className="w-4 h-4 mr-2" />
-                    Обади се за час
-                  </a>
-                </Button>
-                <Button variant="outline" className="w-full border-soft-blue text-soft-blue hover:bg-soft-blue hover:text-white transition-all duration-300" asChild>
-                  <a href="mailto:olgakoleva@abv.bg">
-                    <Mail className="w-4 h-4 mr-2" />
-                    Изпрати имейл
-                  </a>
-                </Button>
-              </div>
-              
-              <p className="text-xs text-gray-medium mt-6 text-center">
-                * Плащането се извършва в офиса или по банков превод
-              </p>
             </div>
           </div>
         </div>

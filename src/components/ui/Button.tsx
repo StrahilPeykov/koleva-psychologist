@@ -3,22 +3,22 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-xl text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-soft-blue focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none transform active:scale-95",
+  "inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-soft-blue focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
   {
     variants: {
       variant: {
-        default: "bg-gradient-to-r from-soft-blue to-sky-blue text-white shadow-lg hover:shadow-xl hover:scale-105",
-        destructive: "bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 shadow-lg hover:shadow-xl",
-        outline: "border-2 hover:scale-105 bg-transparent",
-        secondary: "bg-powder-blue/30 text-charcoal hover:bg-powder-blue/50 shadow-sm hover:shadow-md",
-        ghost: "hover:bg-gray-cream/50 hover:text-charcoal",
-        link: "underline-offset-4 hover:underline text-soft-blue hover:text-sky-blue",
+        default: "bg-soft-blue text-white shadow-sm hover:bg-steel-blue",
+        destructive: "bg-red-500 text-white hover:bg-red-600 shadow-sm",
+        outline: "border border-gray-200 bg-transparent hover:bg-gray-50",
+        secondary: "bg-gray-100 text-charcoal hover:bg-gray-200",
+        ghost: "hover:bg-gray-100 hover:text-charcoal",
+        link: "underline-offset-4 hover:underline text-soft-blue hover:text-steel-blue",
       },
       size: {
-        default: "h-11 py-3 px-6",
-        sm: "h-9 px-4 rounded-lg text-xs",
-        lg: "h-12 px-8 rounded-2xl text-base",
-        icon: "h-10 w-10 rounded-xl",
+        default: "h-10 py-2.5 px-5",
+        sm: "h-8 px-3 rounded-md text-xs",
+        lg: "h-12 px-6 rounded-lg text-base",
+        icon: "h-9 w-9 rounded-lg",
       },
     },
     defaultVariants: {
