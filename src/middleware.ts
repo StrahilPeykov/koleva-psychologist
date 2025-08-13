@@ -1,44 +1,47 @@
-import createMiddleware from 'next-intl/middleware'
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-const middleware = createMiddleware({
-  // A list of all locales that are supported
-  locales: ['bg', 'en'],
-  
-  // Bulgarian is the default locale
-  defaultLocale: 'bg',
-  
-  // Use prefixes only when needed (not for default locale)
-  localePrefix: 'as-needed',
-  
-  // Disable automatic locale detection
-  localeDetection: false
-})
-
-export default function (request: NextRequest) {
-  // Skip locale handling for specific paths
+/**
+ * Simple middleware for the restructured app
+ * No complex locale handling needed since we use direct file structure
+ */
+export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
   
-  // Skip for static assets, API routes, and Sanity Studio
+  // Skip middleware for static files, API routes, and studio
   if (
-    pathname.startsWith('/api') ||
     pathname.startsWith('/_next') ||
+    pathname.startsWith('/api') ||
     pathname.startsWith('/studio') ||
-    pathname.startsWith('/images') ||
     pathname.includes('.') ||
     pathname === '/favicon.ico' ||
     pathname === '/robots.txt' ||
-    pathname === '/sitemap.xml'
+    pathname === '/sitemap.xml' ||
+    pathname.startsWith('/apple-touch-icon') ||
+    pathname.startsWith('/icon-')
   ) {
-    return
+    return NextResponse.next()
   }
   
-  return middleware(request)
+  // Add security headers
+  const response = NextResponse.next()
+  
+  response.headers.set('X-Frame-Options', 'DENY')
+  response.headers.set('X-Content-Type-Options', 'nosniff')
+  response.headers.set('Referrer-Policy', 'origin-when-cross-origin')
+  
+  return response
 }
 
 export const config = {
-  // Match all paths except static assets and API routes
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|studio|images|robots.txt|sitemap.xml).*)'
-  ]
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - static files with extensions
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|studio|.*\\.).*)',
+  ],
 }

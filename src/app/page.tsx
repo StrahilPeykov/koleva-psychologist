@@ -1,17 +1,273 @@
-import { redirect } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Button } from '@/components/ui/Button'
+import ServiceCard from '@/components/ServiceCard'
+import { Phone, Mail, MapPin, Calendar, Award, Users, Heart, Shield, Sparkles, Brain, Flower2, Sun } from 'lucide-react'
 
-// This handles the root route "/" and redirects to Bulgarian
-export default function RootPage() {
-  redirect('/bg')
-}
+export default function HomePage() {
+  return (
+    <div className="space-y-0">
+      {/* Hero Section - Optimized for screen height */}
+      <section className="relative min-h-[calc(100vh-5rem)] flex items-center overflow-hidden bg-gradient-to-br from-cream via-cream-light to-cream">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-10 w-64 h-64 bg-soft-blue rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-sky-blue rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 py-12 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-7xl mx-auto">
+            <div className="space-y-6 animate-fade-in-up">
+              <div className="space-y-4">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-charcoal leading-tight">
+                  Олга Колева
+                </h1>
+                <p className="text-lg md:text-xl text-soft-blue font-medium">
+                  Психолог & Психотерапевт на Зависимости
+                </p>
+                <p className="text-base md:text-lg text-gray-medium italic leading-relaxed font-light max-w-lg">
+                  &ldquo;Създавам пространство, в което можеш да бъдеш истински себе си – без маски, без страх&rdquo;
+                </p>
+              </div>
+              
+              <div className="flex flex-wrap gap-2 text-xs md:text-sm">
+                <div className="flex items-center gap-1.5 bg-white/70 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
+                  <Award className="w-3.5 h-3.5 text-soft-blue" />
+                  <span className="text-charcoal">Лицензиран психолог</span>
+                </div>
+                <div className="flex items-center gap-1.5 bg-white/70 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
+                  <Brain className="w-3.5 h-3.5 text-steel-blue" />
+                  <span className="text-charcoal">Психотерапевт</span>
+                </div>
+                <div className="flex items-center gap-1.5 bg-white/70 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
+                  <Heart className="w-3.5 h-3.5 text-sky-blue" />
+                  <span className="text-charcoal">Травма терапия</span>
+                </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <Button asChild size="lg" className="bg-soft-blue hover:bg-steel-blue text-white shadow-md">
+                  <Link href="#booking">
+                    <Calendar className="w-4 h-4 mr-2" />
+                    Запази консултация
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="border-soft-blue/30 text-soft-blue hover:bg-soft-blue/10">
+                  <Link href="/about">
+                    Научи повече
+                  </Link>
+                </Button>
+              </div>
+            </div>
+            
+            <div className="relative animate-fade-in lg:pl-8">
+              <div className="relative w-full max-w-sm mx-auto">
+                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-powder-blue/20 to-sky-blue/20">
+                  <Image
+                    src="/images/olga-koleva.jpg"
+                    alt="Олга Колева - Психолог и Психотерапевт"
+                    fill
+                    className="object-cover"
+                    priority
+                    sizes="(max-width: 768px) 100vw, 400px"
+                  />
+                </div>
+                
+                {/* Subtle decorative elements */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-soft-blue/10 rounded-full blur-2xl"></div>
+                <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-sky-blue/10 rounded-full blur-2xl"></div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Quick Stats - Compact */}
+          <div className="grid grid-cols-3 gap-4 max-w-md mx-auto mt-12 lg:hidden">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-soft-blue">90</div>
+              <div className="text-xs text-gray-medium">минути сесия</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-steel-blue">3</div>
+              <div className="text-xs text-gray-medium">езика</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-sky-blue">70</div>
+              <div className="text-xs text-gray-medium">лв. консултация</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-export async function generateMetadata() {
-  return {
-    title: 'Олга Колева - Психолог Бургас',
-    description: 'Лицензиран психолог и психотерапевт на зависимости в Бургас.',
-    robots: {
-      index: false,
-      follow: true,
-    },
-  }
+      {/* Trust Indicators - Compact */}
+      <section className="py-12 md:py-16 bg-white/50">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            <div className="text-center group cursor-pointer">
+              <div className="w-14 h-14 bg-soft-blue/10 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-all duration-300">
+                <Shield className="w-7 h-7 text-soft-blue" />
+              </div>
+              <h3 className="font-medium text-sm text-charcoal">Лицензиран специалист</h3>
+            </div>
+            <div className="text-center group cursor-pointer">
+              <div className="w-14 h-14 bg-sky-blue/10 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-all duration-300">
+                <Heart className="w-7 h-7 text-sky-blue" />
+              </div>
+              <h3 className="font-medium text-sm text-charcoal">Индивидуален подход</h3>
+            </div>
+            <div className="text-center group cursor-pointer">
+              <div className="w-14 h-14 bg-steel-blue/10 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-all duration-300">
+                <Users className="w-7 h-7 text-steel-blue" />
+              </div>
+              <h3 className="font-medium text-sm text-charcoal">Многоезична</h3>
+            </div>
+            <div className="text-center group cursor-pointer">
+              <div className="w-14 h-14 bg-powder-blue/10 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-all duration-300">
+                <MapPin className="w-7 h-7 text-powder-blue" />
+              </div>
+              <h3 className="font-medium text-sm text-charcoal">Удобна локация</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section - Refined */}
+      <section id="services" className="py-16 md:py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+              Психологически услуги
+            </h2>
+            <div className="w-20 h-1 bg-soft-blue mx-auto mb-6 rounded-full"></div>
+            <p className="text-base text-gray-medium max-w-2xl mx-auto">
+              Консултации на български, руски и английски език
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
+            <ServiceCard
+              title="Индивидуални консултации"
+              description="90-минутни сесии за работа с емоционална травма, зависимости, тревожност, депресия и ОКР"
+              icon={<Sparkles className="w-8 h-8 text-soft-blue" />}
+            />
+            <ServiceCard
+              title="Семейни консултации"
+              description="Работа с близки на хора със зависимости и семейни кризи. Възстановяване на здравословните отношения"
+              icon={<Users className="w-8 h-8 text-sky-blue" />}
+            />
+            <ServiceCard
+              title="Психотерапия на зависимости"
+              description="Специализирано лечение на химични и поведенчески зависимости с научно доказани методи"
+              icon={<Brain className="w-8 h-8 text-steel-blue" />}
+            />
+            <ServiceCard
+              title="Травма терапия"
+              description="ПТСР терапия и работа с последици от домашно насилие, сексуално насилие и детска травма"
+              icon={<Heart className="w-8 h-8 text-powder-blue" />}
+            />
+          </div>
+          
+          <div className="text-center">
+            <div className="inline-block bg-soft-blue/10 rounded-2xl p-6 md:p-8">
+              <p className="text-2xl md:text-3xl font-bold text-soft-blue mb-2">
+                70 лв. за 90 минути
+              </p>
+              <p className="text-sm text-gray-medium">
+                Продължителност: 90 минути • Индивидуален подход
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact & Booking Section - Refined */}
+      <section id="contact" className="py-16 md:py-20 bg-gradient-to-br from-cream-light to-cream">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-10">
+              {/* Contact Info */}
+              <div>
+                <h2 className="text-3xl font-bold text-charcoal mb-8">
+                  Контакт
+                </h2>
+                
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-start space-x-4 p-5 bg-white/80 rounded-xl shadow-sm">
+                    <MapPin className="w-5 h-5 text-soft-blue mt-1" />
+                    <div>
+                      <p className="font-medium text-charcoal text-sm">Психологически център Хармония</p>
+                      <p className="text-gray-medium text-sm">ул. Александровска 79, Бургас</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-4 p-5 bg-white/80 rounded-xl shadow-sm">
+                    <Phone className="w-5 h-5 text-sky-blue" />
+                    <div>
+                      <p className="font-medium text-charcoal text-sm">Телефон</p>
+                      <a href="tel:+359888494533" className="text-soft-blue hover:text-sky-blue transition-colors text-sm">
+                        +359 888 494 533
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-4 p-5 bg-white/80 rounded-xl shadow-sm">
+                    <Mail className="w-5 h-5 text-steel-blue" />
+                    <div>
+                      <p className="font-medium text-charcoal text-sm">Имейл</p>
+                      <a href="mailto:olgakoleva@abv.bg" className="text-soft-blue hover:text-sky-blue transition-colors text-sm">
+                        olgakoleva@abv.bg
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Booking */}
+              <div id="booking" className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
+                <h3 className="text-2xl font-bold text-charcoal mb-4">
+                  Запази час
+                </h3>
+                <p className="text-gray-medium mb-6 text-sm">
+                  Избери удобно време за консултация. Възможно е и онлайн консултиране.
+                </p>
+                
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <span className="text-charcoal text-sm">Консултация (90 мин)</span>
+                    <span className="font-bold text-soft-blue">70 лв.</span>
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <span className="text-charcoal text-sm">Семейна консултация</span>
+                    <span className="font-bold text-soft-blue">70 лв.</span>
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <span className="text-charcoal text-sm">Онлайн сесия</span>
+                    <span className="font-bold text-soft-blue">70 лв.</span>
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <Button className="w-full bg-soft-blue hover:bg-steel-blue" asChild>
+                    <a href="tel:+359888494533">
+                      <Phone className="w-4 h-4 mr-2" />
+                      Обади се за час
+                    </a>
+                  </Button>
+                  <Button variant="outline" className="w-full border-soft-blue/30 text-soft-blue hover:bg-soft-blue/10" asChild>
+                    <a href="mailto:olgakoleva@abv.bg">
+                      <Mail className="w-4 h-4 mr-2" />
+                      Изпрати имейл
+                    </a>
+                  </Button>
+                </div>
+                
+                <p className="text-xs text-gray-medium mt-4 text-center">
+                  * Плащането се извършва в офиса или по банков превод
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
 }

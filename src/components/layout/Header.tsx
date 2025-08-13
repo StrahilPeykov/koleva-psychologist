@@ -6,46 +6,47 @@ import { useRouter, usePathname } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { Menu, X, Globe, Phone, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { getLocaleFromPath, switchLocale, type Locale } from '@/lib/translations'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false)
   const t = useTranslations()
-  const locale = useLocale()
+  const locale = useLocale() as Locale
   const pathname = usePathname()
   const router = useRouter()
 
+  // Determine current locale from pathname for this structure
+  const currentLocale = getLocaleFromPath(pathname)
+  
+  // Create navigation links based on current locale
   const navigation = [
-    { name: t('nav.home'), href: '/' },
-    { name: t('nav.about'), href: '/about' },
-    { name: t('nav.services'), href: '/#services' },
-    { name: t('nav.articles'), href: '/articles' },
-    { name: t('nav.events'), href: '/events' },
-    { name: t('nav.contact'), href: '/#contact' },
+    { name: t('nav.home'), href: currentLocale === 'en' ? '/en' : '/' },
+    { name: t('nav.about'), href: currentLocale === 'en' ? '/en/about' : '/about' },
+    { name: t('nav.services'), href: currentLocale === 'en' ? '/en#services' : '/#services' },
+    { name: t('nav.articles'), href: currentLocale === 'en' ? '/en/articles' : '/articles' },
+    { name: t('nav.events'), href: currentLocale === 'en' ? '/en/events' : '/events' },
+    { name: t('nav.contact'), href: currentLocale === 'en' ? '/en#contact' : '/#contact' },
   ]
 
-  const switchLocale = (newLocale: string) => {
-    if (locale === newLocale) {
+  const handleLocaleSwitch = (newLocale: Locale) => {
+    if (currentLocale === newLocale) {
       setIsLangMenuOpen(false)
       return
     }
-
-    let newPath = pathname
     
-    // Handle locale switching based on the current path
-    if (locale === 'en') {
-      // Remove /en prefix from current path
-      newPath = pathname.replace('/en', '') || '/'
-    }
-    
-    // Add new locale prefix if switching to English
-    if (newLocale === 'en') {
-      newPath = '/en' + (newPath === '/' ? '' : newPath)
-    }
-    
-    // Close the menu and navigate
     setIsLangMenuOpen(false)
+    
+    // Get the new path for the target locale
+    const newPath = switchLocale(pathname, newLocale)
+    
+    // Navigate to the new path
     router.push(newPath)
+  }
+
+  // Handle clicks outside language menu
+  const handleLanguageMenuToggle = () => {
+    setIsLangMenuOpen(!isLangMenuOpen)
   }
 
   return (
@@ -54,7 +55,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-3 group">
+            <Link href={currentLocale === 'en' ? '/en' : '/'} className="flex items-center space-x-3 group">
               <div className="w-10 h-10 bg-soft-blue rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-200">
                 <Heart className="w-5 h-5 text-white" />
               </div>
@@ -63,7 +64,7 @@ export default function Header() {
                   Олга Колева
                 </div>
                 <div className="text-xs text-soft-blue">
-                  Психолог & Терапевт
+                  {currentLocale === 'en' ? 'Psychologist & Therapist' : 'Психолог & Терапевт'}
                 </div>
               </div>
             </Link>
@@ -87,42 +88,54 @@ export default function Header() {
             {/* Language Switcher */}
             <div className="relative">
               <button
-                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                onClick={handleLanguageMenuToggle}
                 className="flex items-center space-x-2 px-3 py-2 rounded-lg text-charcoal hover:text-soft-blue hover:bg-powder-blue/30 transition-all duration-300"
+                aria-label="Change language"
+                aria-expanded={isLangMenuOpen}
+                aria-haspopup="true"
               >
                 <Globe className="w-4 h-4" />
-                <span className="text-sm font-medium">{locale.toUpperCase()}</span>
+                <span className="text-sm font-medium">{currentLocale.toUpperCase()}</span>
               </button>
               
               {isLangMenuOpen && (
-                <div className="absolute right-0 mt-2 w-24 bg-white rounded-xl shadow-xl border border-gray-cream/20 overflow-hidden">
-                  <button
-                    onClick={() => switchLocale('bg')}
-                    className={`block w-full text-left px-4 py-3 text-sm transition-all duration-200 ${
-                      locale === 'bg' 
-                        ? 'bg-soft-blue text-white font-medium' 
-                        : 'text-charcoal hover:bg-powder-blue/30'
-                    }`}
-                  >
-                    BG
-                  </button>
-                  <button
-                    onClick={() => switchLocale('en')}
-                    className={`block w-full text-left px-4 py-3 text-sm transition-all duration-200 ${
-                      locale === 'en' 
-                        ? 'bg-soft-blue text-white font-medium' 
-                        : 'text-charcoal hover:bg-powder-blue/30'
-                    }`}
-                  >
-                    EN
-                  </button>
-                </div>
+                <>
+                  {/* Backdrop */}
+                  <div 
+                    className="fixed inset-0 z-10" 
+                    onClick={() => setIsLangMenuOpen(false)}
+                  />
+                  
+                  {/* Dropdown Menu */}
+                  <div className="absolute right-0 mt-2 w-24 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-20">
+                    <button
+                      onClick={() => handleLocaleSwitch('bg')}
+                      className={`block w-full text-left px-4 py-3 text-sm transition-all duration-200 ${
+                        currentLocale === 'bg' 
+                          ? 'bg-soft-blue text-white font-medium' 
+                          : 'text-charcoal hover:bg-powder-blue/30'
+                      }`}
+                    >
+                      BG
+                    </button>
+                    <button
+                      onClick={() => handleLocaleSwitch('en')}
+                      className={`block w-full text-left px-4 py-3 text-sm transition-all duration-200 ${
+                        currentLocale === 'en' 
+                          ? 'bg-soft-blue text-white font-medium' 
+                          : 'text-charcoal hover:bg-powder-blue/30'
+                      }`}
+                    >
+                      EN
+                    </button>
+                  </div>
+                </>
               )}
             </div>
 
             {/* Book Session Button */}
             <Button asChild className="bg-gradient-to-r from-soft-blue to-sky-blue hover:from-sky-blue hover:to-soft-blue text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-              <Link href="/#booking">
+              <Link href={currentLocale === 'en' ? '/en#booking' : '/#booking'}>
                 <Phone className="w-4 h-4 mr-2" />
                 {t('nav.book')}
               </Link>
@@ -134,6 +147,8 @@ export default function Header() {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-2 rounded-lg text-charcoal hover:text-soft-blue hover:bg-powder-blue/30 transition-all duration-300"
+              aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
             >
               {isMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -146,7 +161,7 @@ export default function Header() {
 
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-gray-cream/30 mt-2 pt-4 pb-4 animate-fade-in">
+          <div className="lg:hidden border-t border-gray-100 mt-2 pt-4 pb-4 animate-fade-in">
             <div className="space-y-2">
               {navigation.map((item) => (
                 <Link
@@ -159,17 +174,19 @@ export default function Header() {
                 </Link>
               ))}
               
-              <div className="border-t border-gray-cream/30 pt-4 mt-4">
+              <div className="border-t border-gray-100 pt-4 mt-4">
                 <div className="flex items-center justify-between px-3 py-2">
-                  <span className="text-sm text-charcoal">Език:</span>
+                  <span className="text-sm text-charcoal">
+                    {currentLocale === 'en' ? 'Language:' : 'Език:'}
+                  </span>
                   <div className="flex space-x-2">
                     <button
                       onClick={() => {
-                        switchLocale('bg')
+                        handleLocaleSwitch('bg')
                         setIsMenuOpen(false)
                       }}
                       className={`px-3 py-1 text-xs rounded-md transition-all duration-300 ${
-                        locale === 'bg' 
+                        currentLocale === 'bg' 
                           ? 'bg-soft-blue text-white' 
                           : 'text-charcoal bg-powder-blue/30'
                       }`}
@@ -178,11 +195,11 @@ export default function Header() {
                     </button>
                     <button
                       onClick={() => {
-                        switchLocale('en')
+                        handleLocaleSwitch('en')
                         setIsMenuOpen(false)
                       }}
                       className={`px-3 py-1 text-xs rounded-md transition-all duration-300 ${
-                        locale === 'en' 
+                        currentLocale === 'en' 
                           ? 'bg-soft-blue text-white' 
                           : 'text-charcoal bg-powder-blue/30'
                       }`}
@@ -194,7 +211,7 @@ export default function Header() {
                 
                 <div className="px-3 pt-2">
                   <Button asChild className="w-full bg-gradient-to-r from-soft-blue to-sky-blue hover:from-sky-blue hover:to-soft-blue text-white shadow-lg">
-                    <Link href="/#booking" onClick={() => setIsMenuOpen(false)}>
+                    <Link href={currentLocale === 'en' ? '/en#booking' : '/#booking'} onClick={() => setIsMenuOpen(false)}>
                       <Phone className="w-4 h-4 mr-2" />
                       {t('nav.book')}
                     </Link>

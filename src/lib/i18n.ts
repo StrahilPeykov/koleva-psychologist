@@ -1,15 +1,51 @@
 import { getRequestConfig } from 'next-intl/server'
+import { notFound } from 'next/navigation'
+
+// Define supported locales
+const locales = ['bg', 'en'] as const
+export type Locale = typeof locales[number]
 
 export default getRequestConfig(async ({ locale }) => {
-  // Ensure locale is defined and validate that it's supported
-  const validLocale = locale || 'bg'
-  
-  if (!['bg', 'en'].includes(validLocale)) {
-    throw new Error(`Invalid locale: ${validLocale}`)
+  // Validate that the incoming `locale` parameter is valid
+  if (!locale || !locales.includes(locale as Locale)) {
+    notFound()
   }
   
-  return {
-    locale: validLocale,
-    messages: (await import(`../../messages/${validLocale}.json`)).default
+  const validLocale = locale as Locale
+  
+  try {
+    const messages = (await import(`../../messages/${validLocale}.json`)).default
+    
+    return {
+      locale: validLocale,
+      messages,
+      timeZone: 'Europe/Sofia',
+      now: new Date(),
+      // Optional: Set formats for dates, numbers, etc.
+      formats: {
+        dateTime: {
+          short: {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+          },
+          long: {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            weekday: 'long'
+          }
+        },
+        number: {
+          currency: {
+            style: 'currency',
+            currency: 'BGN'
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.error(`Failed to load messages for locale: ${validLocale}`, error)
+    notFound()
   }
 })
