@@ -1,4 +1,6 @@
 import { Inter } from 'next/font/google'
+import { NextIntlClientProvider } from 'next-intl'
+import { getMessages } from 'next-intl/server'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import './globals.css'
@@ -63,7 +65,11 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  // For Bulgarian (default) locale
+  const locale = 'bg'
+  const messages = await getMessages({ locale })
+
   return (
     <html lang="bg" className={inter.variable} dir="ltr">
       <head>
@@ -79,13 +85,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link rel="alternate" hrefLang="x-default" href="https://psiholog-koleva.bg" />
       </head>
       <body className={`${inter.className} bg-cream text-charcoal antialiased`}>
-        <div className="min-h-screen flex flex-col">
-          <Header />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
-        </div>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <div className="min-h-screen flex flex-col">
+            <Header />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

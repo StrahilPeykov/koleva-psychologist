@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 /**
- * Simple middleware for the restructured app
- * No complex locale handling needed since we use direct file structure
+ * Middleware for handling locales and security headers
  */
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
@@ -22,12 +21,19 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
   
-  // Add security headers
   const response = NextResponse.next()
   
+  // Add security headers
   response.headers.set('X-Frame-Options', 'DENY')
   response.headers.set('X-Content-Type-Options', 'nosniff')
   response.headers.set('Referrer-Policy', 'origin-when-cross-origin')
+  
+  // Set locale in response headers for debugging
+  if (pathname.startsWith('/en')) {
+    response.headers.set('X-Locale', 'en')
+  } else {
+    response.headers.set('X-Locale', 'bg')
+  }
   
   return response
 }

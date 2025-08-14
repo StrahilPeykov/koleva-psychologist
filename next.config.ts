@@ -28,9 +28,6 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['lucide-react'],
   },
 
-  // Transpile packages - Keep next-intl for client components
-  transpilePackages: ['next-intl'],
-
   // Disable source maps in production for faster builds
   productionBrowserSourceMaps: false,
 
@@ -57,10 +54,6 @@ const nextConfig: NextConfig = {
           {
             key: 'Referrer-Policy',
             value: 'origin-when-cross-origin',
-          },
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
           },
         ],
       },

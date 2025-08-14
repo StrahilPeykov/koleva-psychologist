@@ -2,26 +2,26 @@ import { getRequestConfig } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 
 // Define supported locales
-const locales = ['bg', 'en'] as const
-export type Locale = typeof locales[number]
+export const locales = ['bg', 'en'] as const
+export type Locale = (typeof locales)[number]
+export const defaultLocale: Locale = 'bg'
 
 export default getRequestConfig(async ({ locale }) => {
   // Validate that the incoming `locale` parameter is valid
   if (!locale || !locales.includes(locale as Locale)) {
     notFound()
   }
-  
+
   const validLocale = locale as Locale
-  
+
   try {
-    const messages = (await import(`../../messages/${validLocale}.json`)).default
-    
+    const messages = (await import(`../messages/${validLocale}.json`)).default
+
     return {
       locale: validLocale,
       messages,
       timeZone: 'Europe/Sofia',
       now: new Date(),
-      // Optional: Set formats for dates, numbers, etc.
       formats: {
         dateTime: {
           short: {

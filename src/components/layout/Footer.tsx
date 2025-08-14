@@ -36,22 +36,22 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                <Link href={locale === 'en' ? '/en' : '/'} className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                   {t('nav.home')}
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                <Link href={locale === 'en' ? '/en/about' : '/about'} className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                   {t('nav.about')}
                 </Link>
               </li>
               <li>
-                <Link href="/articles" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                <Link href={locale === 'en' ? '/en/articles' : '/articles'} className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                   {t('nav.articles')}
                 </Link>
               </li>
               <li>
-                <Link href="/events" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
+                <Link href={locale === 'en' ? '/en/events' : '/events'} className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
                   {t('nav.events')}
                 </Link>
               </li>
@@ -99,10 +99,10 @@ export default function Footer() {
               © {new Date().getFullYear()} Олга Колева. {locale === 'bg' ? 'Всички права запазени.' : 'All rights reserved.'}
             </div>
             <div className="flex items-center space-x-6 text-sm text-gray-400">
-              <Link href="/privacy" className="hover:text-white transition-colors duration-200">
+              <Link href={locale === 'en' ? '/en/privacy' : '/privacy'} className="hover:text-white transition-colors duration-200">
                 {locale === 'bg' ? 'Поверителност' : 'Privacy Policy'}
               </Link>
-              <Link href="/terms" className="hover:text-white transition-colors duration-200">
+              <Link href={locale === 'en' ? '/en/terms' : '/terms'} className="hover:text-white transition-colors duration-200">
                 {locale === 'bg' ? 'Условия' : 'Terms of Service'}
               </Link>
             </div>

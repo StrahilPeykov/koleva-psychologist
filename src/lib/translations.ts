@@ -78,3 +78,20 @@ export function getAlternateUrls(path: string) {
     'x-default': `${baseUrl}${createLocalePath(path, 'bg')}`
   }
 }
+
+/**
+ * Get current locale from server context
+ */
+export function getCurrentLocale(pathname: string): Locale {
+  return getLocaleFromPath(pathname)
+}
+
+/**
+ * Remove locale prefix from path
+ */
+export function removeLocaleFromPath(pathname: string): string {
+  if (pathname.startsWith('/en')) {
+    return pathname.replace('/en', '') || '/'
+  }
+  return pathname
+}
