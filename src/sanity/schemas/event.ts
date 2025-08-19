@@ -1,5 +1,3 @@
-// sanity/schemas/event.ts - Enhanced event schema for psychology seminars and courses
-
 import { defineField, defineType } from 'sanity'
 import { CalendarIcon } from '@sanity/icons'
 
@@ -11,7 +9,7 @@ export default defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'Event Title',
+      title: 'Заглавие на събитието',
       type: 'string',
       validation: Rule => Rule.required().max(100)
     }),
@@ -32,15 +30,15 @@ export default defineType({
     }),
     defineField({
       name: 'description',
-      title: 'Short Description',
+      title: 'Кратко описание',
       type: 'text',
       rows: 4,
       validation: Rule => Rule.required().max(300),
-      description: 'Brief description for listings and previews'
+      description: 'Кратко описание за списъци и прегледи'
     }),
     defineField({
       name: 'content',
-      title: 'Detailed Content',
+      title: 'Подробно съдържание',
       type: 'array',
       of: [
         {
@@ -86,16 +84,16 @@ export default defineType({
         {
           type: 'object',
           name: 'schedule',
-          title: 'Schedule Block',
+          title: 'Програма',
           fields: [
             {
               name: 'title',
-              title: 'Schedule Title',
+              title: 'Заглавие на програмата',
               type: 'string'
             },
             {
               name: 'items',
-              title: 'Schedule Items',
+              title: 'Елементи от програмата',
               type: 'array',
               of: [
                 {
@@ -103,17 +101,17 @@ export default defineType({
                   fields: [
                     {
                       name: 'time',
-                      title: 'Time',
+                      title: 'Време',
                       type: 'string'
                     },
                     {
                       name: 'activity',
-                      title: 'Activity',
+                      title: 'Дейност',
                       type: 'string'
                     },
                     {
                       name: 'description',
-                      title: 'Description',
+                      title: 'Описание',
                       type: 'text',
                       rows: 2
                     }
@@ -124,11 +122,11 @@ export default defineType({
           ]
         }
       ],
-      description: 'Detailed event information, curriculum, and schedule'
+      description: 'Подробна информация за събитието, учебна програма и график'
     }),
     defineField({
       name: 'image',
-      title: 'Event Image',
+      title: 'Изображение на събитието',
       type: 'image',
       options: {
         hotspot: true,
@@ -146,118 +144,77 @@ export default defineType({
     // Date and Time
     defineField({
       name: 'startDate',
-      title: 'Start Date',
+      title: 'Начална дата',
       type: 'date',
       validation: Rule => Rule.required()
     }),
     defineField({
       name: 'endDate',
-      title: 'End Date',
+      title: 'Крайна дата',
       type: 'date',
-      description: 'Leave empty for single-day events'
+      description: 'Остави празно за еднодневни събития'
     }),
     defineField({
       name: 'startTime',
-      title: 'Start Time',
+      title: 'Начален час',
       type: 'string',
       validation: Rule => Rule.required().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, {
         name: 'time',
         invert: false
       }),
-      placeholder: 'HH:MM (e.g., 09:00)'
+      placeholder: 'HH:MM (напр. 09:00)'
     }),
     defineField({
       name: 'endTime',
-      title: 'End Time',
+      title: 'Краен час',
       type: 'string',
       validation: Rule => Rule.regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, {
         name: 'time',
         invert: false
       }),
-      placeholder: 'HH:MM (e.g., 17:00)'
+      placeholder: 'HH:MM (напр. 17:00)'
     }),
     defineField({
       name: 'duration',
-      title: 'Duration Description',
+      title: 'Описание на продължителността',
       type: 'string',
-      description: 'e.g., "2 hours", "3 weekends", "60 hours total"',
-      placeholder: 'e.g., 2 hours, 3 weekends, 60 hours total'
+      description: 'напр. "2 часа", "3 уикенда", "60 часа общо"',
+      placeholder: 'напр. 2 часа, 3 уикенда, 60 часа общо'
     }),
     
     // Pricing
     defineField({
       name: 'price',
-      title: 'Regular Price (BGN)',
+      title: 'Редовна цена (лв.)',
       type: 'number',
       validation: Rule => Rule.required().min(0)
     }),
     defineField({
       name: 'discountPrice',
-      title: 'Early Bird / Discount Price (BGN)',
+      title: 'Ранна птичка / Намалена цена (лв.)',
       type: 'number',
       validation: Rule => Rule.min(0)
     }),
     defineField({
       name: 'discountDeadline',
-      title: 'Discount Deadline',
+      title: 'Краен срок за отстъпка',
       type: 'date',
-      description: 'Until when the discount price is valid',
+      description: 'До кога важи намалената цена',
       hidden: ({ document }) => !document?.discountPrice
-    }),
-    defineField({
-      name: 'installments',
-      title: 'Installment Options',
-      type: 'object',
-      fields: [
-        {
-          name: 'available',
-          title: 'Installments Available',
-          type: 'boolean',
-          initialValue: false
-        },
-        {
-          name: 'options',
-          title: 'Payment Plans',
-          type: 'array',
-          of: [
-            {
-              type: 'object',
-              fields: [
-                {
-                  name: 'payments',
-                  title: 'Number of Payments',
-                  type: 'number'
-                },
-                {
-                  name: 'amount',
-                  title: 'Amount per Payment',
-                  type: 'number'
-                },
-                {
-                  name: 'description',
-                  title: 'Description',
-                  type: 'string'
-                }
-              ]
-            }
-          ],
-          hidden: ({ parent }) => !parent?.available
-        }
-      ]
     }),
     
     // Location
     defineField({
       name: 'location',
-      title: 'Location Type',
+      title: 'Тип местоположение',
       type: 'string',
       options: {
         list: [
-          { title: '💻 Online (Zoom)', value: 'online' },
-          { title: '🏢 Burgas', value: 'burgas' },
-          { title: '🏛️ Plovdiv', value: 'plovdiv' },
-          { title: '🏙️ Sofia', value: 'sofia' },
-          { title: '📍 Other', value: 'other' },
+          { title: '💻 Онлайн (Zoom)', value: 'online' },
+          { title: '🏢 Бургас', value: 'burgas' },
+          { title: '🏛️ Пловдив', value: 'plovdiv' },
+          { title: '🏙️ София', value: 'sofia' },
+          { title: '📍 Друго', value: 'other' },
         ],
       },
       validation: Rule => Rule.required(),
@@ -265,26 +222,26 @@ export default defineType({
     }),
     defineField({
       name: 'locationDetails',
-      title: 'Location Details',
+      title: 'Детайли за местоположението',
       type: 'object',
       fields: [
         {
           name: 'venue',
-          title: 'Venue Name',
+          title: 'Име на мястото',
           type: 'string'
         },
         {
           name: 'address',
-          title: 'Address',
+          title: 'Адрес',
           type: 'text',
           rows: 2
         },
         {
           name: 'instructions',
-          title: 'Special Instructions',
+          title: 'Специални инструкции',
           type: 'text',
           rows: 3,
-          description: 'Parking, building access, etc.'
+          description: 'Паркиране, достъп до сградата и др.'
         },
         {
           name: 'mapUrl',
@@ -296,31 +253,17 @@ export default defineType({
     
     // Event Details
     defineField({
-      name: 'language',
-      title: 'Event Language',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Bulgarian', value: 'bg' },
-          { title: 'English', value: 'en' },
-          { title: 'Russian', value: 'ru' },
-        ],
-      },
-      validation: Rule => Rule.required(),
-      initialValue: 'bg'
-    }),
-    defineField({
       name: 'eventType',
-      title: 'Event Type',
+      title: 'Тип събитие',
       type: 'string',
       options: {
         list: [
-          { title: '📚 Seminar', value: 'seminar' },
-          { title: '🛠️ Workshop', value: 'workshop' },
-          { title: '📖 Course', value: 'course' },
-          { title: '💻 Webinar', value: 'webinar' },
-          { title: '🎯 Conference', value: 'conference' },
-          { title: '👥 Group Therapy', value: 'group-therapy' },
+          { title: '📚 Семинар', value: 'seminar' },
+          { title: '🛠️ Работилница', value: 'workshop' },
+          { title: '📖 Курс', value: 'course' },
+          { title: '💻 Уебинар', value: 'webinar' },
+          { title: '🎯 Конференция', value: 'conference' },
+          { title: '👥 Групова терапия', value: 'group-therapy' },
         ],
       },
       validation: Rule => Rule.required(),
@@ -328,145 +271,78 @@ export default defineType({
     }),
     defineField({
       name: 'capacity',
-      title: 'Maximum Participants',
+      title: 'Максимален брой участници',
       type: 'number',
       validation: Rule => Rule.min(1).max(100),
-      description: 'Leave empty for unlimited capacity'
+      description: 'Остави празно за неограничен капацитет'
     }),
     defineField({
       name: 'currentRegistrations',
-      title: 'Current Registrations',
+      title: 'Текущи записвания',
       type: 'number',
       validation: Rule => Rule.min(0),
       initialValue: 0,
-      description: 'Keep track of registrations'
+      description: 'Следи записванията'
     }),
     
     // Target Audience
     defineField({
       name: 'targetAudience',
-      title: 'Target Audience',
+      title: 'Целева аудитория',
       type: 'array',
       of: [{ type: 'string' }],
       options: {
         list: [
-          { title: '🎓 Psychology Students', value: 'students' },
-          { title: '🧠 Practicing Psychologists', value: 'psychologists' },
-          { title: '💼 Psychotherapists', value: 'psychotherapists' },
-          { title: '👥 General Public', value: 'general' },
-          { title: '🏥 Medical Professionals', value: 'medical' },
-          { title: '👨‍👩‍👧‍👦 Families', value: 'families' },
-          { title: '👩‍🏫 Educators', value: 'educators' },
-          { title: '💼 HR Professionals', value: 'hr' },
+          { title: '🎓 Студенти по психология', value: 'students' },
+          { title: '🧠 Практикуващи психолози', value: 'psychologists' },
+          { title: '💼 Психотерапевти', value: 'psychotherapists' },
+          { title: '👥 Широка публика', value: 'general' },
+          { title: '🏥 Медицински професионалисти', value: 'medical' },
+          { title: '👨‍👩‍👧‍👦 Семейства', value: 'families' },
+          { title: '👩‍🏫 Педагози', value: 'educators' },
+          { title: '💼 HR професионалисти', value: 'hr' },
         ],
       },
       validation: Rule => Rule.required().min(1)
     }),
     
-    // Prerequisites and Requirements
-    defineField({
-      name: 'prerequisites',
-      title: 'Prerequisites',
-      type: 'array',
-      of: [{ type: 'string' }],
-      description: 'What participants need to know or have before attending'
-    }),
-    defineField({
-      name: 'materials',
-      title: 'Materials Provided',
-      type: 'array',
-      of: [{ type: 'string' }],
-      description: 'What materials are included in the price'
-    }),
-    defineField({
-      name: 'requirements',
-      title: 'What to Bring',
-      type: 'array',
-      of: [{ type: 'string' }],
-      description: 'What participants should bring'
-    }),
-    
     // Certification
     defineField({
       name: 'certificate',
-      title: 'Certificate Information',
+      title: 'Информация за сертификат',
       type: 'object',
       fields: [
         {
           name: 'provided',
-          title: 'Certificate Provided',
+          title: 'Предоставя се сертификат',
           type: 'boolean',
           initialValue: false
         },
         {
           name: 'type',
-          title: 'Certificate Type',
+          title: 'Тип сертификат',
           type: 'string',
           options: {
             list: [
-              { title: 'Attendance Certificate', value: 'attendance' },
-              { title: 'Completion Certificate', value: 'completion' },
-              { title: 'Professional Certificate', value: 'professional' },
-              { title: 'European Recognized', value: 'european' },
+              { title: 'Сертификат за присъствие', value: 'attendance' },
+              { title: 'Сертификат за завършване', value: 'completion' },
+              { title: 'Професионален сертификат', value: 'professional' },
+              { title: 'Европейски признат', value: 'european' },
             ]
           },
           hidden: ({ parent }) => !parent?.provided
         },
         {
           name: 'hours',
-          title: 'Training Hours',
+          title: 'Часове обучение',
           type: 'number',
           hidden: ({ parent }) => !parent?.provided
         },
         {
           name: 'issuingOrganization',
-          title: 'Issuing Organization',
+          title: 'Издаваща организация',
           type: 'string',
           hidden: ({ parent }) => !parent?.provided
-        },
-        {
-          name: 'requirements',
-          title: 'Requirements for Certificate',
-          type: 'text',
-          rows: 2,
-          hidden: ({ parent }) => !parent?.provided,
-          placeholder: 'e.g., 80% attendance, final assignment'
-        }
-      ]
-    }),
-    
-    // Registration
-    defineField({
-      name: 'registrationDeadline',
-      title: 'Registration Deadline',
-      type: 'date'
-    }),
-    defineField({
-      name: 'registrationLink',
-      title: 'External Registration Link',
-      type: 'url',
-      description: 'Use if registration is handled externally'
-    }),
-    defineField({
-      name: 'contactForRegistration',
-      title: 'Registration Contact',
-      type: 'object',
-      fields: [
-        {
-          name: 'email',
-          title: 'Email',
-          type: 'email'
-        },
-        {
-          name: 'phone',
-          title: 'Phone',
-          type: 'string'
-        },
-        {
-          name: 'instructions',
-          title: 'Registration Instructions',
-          type: 'text',
-          rows: 3
         }
       ]
     }),
@@ -474,16 +350,16 @@ export default defineType({
     // Status and Organization
     defineField({
       name: 'status',
-      title: 'Event Status',
+      title: 'Статус на събитието',
       type: 'string',
       options: {
         list: [
-          { title: '📅 Upcoming', value: 'upcoming' },
-          { title: '✅ Registration Open', value: 'open' },
-          { title: '🔒 Registration Closed', value: 'closed' },
-          { title: '❌ Cancelled', value: 'cancelled' },
-          { title: '✅ Completed', value: 'completed' },
-          { title: '⏳ In Progress', value: 'in-progress' },
+          { title: '📅 Предстоящо', value: 'upcoming' },
+          { title: '✅ Записването е отворено', value: 'open' },
+          { title: '🔒 Записването е затворено', value: 'closed' },
+          { title: '❌ Отменено', value: 'cancelled' },
+          { title: '✅ Завършено', value: 'completed' },
+          { title: '⏳ В ход', value: 'in-progress' },
         ],
       },
       initialValue: 'upcoming',
@@ -491,45 +367,19 @@ export default defineType({
     }),
     defineField({
       name: 'featured',
-      title: 'Featured Event',
+      title: 'Препоръчано събитие',
       type: 'boolean',
-      description: 'Featured events appear prominently on the homepage',
+      description: 'Препоръчаните събития се показват на началната страница',
       initialValue: false
     }),
     defineField({
       name: 'tags',
-      title: 'Tags',
+      title: 'Тагове',
       type: 'array',
       of: [{ type: 'string' }],
       options: {
         layout: 'tags'
       }
-    }),
-    
-    // SEO
-    defineField({
-      name: 'seo',
-      title: 'SEO Settings',
-      type: 'object',
-      options: {
-        collapsible: true,
-        collapsed: true
-      },
-      fields: [
-        {
-          name: 'metaTitle',
-          title: 'Meta Title',
-          type: 'string',
-          validation: Rule => Rule.max(60),
-        },
-        {
-          name: 'metaDescription',
-          title: 'Meta Description',
-          type: 'text',
-          rows: 3,
-          validation: Rule => Rule.max(160),
-        }
-      ]
     })
   ],
   preview: {
@@ -539,10 +389,9 @@ export default defineType({
       eventType: 'eventType',
       status: 'status',
       media: 'image',
-      featured: 'featured',
-      language: 'language'
+      featured: 'featured'
     },
-    prepare({ title, startDate, eventType, status, media, featured, language }) {
+    prepare({ title, startDate, eventType, status, media, featured }) {
       const statusIcons = {
         upcoming: '📅',
         open: '✅',
@@ -561,28 +410,28 @@ export default defineType({
         'group-therapy': '👥'
       }
       
-      const formattedDate = startDate ? new Date(startDate).toLocaleDateString('en-GB') : 'No date'
+      const formattedDate = startDate ? new Date(startDate).toLocaleDateString('bg-BG') : 'Без дата'
       
       return {
         title: title,
-        subtitle: `${formattedDate} • ${typeIcons[eventType as keyof typeof typeIcons] || ''} ${eventType} • ${statusIcons[status as keyof typeof statusIcons] || ''} ${status}${featured ? ' • ⭐' : ''} • ${language?.toUpperCase()}`,
+        subtitle: `${formattedDate} • ${typeIcons[eventType as keyof typeof typeIcons] || ''} ${eventType} • ${statusIcons[status as keyof typeof statusIcons] || ''} ${status}${featured ? ' • ⭐' : ''}`,
         media: media
       }
     }
   },
   orderings: [
     {
-      title: 'Event Date, Upcoming First',
+      title: 'Дата на събитието, предстоящи първо',
       name: 'dateAsc',
       by: [{ field: 'startDate', direction: 'asc' }]
     },
     {
-      title: 'Event Date, Recent First',
+      title: 'Дата на събитието, скорошни първо',
       name: 'dateDesc',
       by: [{ field: 'startDate', direction: 'desc' }]
     },
     {
-      title: 'Status Priority',
+      title: 'Приоритет по статус',
       name: 'statusPriority',
       by: [
         { field: 'status', direction: 'asc' },

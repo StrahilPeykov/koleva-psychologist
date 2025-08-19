@@ -2,50 +2,20 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter, usePathname } from 'next/navigation'
-import { useTranslations, useLocale } from 'next-intl'
-import { Menu, X, Globe, Phone, Heart } from 'lucide-react'
+import { Menu, X, Phone, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false)
-  const t = useTranslations()
-  const locale = useLocale()
-  const pathname = usePathname()
-  const router = useRouter()
 
   const navigation = [
-    { name: t('nav.home'), href: '/' },
-    { name: t('nav.about'), href: '/about' },
-    { name: t('nav.services'), href: '/#services' },
-    { name: t('nav.articles'), href: '/articles' },
-    { name: t('nav.events'), href: '/events' },
-    { name: t('nav.contact'), href: '/#contact' },
+    { name: 'Начало', href: '/' },
+    { name: 'За мен', href: '/about' },
+    { name: 'Услуги', href: '/#services' },
+    { name: 'Статии', href: '/articles' },
+    { name: 'Събития', href: '/events' },
+    { name: 'Контакт', href: '/#contact' },
   ]
-
-  const switchLocale = (newLocale: string) => {
-    if (locale === newLocale) {
-      setIsLangMenuOpen(false)
-      return
-    }
-
-    // Simple locale switching - just replace or add locale prefix
-    let newPath = pathname
-    
-    // Remove any existing locale prefix
-    if (pathname.startsWith('/en')) {
-      newPath = pathname.slice(3) || '/'
-    }
-    
-    // Add new locale prefix if not Bulgarian
-    if (newLocale === 'en') {
-      newPath = '/en' + (newPath === '/' ? '' : newPath)
-    }
-    
-    router.push(newPath)
-    setIsLangMenuOpen(false)
-  }
 
   return (
     <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100 sticky top-0 z-50">
@@ -83,47 +53,11 @@ export default function Header() {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center space-x-4">
-            {/* Language Switcher */}
-            <div className="relative">
-              <button
-                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-charcoal hover:text-soft-blue hover:bg-powder-blue/30 transition-all duration-300"
-              >
-                <Globe className="w-4 h-4" />
-                <span className="text-sm font-medium">{locale.toUpperCase()}</span>
-              </button>
-              
-              {isLangMenuOpen && (
-                <div className="absolute right-0 mt-2 w-24 bg-white rounded-xl shadow-xl border border-gray-cream/20 overflow-hidden">
-                  <button
-                    onClick={() => switchLocale('bg')}
-                    className={`block w-full text-left px-4 py-3 text-sm transition-all duration-200 ${
-                      locale === 'bg' 
-                        ? 'bg-soft-blue text-white font-medium' 
-                        : 'text-charcoal hover:bg-powder-blue/30'
-                    }`}
-                  >
-                    BG
-                  </button>
-                  <button
-                    onClick={() => switchLocale('en')}
-                    className={`block w-full text-left px-4 py-3 text-sm transition-all duration-200 ${
-                      locale === 'en' 
-                        ? 'bg-soft-blue text-white font-medium' 
-                        : 'text-charcoal hover:bg-powder-blue/30'
-                    }`}
-                  >
-                    EN
-                  </button>
-                </div>
-              )}
-            </div>
-
             {/* Book Session Button */}
             <Button asChild className="bg-gradient-to-r from-soft-blue to-sky-blue hover:from-sky-blue hover:to-soft-blue text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
               <Link href="/#booking">
                 <Phone className="w-4 h-4 mr-2" />
-                {t('nav.book')}
+                Запази час
               </Link>
             </Button>
           </div>
@@ -159,43 +93,11 @@ export default function Header() {
               ))}
               
               <div className="border-t border-gray-cream/30 pt-4 mt-4">
-                <div className="flex items-center justify-between px-3 py-2">
-                  <span className="text-sm text-charcoal">Език:</span>
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => {
-                        switchLocale('bg')
-                        setIsMenuOpen(false)
-                      }}
-                      className={`px-3 py-1 text-xs rounded-md transition-all duration-300 ${
-                        locale === 'bg' 
-                          ? 'bg-soft-blue text-white' 
-                          : 'text-charcoal bg-powder-blue/30'
-                      }`}
-                    >
-                      BG
-                    </button>
-                    <button
-                      onClick={() => {
-                        switchLocale('en')
-                        setIsMenuOpen(false)
-                      }}
-                      className={`px-3 py-1 text-xs rounded-md transition-all duration-300 ${
-                        locale === 'en' 
-                          ? 'bg-soft-blue text-white' 
-                          : 'text-charcoal bg-powder-blue/30'
-                      }`}
-                    >
-                      EN
-                    </button>
-                  </div>
-                </div>
-                
                 <div className="px-3 pt-2">
                   <Button asChild className="w-full bg-gradient-to-r from-soft-blue to-sky-blue hover:from-sky-blue hover:to-soft-blue text-white shadow-lg">
                     <Link href="/#booking" onClick={() => setIsMenuOpen(false)}>
                       <Phone className="w-4 h-4 mr-2" />
-                      {t('nav.book')}
+                      Запази час
                     </Link>
                   </Button>
                 </div>

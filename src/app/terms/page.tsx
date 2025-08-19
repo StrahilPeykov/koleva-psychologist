@@ -1,10 +1,8 @@
-import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { FileText, Scale, AlertTriangle, Phone, Mail, Calendar, Euro } from 'lucide-react'
 import { BackButton } from '@/components/ui/BackButton'
 
 export default function TermsOfServicePage() {
-  const t = useTranslations()
 
   return (
     <div className="min-h-screen bg-white">

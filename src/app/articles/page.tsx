@@ -1,4 +1,3 @@
-import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/Button'
@@ -13,7 +12,6 @@ import {
 } from 'lucide-react'
 
 export default function ArticlesPage() {
-  const t = useTranslations()
 
   const articles = [
     {

@@ -1,4 +1,3 @@
-import { useTranslations } from 'next-intl'
 import ServiceCard from '@/components/ServiceCard'
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
@@ -19,7 +18,6 @@ import {
 } from 'lucide-react'
 
 export default function ServicesPage() {
-  const t = useTranslations()
 
   const services = [
     {

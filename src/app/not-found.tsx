@@ -1,4 +1,3 @@
-import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { BackButton } from '@/components/ui/BackButton'
@@ -14,7 +13,6 @@ import {
 } from 'lucide-react'
 
 export default function NotFoundPage() {
-  const t = useTranslations()
 
   const quickLinks = [
     {

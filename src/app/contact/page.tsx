@@ -1,6 +1,5 @@
 "use client"
 
-import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/Button'
 import { 
   MapPin,
@@ -20,7 +19,6 @@ import {
 import { useState } from 'react'
 
 export default function ContactPage() {
-  const t = useTranslations()
   const [formData, setFormData] = useState({
     name: '',
     email: '',

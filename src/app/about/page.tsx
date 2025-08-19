@@ -1,4 +1,3 @@
-import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
@@ -18,9 +17,13 @@ import {
   Globe
 } from 'lucide-react'
 
-export default function AboutPage() {
-  const t = useTranslations()
+export const metadata = {
+  title: 'За мен - Олга Колева | Психолог Бургас',
+  description: 'Магистър по Психологическо консултиране, лицензиран психолог и психотерапевт на зависимости в Бургас. Над 250 часа психодрама обучение.',
+  keywords: 'олга колева психолог, психолог бургас, психотерапевт зависимости, образование психолог, квалификации'
+}
 
+export default function AboutPage() {
   const education = [
     {
       title: "Магистър по Психологическо консултиране",

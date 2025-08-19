@@ -3,14 +3,14 @@ import imageUrlBuilder from '@sanity/image-url'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 import { type PortableTextBlock, type ArbitraryTypedObject } from '@portabletext/types'
 
-// Sanity client configuration - ensure it works in both server and client environments
+// Sanity client configuration
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  useCdn: process.env.NODE_ENV === 'production', // Use CDN in production
+  useCdn: process.env.NODE_ENV === 'production',
   apiVersion: '2024-01-01',
-  token: process.env.SANITY_API_TOKEN, // For write operations
-  perspective: 'published', // Ensure we only get published content
+  token: process.env.SANITY_API_TOKEN,
+  perspective: 'published',
 })
 
 // Image URL builder
@@ -27,10 +27,9 @@ export interface Article {
   title: string
   slug: { current: string }
   excerpt: string
-  content: PortableTextBlock[] | ArbitraryTypedObject[] // Portable text content with proper types
+  content: PortableTextBlock[] | ArbitraryTypedObject[]
   image?: SanityImageSource
   publishedAt: string
-  language: 'bg' | 'en'
   category: 'original' | 'translation' | 'research' | 'clinical'
   tags: string[]
   originalSource?: string
@@ -44,7 +43,7 @@ export interface Event {
   title: string
   slug: { current: string }
   description: string
-  content?: PortableTextBlock[] | ArbitraryTypedObject[] // Portable text content with proper types
+  content?: PortableTextBlock[] | ArbitraryTypedObject[]
   image?: SanityImageSource
   startDate: string
   endTime?: string
@@ -58,7 +57,6 @@ export interface Event {
     venue?: string
     [key: string]: unknown
   }
-  language: 'bg' | 'en'
   eventType: 'seminar' | 'workshop' | 'course' | 'webinar' | 'conference' | 'group-therapy'
   targetAudience: string[]
   certificate?: {
@@ -72,15 +70,14 @@ export interface Event {
 }
 
 // Helper functions for fetching data with error handling
-export async function getArticles(language: string = 'bg'): Promise<Article[]> {
+export async function getArticles(): Promise<Article[]> {
   try {
-    const query = `*[_type == "article" && language == $language] | order(publishedAt desc) {
+    const query = `*[_type == "article"] | order(publishedAt desc) {
       _id,
       title,
       slug,
       excerpt,
       publishedAt,
-      language,
       category,
       tags,
       originalSource,
@@ -89,16 +86,16 @@ export async function getArticles(language: string = 'bg'): Promise<Article[]> {
       image
     }`
     
-    return await client.fetch(query, { language })
+    return await client.fetch(query)
   } catch (error) {
     console.warn('Failed to fetch articles:', error)
     return []
   }
 }
 
-export async function getFeaturedArticles(language: string = 'bg'): Promise<Article[]> {
+export async function getFeaturedArticles(): Promise<Article[]> {
   try {
-    const query = `*[_type == "article" && language == $language && featured == true] | order(publishedAt desc) {
+    const query = `*[_type == "article" && featured == true] | order(publishedAt desc) {
       _id,
       title,
       slug,
@@ -110,23 +107,22 @@ export async function getFeaturedArticles(language: string = 'bg'): Promise<Arti
       image
     }`
     
-    return await client.fetch(query, { language })
+    return await client.fetch(query)
   } catch (error) {
     console.warn('Failed to fetch featured articles:', error)
     return []
   }
 }
 
-export async function getArticle(slug: string, language: string = 'bg'): Promise<Article | null> {
+export async function getArticle(slug: string): Promise<Article | null> {
   try {
-    const query = `*[_type == "article" && slug.current == $slug && language == $language][0] {
+    const query = `*[_type == "article" && slug.current == $slug][0] {
       _id,
       title,
       slug,
       excerpt,
       content,
       publishedAt,
-      language,
       category,
       tags,
       originalSource,
@@ -134,16 +130,16 @@ export async function getArticle(slug: string, language: string = 'bg'): Promise
       image
     }`
     
-    return await client.fetch(query, { slug, language })
+    return await client.fetch(query, { slug })
   } catch (error) {
     console.warn('Failed to fetch article:', error)
     return null
   }
 }
 
-export async function getUpcomingEvents(language: string = 'bg'): Promise<Event[]> {
+export async function getUpcomingEvents(): Promise<Event[]> {
   try {
-    const query = `*[_type == "event" && language == $language && status in ["upcoming", "open"] && startDate >= now()] | order(startDate asc) {
+    const query = `*[_type == "event" && status in ["upcoming", "open"] && startDate >= now()] | order(startDate asc) {
       _id,
       title,
       slug,
@@ -165,16 +161,16 @@ export async function getUpcomingEvents(language: string = 'bg'): Promise<Event[
       image
     }`
     
-    return await client.fetch(query, { language })
+    return await client.fetch(query)
   } catch (error) {
     console.warn('Failed to fetch upcoming events:', error)
     return []
   }
 }
 
-export async function getPastEvents(language: string = 'bg'): Promise<Event[]> {
+export async function getPastEvents(): Promise<Event[]> {
   try {
-    const query = `*[_type == "event" && language == $language && status == "completed"] | order(startDate desc) {
+    const query = `*[_type == "event" && status == "completed"] | order(startDate desc) {
       _id,
       title,
       slug,
@@ -189,16 +185,16 @@ export async function getPastEvents(language: string = 'bg'): Promise<Event[]> {
       image
     }`
     
-    return await client.fetch(query, { language })
+    return await client.fetch(query)
   } catch (error) {
     console.warn('Failed to fetch past events:', error)
     return []
   }
 }
 
-export async function getEvent(slug: string, language: string = 'bg'): Promise<Event | null> {
+export async function getEvent(slug: string): Promise<Event | null> {
   try {
-    const query = `*[_type == "event" && slug.current == $slug && language == $language][0] {
+    const query = `*[_type == "event" && slug.current == $slug][0] {
       _id,
       title,
       slug,
@@ -213,7 +209,6 @@ export async function getEvent(slug: string, language: string = 'bg'): Promise<E
       discountDeadline,
       location,
       locationDetails,
-      language,
       eventType,
       targetAudience,
       certificate,
@@ -222,7 +217,7 @@ export async function getEvent(slug: string, language: string = 'bg'): Promise<E
       image
     }`
     
-    return await client.fetch(query, { slug, language })
+    return await client.fetch(query, { slug })
   } catch (error) {
     console.warn('Failed to fetch event:', error)
     return null
@@ -230,18 +225,18 @@ export async function getEvent(slug: string, language: string = 'bg'): Promise<E
 }
 
 // Utility functions
-export function formatDate(dateString: string, locale: string = 'bg-BG'): string {
+export function formatDate(dateString: string): string {
   const date = new Date(dateString)
-  return date.toLocaleDateString(locale, {
+  return date.toLocaleDateString('bg-BG', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
   })
 }
 
-export function formatDateTime(dateString: string, timeString: string, locale: string = 'bg-BG'): string {
+export function formatDateTime(dateString: string, timeString: string): string {
   const date = new Date(`${dateString}T${timeString}`)
-  return date.toLocaleDateString(locale, {
+  return date.toLocaleDateString('bg-BG', {
     weekday: 'long',
     year: 'numeric',
     month: 'long',

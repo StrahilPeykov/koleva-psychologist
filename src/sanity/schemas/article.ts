@@ -1,7 +1,5 @@
-// sanity/schemas/article.ts - Enhanced article schema for psychology content
-
 import { defineField, defineType } from 'sanity'
-import { DocumentIcon, TranslateIcon, SearchIcon, ClipboardIcon } from '@sanity/icons'
+import { DocumentIcon } from '@sanity/icons'
 
 export default defineType({
   name: 'article',
@@ -189,38 +187,25 @@ export default defineType({
       initialValue: () => new Date().toISOString()
     }),
     defineField({
-      name: 'language',
-      title: 'Language',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Bulgarian', value: 'bg' },
-          { title: 'English', value: 'en' },
-        ],
-      },
-      validation: Rule => Rule.required(),
-      initialValue: 'bg'
-    }),
-    defineField({
       name: 'category',
       title: 'Category',
       type: 'string',
       options: {
         list: [
           { 
-            title: 'Original Article', 
+            title: 'Авторска статия', 
             value: 'original',
           },
           { 
-            title: 'Translation', 
+            title: 'Превод', 
             value: 'translation',
           },
           { 
-            title: 'Research', 
+            title: 'Научно изследване', 
             value: 'research',
           },
           { 
-            title: 'Clinical Notes', 
+            title: 'Клинични бележки', 
             value: 'clinical',
           },
         ],
@@ -230,46 +215,46 @@ export default defineType({
     }),
     defineField({
       name: 'originalSource',
-      title: 'Original Source',
+      title: 'Оригинален източник',
       type: 'object',
-      description: 'Required for translations - provide original source information',
+      description: 'Задължително за преводи - информация за оригиналния източник',
       fields: [
         {
           name: 'title',
-          title: 'Original Title',
+          title: 'Оригинално заглавие',
           type: 'string'
         },
         {
           name: 'author',
-          title: 'Original Author',
+          title: 'Оригинален автор',
           type: 'string'
         },
         {
           name: 'publication',
-          title: 'Publication',
+          title: 'Публикация',
           type: 'string',
-          description: 'Journal, website, or book name'
+          description: 'Списание, уебсайт или книга'
         },
         {
           name: 'year',
-          title: 'Publication Year',
+          title: 'Година на публикуване',
           type: 'number'
         },
         {
           name: 'url',
-          title: 'Original URL',
+          title: 'Оригинален URL',
           type: 'url'
         },
         {
           name: 'language',
-          title: 'Original Language',
+          title: 'Оригинален език',
           type: 'string',
           options: {
             list: [
-              { title: 'English', value: 'en' },
-              { title: 'Russian', value: 'ru' },
-              { title: 'German', value: 'de' },
-              { title: 'French', value: 'fr' }
+              { title: 'Английски', value: 'en' },
+              { title: 'Руски', value: 'ru' },
+              { title: 'Немски', value: 'de' },
+              { title: 'Френски', value: 'fr' }
             ]
           }
         }
@@ -278,31 +263,31 @@ export default defineType({
     }),
     defineField({
       name: 'tags',
-      title: 'Tags',
+      title: 'Тагове',
       type: 'array',
       of: [{ type: 'string' }],
       options: {
         layout: 'tags'
       },
-      validation: Rule => Rule.max(10).warning('Too many tags can dilute SEO value')
+      validation: Rule => Rule.max(10).warning('Твърде много тагове могат да навредят на SEO')
     }),
     defineField({
       name: 'readingTime',
-      title: 'Estimated Reading Time (minutes)',
+      title: 'Време за четене (минути)',
       type: 'number',
-      description: 'Will be auto-calculated if left empty',
+      description: 'Ще се изчисли автоматично ако остане празно',
       validation: Rule => Rule.min(1).max(60)
     }),
     defineField({
       name: 'featured',
-      title: 'Featured Article',
+      title: 'Препоръчана статия',
       type: 'boolean',
-      description: 'Featured articles appear prominently on the homepage',
+      description: 'Препоръчаните статии се показват на началната страница',
       initialValue: false
     }),
     defineField({
       name: 'seo',
-      title: 'SEO Settings',
+      title: 'SEO настройки',
       type: 'object',
       options: {
         collapsible: true,
@@ -311,34 +296,34 @@ export default defineType({
       fields: [
         {
           name: 'metaTitle',
-          title: 'Meta Title',
+          title: 'Meta заглавие',
           type: 'string',
-          validation: Rule => Rule.max(60).warning('Meta titles should be under 60 characters'),
-          description: 'Override the default title for SEO'
+          validation: Rule => Rule.max(60).warning('Meta заглавията трябва да са под 60 символа'),
+          description: 'Замести заглавието по подразбиране за SEO'
         },
         {
           name: 'metaDescription',
-          title: 'Meta Description',
+          title: 'Meta описание',
           type: 'text',
           rows: 3,
-          validation: Rule => Rule.max(160).warning('Meta descriptions should be under 160 characters'),
-          description: 'Override the excerpt for SEO'
+          validation: Rule => Rule.max(160).warning('Meta описанията трябва да са под 160 символа'),
+          description: 'Замести краткото описание за SEO'
         },
         {
           name: 'keywords',
-          title: 'Focus Keywords',
+          title: 'Ключови думи',
           type: 'array',
           of: [{ type: 'string' }],
           options: {
             layout: 'tags'
           },
-          description: 'Main keywords for this article'
+          description: 'Основни ключови думи за тази статия'
         }
       ]
     }),
     defineField({
       name: 'relatedArticles',
-      title: 'Related Articles',
+      title: 'Свързани статии',
       type: 'array',
       of: [
         {
@@ -352,12 +337,11 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      language: 'language',
       category: 'category',
       media: 'image',
       featured: 'featured'
     },
-    prepare({ title, language, category, media, featured }) {
+    prepare({ title, category, media, featured }) {
       const categoryIcons = {
         original: '📝',
         translation: '🌐', 
@@ -367,24 +351,24 @@ export default defineType({
       
       return {
         title: title,
-        subtitle: `${language?.toUpperCase()} • ${categoryIcons[category as keyof typeof categoryIcons] || ''} ${category}${featured ? ' • ⭐ Featured' : ''}`,
+        subtitle: `${categoryIcons[category as keyof typeof categoryIcons] || ''} ${category}${featured ? ' • ⭐ Препоръчана' : ''}`,
         media: media
       }
     }
   },
   orderings: [
     {
-      title: 'Published Date, New',
+      title: 'Дата на публикуване, нови',
       name: 'publishedDesc',
       by: [{ field: 'publishedAt', direction: 'desc' }]
     },
     {
-      title: 'Published Date, Old',
+      title: 'Дата на публикуване, стари',
       name: 'publishedAsc',
       by: [{ field: 'publishedAt', direction: 'asc' }]
     },
     {
-      title: 'Title A-Z',
+      title: 'Заглавие А-Я',
       name: 'titleAsc',
       by: [{ field: 'title', direction: 'asc' }]
     }

@@ -1,9 +1,7 @@
-import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { Shield, Lock, Eye, FileText, Phone, Mail } from 'lucide-react'
 
 export default function PrivacyPolicyPage() {
-  const t = useTranslations()
 
   return (
     <div className="min-h-screen bg-white">
