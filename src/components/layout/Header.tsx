@@ -20,6 +20,23 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    // Close menu on route change
+    setIsMenuOpen(false)
+  }, [pathname])
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMenuOpen])
+
   const navigation = [
     { name: 'Начало', href: '/' },
     { name: 'За мен', href: '/about' },
@@ -56,25 +73,25 @@ export default function Header() {
         : 'bg-white/90 backdrop-blur-sm shadow-sm border-b border-gray-100'
     }`}>
       <nav className="container mx-auto px-4" aria-label="Top">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo - Enhanced */}
+        <div className="flex items-center justify-between h-16 md:h-20">
+          {/* Logo - Enhanced for mobile */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-3 group">
+            <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group">
               <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-br from-soft-blue to-sky-blue rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
-                  <Heart className="w-6 h-6 text-white" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-soft-blue to-sky-blue rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
+                  <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 {/* Credential badge */}
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                  <Award className="w-2.5 h-2.5 text-white" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-green-500 rounded-full flex items-center justify-center">
+                  <Award className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-white" />
                 </div>
               </div>
               <div className="hidden sm:block">
-                <div className="text-lg font-bold text-charcoal group-hover:text-soft-blue transition-colors">
+                <div className="text-base sm:text-lg font-bold text-charcoal group-hover:text-soft-blue transition-colors">
                   Олга Колева
                 </div>
-                <div className="text-xs text-soft-blue font-medium flex items-center">
-                  <Award className="w-3 h-3 mr-1" />
+                <div className="text-[10px] sm:text-xs text-soft-blue font-medium flex items-center">
+                  <Award className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-1" />
                   Лицензиран психолог
                 </div>
               </div>
@@ -199,11 +216,25 @@ export default function Header() {
             </Button>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="lg:hidden flex items-center space-x-2">
+          {/* Mobile Actions */}
+          <div className="flex lg:hidden items-center space-x-2">
+            {/* Phone Button - visible on mobile */}
+            <Button
+              size="sm"
+              variant="ghost"
+              className="p-2"
+              asChild
+            >
+              <a href="tel:+359888494533" aria-label="Call">
+                <Phone className="w-5 h-5 text-soft-blue" />
+              </a>
+            </Button>
+            
+            {/* Mobile menu button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-2 rounded-lg text-charcoal hover:text-soft-blue hover:bg-powder-blue/30 transition-all duration-300"
+              aria-label="Toggle menu"
             >
               {isMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -214,96 +245,108 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile menu - Full screen overlay */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-gray-100 mt-4 pt-4 pb-6 animate-fade-in">
-            {/* Quick stats in mobile */}
-            <div className="grid grid-cols-3 gap-2 mb-6 text-center">
-              <div className="bg-gray-50 rounded-lg p-3">
-                <div className="text-lg font-bold text-soft-blue">500+</div>
-                <div className="text-xs text-gray-500">клиенти</div>
+          <div className="fixed inset-0 top-16 bg-white z-50 lg:hidden overflow-y-auto">
+            <div className="container mx-auto px-4 py-6">
+              {/* Quick stats in mobile */}
+              <div className="grid grid-cols-3 gap-2 mb-6 text-center">
+                <div className="bg-gray-50 rounded-lg p-2 sm:p-3">
+                  <div className="text-base sm:text-lg font-bold text-soft-blue">500+</div>
+                  <div className="text-[10px] sm:text-xs text-gray-500">клиенти</div>
+                </div>
+                <div className="bg-gray-50 rounded-lg p-2 sm:p-3">
+                  <div className="text-base sm:text-lg font-bold text-steel-blue">95%</div>
+                  <div className="text-[10px] sm:text-xs text-gray-500">удовлетвореност</div>
+                </div>
+                <div className="bg-gray-50 rounded-lg p-2 sm:p-3">
+                  <div className="text-base sm:text-lg font-bold text-sky-blue">24ч</div>
+                  <div className="text-[10px] sm:text-xs text-gray-500">отговор</div>
+                </div>
               </div>
-              <div className="bg-gray-50 rounded-lg p-3">
-                <div className="text-lg font-bold text-steel-blue">90%</div>
-                <div className="text-xs text-gray-500">успех</div>
-              </div>
-              <div className="bg-gray-50 rounded-lg p-3">
-                <div className="text-lg font-bold text-sky-blue">24ч</div>
-                <div className="text-xs text-gray-500">отговор</div>
-              </div>
-            </div>
 
-            <div className="space-y-2">
-              {navigation.map((item) => (
-                <div key={item.name}>
-                  {item.hasDropdown ? (
-                    <div>
+              <div className="space-y-2">
+                {navigation.map((item) => (
+                  <div key={item.name}>
+                    {item.hasDropdown ? (
+                      <div>
+                        <Link
+                          href={item.href}
+                          className={`block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 ${
+                            pathname === item.href
+                              ? 'text-soft-blue bg-soft-blue/10'
+                              : 'text-charcoal hover:text-soft-blue hover:bg-powder-blue/20'
+                          }`}
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {item.name}
+                        </Link>
+                        <div className="ml-4 mt-2 space-y-1">
+                          {item.dropdownItems?.slice(1).map((dropdownItem) => (
+                            <Link
+                              key={dropdownItem.name}
+                              href={dropdownItem.href}
+                              className="flex items-center px-3 py-2 text-sm text-gray-600 hover:text-soft-blue hover:bg-gray-50 rounded-lg transition-all duration-300"
+                              onClick={() => setIsMenuOpen(false)}
+                            >
+                              {dropdownItem.icon}
+                              <span className="ml-2">{dropdownItem.name}</span>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
                       <Link
                         href={item.href}
-                        className="block px-3 py-3 text-charcoal hover:text-soft-blue hover:bg-powder-blue/20 rounded-lg font-medium transition-all duration-300"
+                        className={`block px-3 py-3 text-base font-medium rounded-lg transition-all duration-300 ${
+                          pathname === item.href
+                            ? 'text-soft-blue bg-soft-blue/10'
+                            : 'text-charcoal hover:text-soft-blue hover:bg-powder-blue/20'
+                        }`}
                         onClick={() => setIsMenuOpen(false)}
                       >
                         {item.name}
                       </Link>
-                      <div className="ml-4 mt-2 space-y-1">
-                        {item.dropdownItems?.slice(1).map((dropdownItem) => (
-                          <Link
-                            key={dropdownItem.name}
-                            href={dropdownItem.href}
-                            className="flex items-center px-3 py-2 text-sm text-gray-600 hover:text-soft-blue hover:bg-gray-50 rounded-lg transition-all duration-300"
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            {dropdownItem.icon}
-                            <span className="ml-2">{dropdownItem.name}</span>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      className="block px-3 py-3 text-charcoal hover:text-soft-blue hover:bg-powder-blue/20 rounded-lg font-medium transition-all duration-300"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  )}
-                </div>
-              ))}
-              
-              <div className="border-t border-gray-100 pt-6 mt-6">
-                <div className="grid grid-cols-2 gap-3">
-                  <Button 
-                    className="bg-soft-blue hover:bg-steel-blue text-white" 
-                    asChild
-                  >
-                    <a 
-                      href="https://calendly.com/olga-koleva" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <Calendar className="w-4 h-4 mr-2" />
-                      Запази час
-                    </a>
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="border-soft-blue/30 text-soft-blue hover:bg-soft-blue/10"
-                    asChild
-                  >
-                    <a href="tel:+359888494533" onClick={() => setIsMenuOpen(false)}>
-                      <Phone className="w-4 h-4 mr-2" />
-                      Обади се
-                    </a>
-                  </Button>
-                </div>
+                    )}
+                  </div>
+                ))}
                 
-                {/* Languages in mobile */}
-                <div className="flex justify-center space-x-4 mt-4 text-sm">
-                  <button className="text-soft-blue font-medium">Български</button>
-                  <button className="text-gray-400 hover:text-soft-blue transition-colors">Русский</button>
-                  <button className="text-gray-400 hover:text-soft-blue transition-colors">English</button>
+                <div className="border-t border-gray-100 pt-6 mt-6">
+                  <div className="grid grid-cols-1 gap-3">
+                    <Button 
+                      className="bg-soft-blue hover:bg-steel-blue text-white w-full" 
+                      size="lg"
+                      asChild
+                    >
+                      <a 
+                        href="https://calendly.com/olga-koleva" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <Calendar className="w-4 h-4 mr-2" />
+                        Запази час онлайн
+                      </a>
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="lg"
+                      className="border-soft-blue/30 text-soft-blue hover:bg-soft-blue/10 w-full"
+                      asChild
+                    >
+                      <a href="tel:+359888494533" onClick={() => setIsMenuOpen(false)}>
+                        <Phone className="w-4 h-4 mr-2" />
+                        +359 888 494 533
+                      </a>
+                    </Button>
+                  </div>
+                  
+                  {/* Languages in mobile */}
+                  <div className="flex justify-center space-x-4 mt-6 text-sm">
+                    <button className="text-soft-blue font-medium">Български</button>
+                    <button className="text-gray-400 hover:text-soft-blue transition-colors">Русский</button>
+                    <button className="text-gray-400 hover:text-soft-blue transition-colors">English</button>
+                  </div>
                 </div>
               </div>
             </div>
