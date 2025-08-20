@@ -77,16 +77,16 @@ export default function HomePage() {
             </div>
             
             {/* Image - Better proportions */}
-            <div className="relative">
-              <div className="aspect-[4/5] max-w-sm mx-auto">
-                <div className="w-full h-full rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300">
+            <div className="relative animate-fade-in lg:pl-8">
+              <div className="relative w-full max-w-sm mx-auto">
+                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-powder-blue/20 to-sky-blue/20">
                   <Image
                     src="/images/olga-koleva.jpg"
                     alt="Олга Колева - Психолог и Психотерапевт"
                     fill
-                    className="object-cover object-center"
+                    className="object-cover"
                     priority
-                    sizes="(max-width: 768px) 90vw, 400px"
+                    sizes="(max-width: 768px) 100vw, 400px"
                   />
                 </div>
               </div>
