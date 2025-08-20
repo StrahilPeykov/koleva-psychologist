@@ -246,18 +246,7 @@ export default function AboutPage() {
                     />
                   </div>
                   
-                  {/* Floating achievements */}
-                  <div className="absolute -top-4 -left-4 bg-white rounded-xl shadow-lg p-4 animate-bounce" style={{animationDuration: '3s'}}>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                        <CheckCircle className="w-4 h-4 text-green-600" />
-                      </div>
-                      <div className="text-xs">
-                        <div className="font-semibold text-charcoal">500+</div>
-                        <div className="text-gray-medium">клиенти</div>
-                      </div>
-                    </div>
-                  </div>
+
                   
                   <div className="absolute -bottom-4 -right-4 bg-white rounded-xl shadow-lg p-4 animate-bounce" style={{animationDelay: '1s', animationDuration: '3s'}}>
                     <div className="flex items-center space-x-2">
@@ -277,28 +266,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Achievements Stats */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {achievements.map((achievement, index) => (
-                <div key={index} className="text-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                  <div className="w-12 h-12 mx-auto mb-4 bg-gray-50 rounded-xl flex items-center justify-center">
-                    {achievement.icon}
-                  </div>
-                  <div className="text-2xl lg:text-3xl font-bold text-charcoal mb-2">
-                    {achievement.number}
-                  </div>
-                  <div className="text-sm text-gray-medium">
-                    {achievement.description}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Philosophy & Values */}
       <section className="py-16 bg-gradient-to-br from-cream-light to-white">
