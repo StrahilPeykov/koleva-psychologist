@@ -19,7 +19,6 @@ import {
   CheckCircle,
   Star,
   Globe,
-  AlertTriangle,
   Info
 } from 'lucide-react'
 
@@ -283,15 +282,12 @@ export default function ContactPage() {
                   </div>
 
                   {formData.urgency === 'emergency' && (
-                    <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                       <div className="flex items-start space-x-3">
-                        <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                        <Info className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
                         <div>
-                          <h4 className="font-medium text-red-900 text-sm">За спешни случаи</h4>
-                          <p className="text-red-800 text-xs mt-1">
-                            При криза или мисли за самонараняване се обадете незабавно на: 
-                            <br /><strong>0800 20 100 (24/7, безплатна линия)</strong>
-                            <br />или на <strong>+359 888 494 533</strong>
+                          <p className="text-blue-800 text-xs">
+                            За спешни случаи: <strong>0800 20 100</strong> (24/7) или <strong>+359 888 494 533</strong>
                           </p>
                         </div>
                       </div>
